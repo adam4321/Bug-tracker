@@ -1,0 +1,34 @@
+/*************************************************************
+**  Description:  Auth service main css styles
+*************************************************************/
+
+#foot-logo {
+    height: 70px;
+}
+
+#login-box {
+    width: 1000px;
+    margin: auto;
+    margin-top: 80px;
+}
+
+#email {
+    width: 400px;
+}
+
+#password {
+    width: 400px;
+}
+
+#login-status {
+    margin-top: 10px;
+}
+
+#sign-up {
+    margin-right: 215px;
+    margin-bottom: 10px;
+}
+
+#sign-in {
+    margin-bottom: 10px;
+}
