@@ -2,18 +2,30 @@
 **  Description:  Auth service main css styles
 *************************************************************/
 
+#top-bar {
+    background-color: rgb(45, 122, 153);
+    padding-top: 7px;
+}
+
 #foot-logo {
-    height: 70px;
+    height: 65px;
+    margin-top: 5px;
+    margin-left: 15px;
 }
 
 #login-box {
-    width: 1000px;
+    width: 950px;
     margin: auto;
-    margin-top: 80px;
+    margin-top: 6%;
+}
+
+#login-top-bar {
+    background-color: rgb(52, 144, 180);
 }
 
 #email {
     width: 400px;
+    margin-top: 10px;
 }
 
 #password {

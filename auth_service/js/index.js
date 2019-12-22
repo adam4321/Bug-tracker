@@ -127,6 +127,7 @@ function initApp() {
             // URL with query string
             let url = "http://localhost:5000/?" + currentUser;
 
+            
             // Test auth service
             console.log(url)
             document.getElementById('sign-in').textContent = 'Sign out';
