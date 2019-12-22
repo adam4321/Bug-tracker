@@ -118,42 +118,28 @@ function initApp() {
         if (user) {
             // User clicks the sign in button
             // [START_EXCLUDE]
-            document.getElementById('sign-in-status').textContent = 'Connecting...';
+            document.getElementById('sign-in-status').textContent = 'Signed in';   
 
-            // [START node server connection test]
-            function ifServerOnline(ifOnline, ifOffline) {
-                let img = document.body.appendChild(document.createElement("img"));
-                img.onload = function() {
-                    ifOnline && ifOnline.constructor == Function && ifOnline();
-                };
-                img.onerror = function() {
-                    ifOffline && ifOffline.constructor == Function && ifOffline();
-                };
-                img.src = "http://flip3.engr.oregonstate.edu:7994/favicon-1.ico";        
-            }
-            
-            // Connected to OSU node server and user signed in
-            ifServerOnline(function() {
-                // Create query string for GET request
-                let currentUser = {uid: user.providerData[0].uid};
-                currentUser = new URLSearchParams(currentUser).toString();
+            // Create query string for GET request
+            let currentUser = {uid: user.providerData[0].uid};
+            currentUser = new URLSearchParams(currentUser).toString();
 
-                // URL with query string
-                let url = "http://flip3.engr.oregonstate.edu:7994/?" + currentUser;
+            // URL with query string
+            let url = "http://localhost:5000/?" + currentUser;
 
-                // Clear out user and sign-out before changing URL
-                user = null;
-                toggleSignIn();
+            // Test auth service
+            console.log(url)
+            document.getElementById('sign-in').textContent = 'Sign out';
 
-                // Change URL to user backend node server
-                window.location.href = url;
-                // [END_EXCLUDE]
-            },
-            // Not connected to OSU node server
-            function () {
-                alert("You must sign in to the OSU vpn to continue");
-                document.getElementById('sign-in-status').textContent = 'Signed out';
-            });
+
+            // // Clear out user and sign-out before changing URL
+            // user = null;
+            // toggleSignIn();
+
+            // // Change URL to user backend node server
+            // window.location.href = url;
+            // // [END_EXCLUDE]
+
         } else {
             // User is signed out.
             // [START_EXCLUDE]
