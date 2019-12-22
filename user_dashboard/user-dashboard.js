@@ -1,31 +1,31 @@
-/********************************************************************
-**  Description:   Node.js web server for the user dashboard service 
-********************************************************************/
+/**********************************************************************************
+**  Description:   Node.js web server for the user dashboard service
+**
+**                 Path of forever binary file: ./node_modules/forever/bin/forever
+**********************************************************************************/
 
 
-// Path of forever binary file: ./node_modules/forever/bin/forever
-
-// set up express
+// Set up express
 var express = require('express');
 var app = express();
 
-// set up express-handlebars
+// Set up express-handlebars
 var handlebars = require('express-handlebars').create({defaultLayout: 'main-co2'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
-// set up body-parser
+// Set up body-parser
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// set up MySQL using dbcon.js file
+// Set up MySQL using dbcon.js file
 var mysql = require('./dbcon.js');
 
-// set up route to static files
+// Set up route to static files
 app.use(express.static('public'));
 
-// set port number based on command-line input
+// Set port number based on command-line input
 app.set('port', process.argv[2]);
 
 // Create route for simple get request to render the home page.
@@ -56,6 +56,7 @@ app.get('/', function renderHome(req, res) {
     });
 });
 
+
 // Create route to create new user in the database
 app.post('/add-user', function insertData(req, res, next) {
     mysql.pool.query("INSERT INTO user_account_data (`email`, `name`, `mobile_number`, `date_of_birth`, `subscribe_to_newsletter`, `receive_mobile_alerts`) VALUES (?, ?, ?, ?, ?, ?)", [req.body.email, req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts], function(err, result) {
@@ -67,6 +68,7 @@ app.post('/add-user', function insertData(req, res, next) {
         res.end()
     });
 });
+
 
 // Create route for get request to render update account page
 app.get('/update-account', function renderUpdateForm(req, res) {
@@ -103,6 +105,7 @@ app.get('/update-account', function renderUpdateForm(req, res) {
     });
 });
 
+
 // Create route to update information for an existing user in the database
 app.post('/update-user', function updateData(req, res, next) {
     mysql.pool.query("UPDATE user_account_data SET name = ?, mobile_number = ?, date_of_birth = ?, subscribe_to_newsletter = ?, receive_mobile_alerts = ? WHERE email = ?", [req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts, req.body.email], function(err, result) {
@@ -114,6 +117,7 @@ app.post('/update-user', function updateData(req, res, next) {
         res.end()
     });
 });
+
 
 // Create route for serving login redirection page if script sends users here
 app.get('/login-redirect', function renderLogin(req, res) {
@@ -127,6 +131,7 @@ app.use(function(req,res) {
     res.render('404');
 });
    
+
 // Server Error
 app.use(function(err, req, res, next) {
     console.error(err.stack);
@@ -134,7 +139,8 @@ app.use(function(err, req, res, next) {
     res.render('500');
 });
 
+
 // Listen on port and display message to indicate listening
 app.listen(app.get('port'), function(){
-    console.log('Express started at http://flip3.engr.oregonstate.edu:' + app.get('port') + '; press ctrl-C to terminate.');
+    console.log('Express started at http://localhost:' + app.get('port') + '; press ctrl-C to terminate.');
 });
