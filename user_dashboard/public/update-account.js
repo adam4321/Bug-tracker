@@ -1,33 +1,37 @@
-/* Add event listener to prevent default action of "save" button. */
+/**********************************************************************************
+**  Description:   Update account page client side JavaScript
+**********************************************************************************/
+
+// Add event listener to prevent default action of "save" button
 document.getElementById("save").addEventListener("click", function(event) {
     event.preventDefault();
 });
 
-/* Add event listener to prevent default action of "Cancel" button. */
+// Add event listener to prevent default action of "Cancel" button
 document.getElementById("cancel").addEventListener("click", function(event) {
     event.preventDefault();
 });
 
-/* Onclick function to process form data when user clicks "Save." */
+// Onclick function to process form data when user clicks "Save."
 function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
-    /* If user deleted name and left field blank, display error message and return. */
+    // If user deleted name and left field blank, display error message and return
     if (name === "") {
         alert("The name field cannot be left blank.");
         return;
     }
     
-    /* If user left phone field blank, set to NULL. */
+    // If user left phone field blank, set to NULL
     if (phone === "") {
         phone = null;
     }
     
-    /* If user left birthday field blank, display error message and return. */
+    // If user left birthday field blank, display error message and return
     if (birthday === "") {
         alert("The birthday field cannot be left blank.");
         return;
     }
     
-    /* Determine boolean value to assign to subscribe. */
+    // Determine boolean value to assign to subscribe
     var subscribe;
     if (subscribeArr[0].checked) {
             subscribe = 1;
@@ -36,7 +40,7 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
         subscribe = 0;
     }
     
-    /* Determine boolean value to assign to alerts. */
+    // Determine boolean value to assign to alerts
     var alerts;
     if (alertsArr[0].checked) {
             alerts = 1;
@@ -50,9 +54,9 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
             alerts = 0;
     }
     
-    /* Make AJAX request to server to add data. */
+    // Make AJAX request to server to add data
     var req = new XMLHttpRequest();
-    req.open("POST", "http://flip3.engr.oregonstate.edu:7994/update-user", true);
+    req.open("POST", "http://localhost:5000/update-user", true);
     req.setRequestHeader("Content-Type", "application/json");
     
     var reqBody = {
@@ -66,10 +70,10 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     
     reqBody = JSON.stringify(reqBody);
     
-    /* Callback function for once request returns. */
+    // Callback function for once request returns
     req.addEventListener("load", function redirectHome() {
         if (req.status >= 200 && req.status < 400) {
-            var homeAddr = "http://flip3.engr.oregonstate.edu:7994/?uid=" + encodeURIComponent(email);
+            var homeAddr = "http://localhost:5000/?uid=" + encodeURIComponent(email);
             window.location.replace(homeAddr);
         }
         else {
@@ -80,9 +84,9 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     req.send(reqBody);
 }
 
-/* Onclick function so that pressing "cancel" redirects to user dashboard with email appended to URL. */
+// Onclick function so that pressing "cancel" redirects to user dashboard with email appended to URL
 function cancelEdit(email)
 {
-    var homeAddr = "http://flip3.engr.oregonstate.edu:7994/?uid=" + encodeURIComponent(email);
+    var homeAddr = "http://localhost:5000/?uid=" + encodeURIComponent(email);
     window.location.replace(homeAddr);
 }

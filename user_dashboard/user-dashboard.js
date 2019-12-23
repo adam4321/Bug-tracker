@@ -4,13 +4,12 @@
 **                 Path of forever binary file: ./node_modules/forever/bin/forever
 **********************************************************************************/
 
-
 // Set up express
 var express = require('express');
 var app = express();
 
 // Set up express-handlebars
-var handlebars = require('express-handlebars').create({defaultLayout: 'main-co2'});
+var handlebars = require('express-handlebars').create({defaultLayout: 'main'});
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -20,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Set up MySQL using dbcon.js file
-var mysql = require('./dbcon.js');
+var mysql = require('./db-config.js');
 
 // Set up route to static files
 app.use(express.static('public'));
@@ -28,10 +27,20 @@ app.use(express.static('public'));
 // Set port number based on command-line input
 app.set('port', process.argv[2]);
 
+
+
+// Blank test route
+app.get('/', function renderHome(req, res) {
+    res.render("user-home");
+});
+
+
+
 // Create route for simple get request to render the home page.
 app.get('/', function renderHome(req, res) {
     // See if user with email at end of query string exists in database
-    mysql.pool.query("SELECT name, email FROM user_account_data WHERE email = ?", decodeURIComponent([req.query.uid]), function(err, rows, fields) {
+    mysql.pool.query("SELECT name, email FROM user_account_data WHERE email = ?", 
+    decodeURIComponent([req.query.uid]), function(err, rows, fields) {
         if (err) {
            next(err);
            return;
@@ -59,7 +68,8 @@ app.get('/', function renderHome(req, res) {
 
 // Create route to create new user in the database
 app.post('/add-user', function insertData(req, res, next) {
-    mysql.pool.query("INSERT INTO user_account_data (`email`, `name`, `mobile_number`, `date_of_birth`, `subscribe_to_newsletter`, `receive_mobile_alerts`) VALUES (?, ?, ?, ?, ?, ?)", [req.body.email, req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts], function(err, result) {
+    mysql.pool.query("INSERT INTO user_account_data (`email`, `name`, `mobile_number`, `date_of_birth`, `subscribe_to_newsletter`, `receive_mobile_alerts`) VALUES (?, ?, ?, ?, ?, ?)", 
+    [req.body.email, req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts], function(err, result) {
         if (err) {
             next(err);
             return;
@@ -73,7 +83,8 @@ app.post('/add-user', function insertData(req, res, next) {
 // Create route for get request to render update account page
 app.get('/update-account', function renderUpdateForm(req, res) {
     // See if user with email at end of query string exists in database
-    mysql.pool.query("SELECT email, name, mobile_number, date_of_birth, subscribe_to_newsletter, receive_mobile_alerts FROM user_account_data WHERE email = ?", decodeURIComponent([req.query.uid]), function(err, rows, fields) {
+    mysql.pool.query("SELECT email, name, mobile_number, date_of_birth, subscribe_to_newsletter, receive_mobile_alerts FROM user_account_data WHERE email = ?", 
+    decodeURIComponent([req.query.uid]), function(err, rows, fields) {
         if (err) {
            next(err);
            return;
@@ -108,7 +119,8 @@ app.get('/update-account', function renderUpdateForm(req, res) {
 
 // Create route to update information for an existing user in the database
 app.post('/update-user', function updateData(req, res, next) {
-    mysql.pool.query("UPDATE user_account_data SET name = ?, mobile_number = ?, date_of_birth = ?, subscribe_to_newsletter = ?, receive_mobile_alerts = ? WHERE email = ?", [req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts, req.body.email], function(err, result) {
+    mysql.pool.query("UPDATE user_account_data SET name = ?, mobile_number = ?, date_of_birth = ?, subscribe_to_newsletter = ?, receive_mobile_alerts = ? WHERE email = ?", 
+    [req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts, req.body.email], function(err, result) {
         if (err) {
             next(err);
             return;

@@ -1,36 +1,35 @@
 /*************************************************************
-**  Description:  main overall css styles
+**  Description:  User dashboard overall css styles
 *************************************************************/
 
-/* User dashboard */
-#foot-logo {
+#top-bar {
+    background-color: rgb(45, 122, 153);
+    padding-top: 7px;
+}
+
+#bug-logo {
     height: 70px;
 }
 
+/* User dashboard */
+#dashboard-top-bar {
+    background-color: rgb(52, 144, 180);
+}
+
 #login-box {
-    width: 96%;
-    margin-top: 80px;
     margin: auto;
-}
-
-#email {
-    width: 400px;
-}
-
-#password {
-    width: 400px;
-}
-
-#login-status {
-    margin-top: 20px;
+    width: 96%;
+    margin-top: 2%;
 }
 
 #logout-button {
 
 }
-#user-history-chart {
 
+#user-history-chart {
+    height: 500px;
 }
+
 #update-account-link {
 
 }

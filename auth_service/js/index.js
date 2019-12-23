@@ -133,13 +133,13 @@ function initApp() {
             document.getElementById('sign-in').textContent = 'Sign out';
 
 
-            // // Clear out user and sign-out before changing URL
-            // user = null;
-            // toggleSignIn();
+            // Clear out user and sign-out before changing URL
+            user = null;
+            toggleSignIn();
 
-            // // Change URL to user backend node server
-            // window.location.href = url;
-            // // [END_EXCLUDE]
+            // Change URL to user backend node server
+            window.location.href = url;
+            // [END_EXCLUDE]
 
         } else {
             // User is signed out.
