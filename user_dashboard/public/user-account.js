@@ -19,6 +19,7 @@ function verifyEmailFormat()
     }
 }
 
+
 // Override default action of submit button
 document.getElementById("save").addEventListener("click", function(event) {
     event.preventDefault();
@@ -59,8 +60,8 @@ function insertUser(name, email, phone, birthday, subscribeArr, alertsArr) {
         alerts = 1;
         if (phone === null)
         {
-                alert("You must enter a phone number if you choose to receive text alerts.");
-                return;
+            alert("You must enter a phone number if you choose to receive text alerts.");
+            return;
         }
     }
     else {

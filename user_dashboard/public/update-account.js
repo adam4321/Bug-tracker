@@ -7,10 +7,12 @@ document.getElementById("save").addEventListener("click", function(event) {
     event.preventDefault();
 });
 
+
 // Add event listener to prevent default action of "Cancel" button
 document.getElementById("cancel").addEventListener("click", function(event) {
     event.preventDefault();
 });
+
 
 // Onclick function to process form data when user clicks "Save."
 function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
@@ -34,7 +36,7 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     // Determine boolean value to assign to subscribe
     var subscribe;
     if (subscribeArr[0].checked) {
-            subscribe = 1;
+        subscribe = 1;
     }
     else {
         subscribe = 0;
@@ -43,15 +45,15 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     // Determine boolean value to assign to alerts
     var alerts;
     if (alertsArr[0].checked) {
-            alerts = 1;
-            if (phone === null)
-            {
-                    alert("You must enter a phone number if you choose to receive text alerts.");
-                    return;
-            }
+        alerts = 1;
+        if (phone === null)
+        {
+            alert("You must enter a phone number if you choose to receive text alerts.");
+            return;
+        }
     }
     else {
-            alerts = 0;
+        alerts = 0;
     }
     
     // Make AJAX request to server to add data
@@ -83,6 +85,7 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     
     req.send(reqBody);
 }
+
 
 // Onclick function so that pressing "cancel" redirects to user dashboard with email appended to URL
 function cancelEdit(email)
