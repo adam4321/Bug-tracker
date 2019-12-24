@@ -6,7 +6,7 @@ const credentials = require('./credentials.js');
 
 const mysql = require('mysql');
 
-const hostwinds = {
+const config = {
 	connectionLimit :  100,
 	user            :  credentials.LOCAL_USER,
 	password        :  credentials.LOCAL_PASSWORD,
@@ -16,6 +16,6 @@ const hostwinds = {
     dateStrings     :  'true',
 };
 
-let pool = mysql.createPool(hostwinds);
+let pool = mysql.createPool(config);
 
 module.exports.pool = pool;

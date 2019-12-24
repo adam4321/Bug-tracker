@@ -29,18 +29,20 @@ app.set('port', process.argv[2]);
 
 
 
-// Blank test route
-app.get('/', function renderHome(req, res) {
-    res.render("user-home");
-});
+// // Blank test route
+// app.get('/', function renderHome(req, res) {
+//     res.render("user-home");
+// });
 
 
 
 // Create route for simple get request to render the home page.
 app.get('/', function renderHome(req, res) {
     // See if user with email at end of query string exists in database
-    mysql.pool.query("SELECT name, email FROM user_account_data WHERE email = ?", 
-    decodeURIComponent([req.query.uid]), function(err, rows, fields) {
+    mysql.pool.query(
+    "SELECT name, email FROM user_account_data WHERE email = ?", 
+    decodeURIComponent([req.query.uid]),
+    function(err, rows, fields) {
         if (err) {
            next(err);
            return;
@@ -68,8 +70,10 @@ app.get('/', function renderHome(req, res) {
 
 // Create route to create new user in the database
 app.post('/add-user', function insertData(req, res, next) {
-    mysql.pool.query("INSERT INTO user_account_data (`email`, `name`, `mobile_number`, `date_of_birth`, `subscribe_to_newsletter`, `receive_mobile_alerts`) VALUES (?, ?, ?, ?, ?, ?)", 
-    [req.body.email, req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts], function(err, result) {
+    mysql.pool.query(
+    "INSERT INTO user_account_data (`email`, `name`, `mobile_number`, `date_of_birth`, `subscribe_to_newsletter`, `receive_mobile_alerts`) VALUES (?, ?, ?, ?, ?, ?)", 
+    [req.body.email, req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts],
+    function(err, result) {
         if (err) {
             next(err);
             return;
@@ -83,8 +87,10 @@ app.post('/add-user', function insertData(req, res, next) {
 // Create route for get request to render update account page
 app.get('/update-account', function renderUpdateForm(req, res) {
     // See if user with email at end of query string exists in database
-    mysql.pool.query("SELECT email, name, mobile_number, date_of_birth, subscribe_to_newsletter, receive_mobile_alerts FROM user_account_data WHERE email = ?", 
-    decodeURIComponent([req.query.uid]), function(err, rows, fields) {
+    mysql.pool.query(
+    "SELECT email, name, mobile_number, date_of_birth, subscribe_to_newsletter, receive_mobile_alerts FROM user_account_data WHERE email = ?", 
+    decodeURIComponent([req.query.uid]),
+    function(err, rows, fields) {
         if (err) {
            next(err);
            return;
@@ -105,7 +111,7 @@ app.get('/update-account', function renderUpdateForm(req, res) {
             context.email = decodeURIComponent([req.query.uid]);
             context.name = rows[0].name;
             context.phone = rows[0].mobile_number;
-            var birthdayISOString = rows[0].date_of_birth.toISOString();
+            var birthdayISOString = rows[0].date_of_birth;
             context.birthday = birthdayISOString.slice(0, 10);
             context.subscribe = rows[0].subscribe_to_newsletter;
             context.alerts = rows[0].receive_mobile_alerts;
@@ -119,8 +125,10 @@ app.get('/update-account', function renderUpdateForm(req, res) {
 
 // Create route to update information for an existing user in the database
 app.post('/update-user', function updateData(req, res, next) {
-    mysql.pool.query("UPDATE user_account_data SET name = ?, mobile_number = ?, date_of_birth = ?, subscribe_to_newsletter = ?, receive_mobile_alerts = ? WHERE email = ?", 
-    [req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts, req.body.email], function(err, result) {
+    mysql.pool.query(
+    "UPDATE user_account_data SET name = ?, mobile_number = ?, date_of_birth = ?, subscribe_to_newsletter = ?, receive_mobile_alerts = ? WHERE email = ?", 
+    [req.body.name, req.body.phone, req.body.birthday, req.body.subscribe, req.body.alerts, req.body.email],
+    function(err, result) {
         if (err) {
             next(err);
             return;
