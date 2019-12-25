@@ -28,14 +28,6 @@ app.use(express.static('public'));
 app.set('port', process.argv[2]);
 
 
-
-// // Blank test route
-// app.get('/', function renderHome(req, res) {
-//     res.render("user-home");
-// });
-
-
-
 // Create route for simple get request to render the home page.
 app.get('/', function renderHome(req, res) {
     // See if user with email at end of query string exists in database
