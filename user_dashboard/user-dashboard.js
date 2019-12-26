@@ -24,8 +24,8 @@ var mysql = require('./db-config.js');
 // Set up route to static files
 app.use(express.static('public'));
 
-// Set port number based on command-line input
-app.set('port', process.argv[2]);
+// Set port number
+app.set('port', 5000);
 
 
 // Create route for simple get request to render the home page.
