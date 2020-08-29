@@ -43,7 +43,7 @@ bugId = document.getElementById("save");
 recordForm.addEventListener('submit', (e) => {
     e.preventDefault();
     let req = new XMLHttpRequest();
-    let path = '/edit-bug/updateBug';
+    let path = '/bug_tracker/edit-bug/updateBug';
 
     // Iterate over the checked programmers to create http query sub-string
     let programmerArr = [];
@@ -98,7 +98,7 @@ recordForm.addEventListener('submit', (e) => {
     req.addEventListener('load', () => {
         if (req.status >= 200 && req.status < 400) {
             // Return the user to the bugs page
-            window.location.href = "/";
+            window.location.href = "/bug_tracker/";
     
         } else {
             console.error('Database return error');
