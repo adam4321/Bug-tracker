@@ -11,7 +11,7 @@ recordForm.addEventListener('submit', (e) => {
     e.preventDefault();
     spinner.style.visibility = "visible"; 
     let req = new XMLHttpRequest();
-    let path = '/programmers/insertProgrammer';
+    let path = '/bug_tracker/programmers/insertProgrammer';
 
     // String that holds the form data
     let reqBody = {
