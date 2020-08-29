@@ -12,7 +12,7 @@
 /build
 
 # credentials
-credentials.js
+*credentials.js
 
 # misc
 .DS_Store
