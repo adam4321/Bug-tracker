@@ -154,5 +154,5 @@ app.use(function(err, req, res, next) {
 
 // Listen on port and display message to indicate listening
 app.listen(app.get('port'), function(){
-    console.log('Express started at http://localhost:' + app.get('port') + '; press ctrl-C to terminate.');
+    console.log('\nExpress started at http://localhost:' + app.get('port') + '\npress ctrl-C to terminate.');
 });
