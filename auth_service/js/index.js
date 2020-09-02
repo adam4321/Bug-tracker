@@ -121,7 +121,7 @@ function initApp() {
             document.getElementById('sign-in-status').textContent = 'Signed in';   
 
             // Create query string for GET request
-            let currentUser = {uid: user.providerData[0].uid};
+            let currentUser = {uid: user.uid};
             console.log(user);
             currentUser = new URLSearchParams(currentUser).toString();
 
@@ -136,10 +136,10 @@ function initApp() {
 
             // Clear out user and sign-out before changing URL
             user = null;
-            // toggleSignIn();
+            toggleSignIn();
 
             // Change URL to user backend node server
-            // window.location.href = url;
+            window.location.href = url;
             // [END_EXCLUDE]
 
         } else {

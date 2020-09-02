@@ -1,14 +1,17 @@
 /**********************************************************************************
-**  Description:   Account setup page client side JavaScript
+**  Description:    Account setup page client side JavaScript
 **********************************************************************************/
 
 
-/**********************************************************************
+/*
 ** Make sure the email field constains something that appears to be in
 ** the form of an email address once DOM content is loaded. Otherwise,
 ** redirect to login screen. 
-**********************************************************************/
-document.addEventListener("DOMContentLoaded", verifyEmailFormat);
+*/
+
+// TODO: this needs to be changed to check uid instead of email
+
+// document.addEventListener("DOMContentLoaded", verifyEmailFormat);
 
 function verifyEmailFormat()
 {
