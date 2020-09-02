@@ -3,18 +3,17 @@
 *****************************************************************/
 
 // Api key
-import firebase_credential from './credentials.js'; 
+import credentials from './credentials.js';
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: firebase_credential,
-    authDomain: "cs361-co2-tracker.firebaseapp.com",
-    databaseURL: "https://cs361-co2-tracker.firebaseio.com",
-    projectId: "cs361-co2-tracker",
-    storageBucket: "cs361-co2-tracker.appspot.com",
-    messagingSenderId: "969301294823",
-    appId: "1:969301294823:web:d60da67816ff10d7a3ec42",
-    measurementId: "G-KPKFZVHCTM"
+    apiKey: credentials.firebase_credential,
+    authDomain: credentials.authDomain,
+    databaseURL: credentials.databaseURL,
+    projectId: credentials.projectId,
+    storageBucket: credentials.storageBucket,
+    messagingSenderId: credentials.messagingSenderId,
+    appId: credentials.appId
 };
 
 firebase.initializeApp(firebaseConfig);
