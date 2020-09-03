@@ -28,9 +28,20 @@ document.getElementById("save").addEventListener("click", function(event) {
     event.preventDefault();
 });
 
+// Function to parse the query string
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
 
 // Onclick function to process form data when user clicks "Save."
 function insertUser(name, email, phone, birthday, subscribeArr, alertsArr) {
+    // Get the user's unique ID
+    const uid = getUrlParameter('uid');
+
     // If user did not enter name, display error message and return
     if (name === "") {
         alert("The name field cannot be left blank.");
@@ -77,6 +88,7 @@ function insertUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     req.setRequestHeader("Content-Type", "application/json");
     
     var reqBody = {
+        "uid": uid,
         "name":name,
         "email":email,
         "phone":phone, 

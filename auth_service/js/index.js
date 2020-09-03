@@ -127,6 +127,7 @@ function initApp() {
 
             // URL with query string
             let url = "http://localhost:5000/?" + currentUser;
+            // let url = "http://localhost:50000/bug_tracker/?" + currentUser;
 
             
             // Test auth service
