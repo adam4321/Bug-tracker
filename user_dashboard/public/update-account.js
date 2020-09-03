@@ -14,8 +14,18 @@ document.getElementById("cancel").addEventListener("click", function(event) {
 });
 
 
+// Function to parse the query string
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
+
 // Onclick function to process form data when user clicks "Save."
 function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
+    const uid = getUrlParameter('uid');
     // If user deleted name and left field blank, display error message and return
     if (name === "") {
         alert("The name field cannot be left blank.");
@@ -75,7 +85,7 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     // Callback function for once request returns
     req.addEventListener("load", function redirectHome() {
         if (req.status >= 200 && req.status < 400) {
-            var homeAddr = "http://localhost:5000/?uid=" + encodeURIComponent(email);
+            var homeAddr = "http://localhost:5000/?uid=" + uid;
             window.location.replace(homeAddr);
         }
         else {

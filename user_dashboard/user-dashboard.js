@@ -30,10 +30,10 @@ app.set('port', 5000);
 
 // Create route for simple get request to render the home page.
 app.get('/', function renderHome(req, res) {
-    const query = `SELECT name, programmerId FROM Programmers WHERE programmerId = ?`
+    const query = `SELECT firstName, lastName, programmerId FROM Programmers WHERE programmerId = ?`
     
     // See if user with email at end of query string exists in database
-    mysql.pool.query(query, decodeURIComponent([req.query.uid]),
+    mysql.pool.query(query, req.query.uid,
     function(err, rows, fields) {
         if (err) {
            next(err);
@@ -41,19 +41,19 @@ app.get('/', function renderHome(req, res) {
         }
         
         // Initialize empty context array
-        var context = [];
+        let context = [];
         
         // If the user does not exist in the database, render user-account page
         if (rows.length === 0) {
-		    context.email = decodeURIComponent([req.query.uid]);    
+		    context.uid = req.query.uid;    
             res.render("user-account", context);
         }
 	    
         // Otherwise, render user home page
         else
 	    {
-		    context.name = rows[0].name;
-            context.encodedEmail = req.query.uid;
+		    context.name = rows[0].firstName + " " + rows[0].lastName;
+            context.uid = req.query.uid;
             res.render("user-home", context);
 	    }
     });
@@ -62,7 +62,7 @@ app.get('/', function renderHome(req, res) {
 
 // Create route to create new user in the database
 app.post('/add-user', function insertData(req, res, next) {
-    const query = `INSERT INTO Programmers (programmerId, email, name, mobile_number, date_of_birth, subscribe_to_newsletter, receive_mobile_alerts)
+    const query = `INSERT INTO Programmers (programmerId, email, firstName, lastName, mobile_number, startDate, accessLevel)
                         VALUES (?, ?, ?, ?, ?, ?, ?)`
     
     mysql.pool.query(query, 
@@ -89,7 +89,7 @@ app.post('/add-user', function insertData(req, res, next) {
 
 // Create route for get request to render update account page
 app.get('/update-account', function renderUpdateForm(req, res) {
-    const query = `SELECT email, name, mobile_number, date_of_birth, subscribe_to_newsletter, receive_mobile_alerts
+    const query = `SELECT programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel
                     FROM Programmers
                     WHERE programmerId = ?`
 
@@ -114,12 +114,12 @@ app.get('/update-account', function renderUpdateForm(req, res) {
             
                 // Fill context array
                 context.email = decodeURIComponent([req.query.uid]);
-                context.name = rows[0].name;
+                context.name = rows[0].firstName + " " + rows[0].lastName;
                 context.phone = rows[0].mobile_number;
-                var birthdayISOString = rows[0].date_of_birth;
-                context.birthday = birthdayISOString.slice(0, 10);
-                context.subscribe = rows[0].subscribe_to_newsletter;
-                context.alerts = rows[0].receive_mobile_alerts;
+                // var birthdayISOString = rows[0].date_of_birth;
+                // context.birthday = birthdayISOString.slice(0, 10);
+                // context.subscribe = rows[0].subscribe_to_newsletter;
+                // context.alerts = rows[0].receive_mobile_alerts;
 
                 // Render update account page
                 res.render("update-account", context); 
@@ -131,7 +131,7 @@ app.get('/update-account', function renderUpdateForm(req, res) {
 
 // Create route to update information for an existing user in the database
 app.post('/update-user', function updateData(req, res, next) {
-    const query = `UPDATE Programmers SET name = ?, mobile_number = ?, date_of_birth = ?, subscribe_to_newsletter = ?, receive_mobile_alerts = ? 
+    const query = `UPDATE Programmers SET firstName = ?, lastName = ?, email = ?, mobile_number = ?, dateStarted = ?, accessLevel = ?
                     WHERE programmerId = ?`
     
     mysql.pool.query(query, 

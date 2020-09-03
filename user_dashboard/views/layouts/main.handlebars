@@ -21,10 +21,13 @@
     <!-- Header section containing title -->
     <header id="top-bar" class="mdl-layout__header mdl-color-text--white">
         <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
-            <img id="bug-logo" src="bug-2-128.png" alt="White bug icon">
+            
         <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
+            <img id="bug-logo" src="bug-2-128.png" alt="White bug icon">
             <h3>Software Bug Tracker</h3>
         </div>
+        <a href="http://localhost:5000/update-account?uid={{{uid}}}" id="update-account-link">Settings</a>
+        <button class="mdl-button mdl-js-button mdl-button--raised" id="logout-button" onclick="window.location.href = 'http://localhost:5500/auth_service'" >Log Out</button>
         </div>
     </header>
 

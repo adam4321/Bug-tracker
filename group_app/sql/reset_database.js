@@ -11,10 +11,11 @@ DROP TABLE IF EXISTS Programmers;
 DROP TABLE IF EXISTS Companies;
 
 CREATE TABLE Programmers (
-    programmerId int(11) NOT NULL AUTO_INCREMENT,
+    programmerId varchar(255) NOT NULL,
     firstName varchar(255) NOT NULL,
     lastName varchar(255) NOT NULL,
-    email varchar(255), 
+    email varchar(255),
+    mobile_number varchar(255) DEFAULT NULL,
     dateStarted date, 
     accessLevel int(11),
     PRIMARY KEY (programmerId)
@@ -22,17 +23,18 @@ CREATE TABLE Programmers (
 
 LOCK TABLES Programmers WRITE;
 
-INSERT INTO Programmers VALUES 
-    (1, 'Joe', 'Smith', 'joe_s@mail.com', '1999-05-05', 2), 
-    (2, 'Andy', 'Ng', 'andy_n@mail.com', '2001-04-13', 3),
-    (3, 'Sally', 'Smith', 'sally_s@gmail.com', '1997-12-31', 2),
-    (4, 'Jack', 'Miller', 'jack_m@gmail.com', '1998-01-01', 1),
-    (5, 'Amy', 'Ellis', 'amy_e@yahoo.com', '1996-08-17', 3),
-    (6, 'Dan', 'King', 'dan_k@yahoo.com', '1995-11-11', 2),
-    (7, 'Kate', 'Hooper', 'kate_h@gmail.com', '2000-07-06', 2),
-    (8, 'Ben', 'Kent', 'ben_k@yahoo.com', '1999-03-20', 3),
-    (9, 'Kyle', 'Gable', 'kyle_g@gmail.com', '1996-05-03', 2),
-    (10, 'Jen', 'Thomas', 'jen_t@gmail.com', '1998-09-20', 3);
+INSERT INTO Programmers VALUES
+    ('test1', 'Joe', 'Smith', 'joe_s@mail.com', NULL, '1999-05-05', 2), 
+    ('test2', 'Andy', 'Ng', 'andy_n@mail.com', NULL, '2001-04-13', 3),
+    ('test3', 'Sally', 'Smith', 'sally_s@gmail.com', NULL, '1997-12-31', 2),
+    ('test4', 'Jack', 'Miller', 'jack_m@gmail.com', NULL, '1998-01-01', 1),
+    ('test5', 'Amy', 'Ellis', 'amy_e@yahoo.com', NULL, '1996-08-17', 3),
+    ('test6', 'Dan', 'King', 'dan_k@yahoo.com', NULL, '1995-11-11', 2),
+    ('test7', 'Kate', 'Hooper', 'kate_h@gmail.com', NULL, '2000-07-06', 2),
+    ('test8', 'Ben', 'Kent', 'ben_k@yahoo.com', NULL, '1999-03-20', 3),
+    ('test9', 'Kyle', 'Gable', 'kyle_g@gmail.com', NULL, '1996-05-03', 2),
+    ('test10', 'Jen', 'Thomas', 'jen_t@gmail.com', NULL, '1998-09-20', 3),
+    ('eqyvguhIaBZ3ouxN7SjZwshAkPp1', 'Adam', 'Wright', 'wrighada@oregonstate.edu', NULL, '2000-01-01', 2);
 
 UNLOCK TABLES;
 
@@ -64,12 +66,12 @@ CREATE TABLE Projects (
     companyId int(11) NOT NULL,
     PRIMARY KEY (projectId),
     FOREIGN KEY (companyId) REFERENCES Companies (companyId)
-        ON UPDATE CASCADE 
+		ON UPDATE CASCADE 
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 LOCK TABLES Projects WRITE,
-    Companies AS c1 WRITE,
+	Companies AS c1 WRITE,
     Companies AS c2 WRITE,
     Companies AS c3 WRITE,
     Companies AS c4 WRITE,
@@ -103,12 +105,12 @@ CREATE TABLE Bugs (
     priority int(11),
     PRIMARY KEY (bugId),
     FOREIGN KEY (projectId) REFERENCES Projects (projectId)
-        ON UPDATE CASCADE 
+		ON UPDATE CASCADE 
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 LOCK TABLES Bugs WRITE, 
-    Projects AS p1 WRITE, 
+	Projects AS p1 WRITE, 
     Projects AS p2 WRITE,
     Projects AS p3 WRITE,
     Projects AS p4 WRITE,
@@ -144,7 +146,7 @@ INSERT INTO Bugs (projectId, bugSummary, bugDescription, dateStarted, resolution
     ((SELECT projectId FROM Projects AS p12 WHERE projectName = 'T-best CMS'), 'API error', 'WooCommerce not completing sales', '2015-06-21', 'Still broken!!!', 0, 5),
     ((SELECT projectId FROM Projects AS p13 WHERE projectName = 'eText Editor'), 'Option missing in edit', 'No option listed in edit dropdown for find in this page', '2004-03-01', '', 0, 3),
     ((SELECT projectId FROM Projects AS p14 WHERE projectName = 'eText Editor'), 'Extra whitespace', 'Extra whitespace added to the end of each paragraph', '2004-03-01', '', 0, 3),
-    ((SELECT projectId FROM Projects AS p15 WHERE projectName = 'Force CRM'), 'Errant % in string', 'Unexplained % symbol showing up in strings', '2004-03-01', '', 0, 3),
+    ((SELECT projectId FROM Projects AS p15 WHERE projectName = 'Force CRM'), 'Errant percent in string', 'Unexplained percent showing up in strings', '2004-03-01', '', 0, 3),
     ((SELECT projectId FROM Projects AS p16 WHERE projectName = 'SY design system'), 'Incorrect font', 'Font should be set to Roboto', '2004-03-01', '', 0, 3),
     ((SELECT projectId FROM Projects AS p17 WHERE projectName = 'SY design system'), 'Move div 15 px', 'div_main_box should be 25 px higher', '2004-03-01', '', 0, 3),
     ((SELECT projectId FROM Projects AS p18 WHERE projectName = 'MicroSheets'), 'Image render error', 'Images not rendering when dragged and dropped onto the page', '2004-03-01', '', 0, 3),
@@ -155,44 +157,44 @@ UNLOCK TABLES;
 
 CREATE TABLE Bugs_Programmers (
     bugId int(11) NOT NULL,
-    programmerId int(11) NOT NULL,
+    programmerId varchar(255) NOT NULL,
     PRIMARY KEY (bugId, programmerId),
     FOREIGN KEY (bugId) REFERENCES Bugs (bugId)
-        ON UPDATE CASCADE 
+		ON UPDATE CASCADE 
         ON DELETE CASCADE,
     FOREIGN KEY (programmerId) REFERENCES Programmers (programmerId)
-        ON UPDATE CASCADE 
+		ON UPDATE CASCADE 
         ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 LOCK TABLES Bugs_Programmers WRITE, Bugs AS b1 WRITE, Programmers AS p1 WRITE;
 
 INSERT INTO Bugs_Programmers (bugId, programmerId) VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10),
-    (11, 1),
-    (12, 1),
-    (13, 2),
-    (14, 2),
-    (15, 2),
-    (16, 2),
-    (17, 2),
-    (18, 2),
-    (19, 2),
-    (20, 2),
-    (6, 2),
-    (9, 2),
-    (12, 2),
-    (13, 5),
-    (16, 7),
-    (19, 9);
+    (1, 'test1'),
+    (2, 'test2'),
+    (3, 'test3'),
+    (4, 'test4'),
+    (5, 'test5'),
+    (6, 'test6'),
+    (7, 'test7'),
+    (8, 'test8'),
+    (9, 'test9'),
+    (10, 'test10'),
+    (11, 'test1'),
+    (12, 'test1'),
+    (13, 'test2'),
+    (14, 'test2'),
+    (15, 'test2'),
+    (16, 'test2'),
+    (17, 'test2'),
+    (18, 'test2'),
+    (19, 'test2'),
+    (20, 'test2'),
+    (6, 'test2'),
+    (9, 'test2'),
+    (12, 'test2'),
+    (13, 'test5'),
+    (16, 'test7'),
+    (19, 'test9');
 
 UNLOCK TABLES;`

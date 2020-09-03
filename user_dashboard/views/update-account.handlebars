@@ -15,62 +15,45 @@
         <form id="recordForm">
             <fieldset>
         
-                <legend>Account Details</legend>
-        
-                <label for="user-name">Name</label>
-                <input type="text" name="user-name" id="user-name-field" value="{{name}}"> <br>
-        
-                <label for="user-email">Email</label>
-                <input type="text" name="user-email" id="user-email-field" value="{{email}}" disabled> <br>
-        
+                <label for="programmer-fname">First name</label>
+                <input required type="text" name="programmerFName" id="programmer-fname-field"> <br>
+
+                <label for="programmer-lname">Last name</label>
+                <input required type="text" name="programmerLName" id="programmer-lname-field"> <br>
+
+                <label for="programmer-email">Email</label>
+                <input required type="text" name="userEmail" id="programmer-email-field"> <br>
+
                 <label for="user-phone">Mobile Number</label>
-                <input type="text" name="user-phone" id="user-phone-field" value="{{phone}}"> <br>
+                <input type="text" name="user-phone" id="programmer-phone-field"> <br>
         
-                <label for="user-date">Date of Birth</label>
-                <input type="date" name="user-date" id="user-date-field" value="{{birthday}}"> <br>
-        
-                {{#if subscribe}}
-                    <label for="subscribe">Subscribe to Newsletter</label>
-                    <label for="subscribe">Yes</label>
-                    <input type="radio" name="subscribe" value="1" id="sub-yes" checked="checked">
+                <label for="started-date">Date Started</label>
+                <input class="submitBtn" required type="date" name="startedDate" id="project-date-started-field" placeholder="yyyy-mm-dd"> <br>
 
-                    <label for="subscribe">No</label>
-                    <input type="radio" name="subscribe" value="0" id="sub-no"><br>
-        
-                {{else}}
-                    <label for="subscribe">Subscribe to Newsletter</label>
-                    <label for="subscribe">Yes</label>
-                    <input type="radio" name="subscribe" value="1" id="sub-yes">
+                <label for="programmer-access">Access Level</label>
+                <select class="submitBtn" required name="programmerAccess" id="programmer-access-field">
+                    <option value="" disabled selected>Select an access level (Highest: 4)</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select> <br>
 
-                    <label for="subscribe">No</label>
-                    <input type="radio" name="subscribe" value="0" id="sub-no" checked="checked"><br>
-                {{/if}}
                 
-                {{#if alerts}}
-                    <label for="alerts">Receive Mobile Alerts</label>
-                    <label for="alerts">Yes</label>
-                    <input type="radio" name="alerts" value="1" id="alerts-yes" checked="checked">
-
-                    <label for="alerts">No</label>
-                    <input type="radio" name="alerts" value="0" id="alerts-no"><br>
-                
-                {{else}}
-                    <label for="alerts">Receive Mobile Alerts</label>
-                    <label for="alerts">Yes</label>
-                    <input type="radio" name="alerts" value="1" id="alerts-yes">
-
-                    <label for="alerts">No</label>
-                    <input type="radio" name="alerts" value="0" id="alerts-no" checked="checked"><br>
-                {{/if}}
-                
-                <input type="submit" id="save" value="Save" onclick="updateUser(document.getElementById('user-name-field').value, document.getElementById('user-email-field').value, document.getElementById('user-phone-field').value, document.getElementById('user-date-field').value, document.getElementsByName('subscribe'), document.getElementsByName('alerts'))">
-                <input type="submit" id="cancel" value="Cancel" onclick="cancelEdit(document.getElementById('user-email-field').value)">
             </fieldset>
         </form>
         <br>
-        
+        <input type="submit" id="save" value="Save" 
+                    onclick="insertUser(
+                        document.getElementById('programmer-fname-field').value,
+                        document.getElementById('programmer-lname-field').value, 
+                        document.getElementById('programmer-email-field').value, 
+                        document.getElementById('programmer-phone-field').value,
+                        document.getElementById('project-date-started-field').value,
+                        document.getElementById('programmer-access-field').value)"
+                >
+                <input type="submit" id="cancel" value="Cancel" onclick="cancelEdit(document.getElementById('user-email-field').value)">
 
-        <button class="mdl-button mdl-js-button mdl-button--raised" id="logout-button" onclick="window.location.href = 'http://localhost:5500/auth_service';" >Log Out</button>
     </div>
 </div>
 <script src="update-account.js"></script>
