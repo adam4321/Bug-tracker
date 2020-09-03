@@ -30,7 +30,6 @@ CREATE TABLE Programmers (
 LOCK TABLES Programmers WRITE;
 
 INSERT INTO Programmers VALUES
-    ('eqyvguhIaBZ3ouxN7SjZwshAkPp1', 'Adam', 'Wright', 'wrighada@oregonstate.edu', NULL, '2000-01-01', 2),
     ('test1', 'Joe', 'Smith', 'joe_s@mail.com', NULL, '1999-05-05', 2), 
     ('test2', 'Andy', 'Ng', 'andy_n@mail.com', NULL, '2001-04-13', 3),
     ('test3', 'Sally', 'Smith', 'sally_s@gmail.com', NULL, '1997-12-31', 2),
@@ -40,7 +39,8 @@ INSERT INTO Programmers VALUES
     ('test7', 'Kate', 'Hooper', 'kate_h@gmail.com', NULL, '2000-07-06', 2),
     ('test8', 'Ben', 'Kent', 'ben_k@yahoo.com', NULL, '1999-03-20', 3),
     ('test9', 'Kyle', 'Gable', 'kyle_g@gmail.com', NULL, '1996-05-03', 2),
-    ('test10', 'Jen', 'Thomas', 'jen_t@gmail.com', NULL, '1998-09-20', 3);
+    ('test10', 'Jen', 'Thomas', 'jen_t@gmail.com', NULL, '1998-09-20', 3),
+    ('eqyvguhIaBZ3ouxN7SjZwshAkPp1', 'Adam', 'Wright', 'wrighada@oregonstate.edu', NULL, '2000-01-01', 2);
 
 UNLOCK TABLES;
 
@@ -176,7 +176,7 @@ UNLOCK TABLES;
 
 CREATE TABLE Bugs_Programmers (
     bugId int(11) NOT NULL,
-    programmerId int(11) NOT NULL,
+    programmerId varchar(255) NOT NULL,
     PRIMARY KEY (bugId, programmerId),
     FOREIGN KEY (bugId) REFERENCES Bugs (bugId)
 		ON UPDATE CASCADE 
@@ -190,31 +190,31 @@ CREATE TABLE Bugs_Programmers (
 LOCK TABLES Bugs_Programmers WRITE, Bugs AS b1 WRITE, Programmers AS p1 WRITE;
 
 INSERT INTO Bugs_Programmers (bugId, programmerId) VALUES
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
-    (5, 5),
-    (6, 6),
-    (7, 7),
-    (8, 8),
-    (9, 9),
-    (10, 10),
-    (11, 1),
-    (12, 1),
-    (13, 2),
-    (14, 2),
-    (15, 2),
-    (16, 2),
-    (17, 2),
-    (18, 2),
-    (19, 2),
-    (20, 2),
-    (6, 2),
-    (9, 2),
-    (12, 2),
-    (13, 5),
-    (16, 7),
-    (19, 9);
+    (1, 'test1'),
+    (2, 'test2'),
+    (3, 'test3'),
+    (4, 'test4'),
+    (5, 'test5'),
+    (6, 'test6'),
+    (7, 'test7'),
+    (8, 'test8'),
+    (9, 'test9'),
+    (10, 'test10'),
+    (11, 'test1'),
+    (12, 'test1'),
+    (13, 'test2'),
+    (14, 'test2'),
+    (15, 'test2'),
+    (16, 'test2'),
+    (17, 'test2'),
+    (18, 'test2'),
+    (19, 'test2'),
+    (20, 'test2'),
+    (6, 'test2'),
+    (9, 'test2'),
+    (12, 'test2'),
+    (13, 'test5'),
+    (16, 'test7'),
+    (19, 'test9');
 
 UNLOCK TABLES;
