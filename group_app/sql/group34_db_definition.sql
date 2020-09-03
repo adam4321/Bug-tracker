@@ -16,10 +16,11 @@ DROP TABLE IF EXISTS Companies;
 -- Create table and insert data for Programmers -------------------------------
 
 CREATE TABLE Programmers (
-    programmerId int(11) NOT NULL AUTO_INCREMENT,
+    programmerId varchar(255) NOT NULL,
     firstName varchar(255) NOT NULL,
     lastName varchar(255) NOT NULL,
-    email varchar(255), 
+    email varchar(255),
+    mobile_number varchar(255) DEFAULT NULL,
     dateStarted date, 
     accessLevel int(11),
     PRIMARY KEY (programmerId)
@@ -28,17 +29,18 @@ CREATE TABLE Programmers (
 
 LOCK TABLES Programmers WRITE;
 
-INSERT INTO Programmers VALUES 
-    (1, 'Joe', 'Smith', 'joe_s@mail.com', '1999-05-05', 2), 
-    (2, 'Andy', 'Ng', 'andy_n@mail.com', '2001-04-13', 3),
-    (3, 'Sally', 'Smith', 'sally_s@gmail.com', '1997-12-31', 2),
-    (4, 'Jack', 'Miller', 'jack_m@gmail.com', '1998-01-01', 1),
-    (5, 'Amy', 'Ellis', 'amy_e@yahoo.com', '1996-08-17', 3),
-    (6, 'Dan', 'King', 'dan_k@yahoo.com', '1995-11-11', 2),
-    (7, 'Kate', 'Hooper', 'kate_h@gmail.com', '2000-07-06', 2),
-    (8, 'Ben', 'Kent', 'ben_k@yahoo.com', '1999-03-20', 3),
-    (9, 'Kyle', 'Gable', 'kyle_g@gmail.com', '1996-05-03', 2),
-    (10, 'Jen', 'Thomas', 'jen_t@gmail.com', '1998-09-20', 3);
+INSERT INTO Programmers VALUES
+    ('eqyvguhIaBZ3ouxN7SjZwshAkPp1', 'Adam', 'Wright', 'wrighada@oregonstate.edu', NULL, '2000-01-01', 2),
+    ('test1', 'Joe', 'Smith', 'joe_s@mail.com', NULL, '1999-05-05', 2), 
+    ('test2', 'Andy', 'Ng', 'andy_n@mail.com', NULL, '2001-04-13', 3),
+    ('test3', 'Sally', 'Smith', 'sally_s@gmail.com', NULL, '1997-12-31', 2),
+    ('test4', 'Jack', 'Miller', 'jack_m@gmail.com', NULL, '1998-01-01', 1),
+    ('test5', 'Amy', 'Ellis', 'amy_e@yahoo.com', NULL, '1996-08-17', 3),
+    ('test6', 'Dan', 'King', 'dan_k@yahoo.com', NULL, '1995-11-11', 2),
+    ('test7', 'Kate', 'Hooper', 'kate_h@gmail.com', NULL, '2000-07-06', 2),
+    ('test8', 'Ben', 'Kent', 'ben_k@yahoo.com', NULL, '1999-03-20', 3),
+    ('test9', 'Kyle', 'Gable', 'kyle_g@gmail.com', NULL, '1996-05-03', 2),
+    ('test10', 'Jen', 'Thomas', 'jen_t@gmail.com', NULL, '1998-09-20', 3);
 
 UNLOCK TABLES;
 

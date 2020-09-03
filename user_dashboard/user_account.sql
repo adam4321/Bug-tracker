@@ -7,12 +7,12 @@ DROP TABLE IF EXISTS Programmers;
 
 CREATE TABLE Programmers (
     programmerId varchar(255) NOT NULL,
-    email varchar(255) NOT NULL,
-    name varchar(255) NOT NULL,
-    mobile_number varchar(255) DEFAULT NULL,
-    date_of_birth date NOT NULL,
-    subscribe_to_newsletter tinyint(1) DEFAULT 0,
-    receive_mobile_alerts tinyint(1) DEFAULT 0
+    firstName varchar(255) NOT NULL,
+    lastName varchar(255) NOT NULL,
+    email varchar(255),
+    mobile_number varchar(255) DEFAULT NULL, 
+    dateStarted date, 
+    accessLevel int(11),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20,6 +20,6 @@ CREATE TABLE Programmers (
 --
 
 INSERT INTO Programmers VALUES
-    ('eqyvguhIaBZ3ouxN7SjZwshAkPp1', 'wrighada@oregonstate.edu', 'Adam Wright', NULL, '2000-01-01', 0, 0);
+    ('eqyvguhIaBZ3ouxN7SjZwshAkPp1', 'Adam', 'Wright', 'wrighada@oregonstate.edu', NULL, '2000-01-01', 2);
     
 SELECT * FROM Programmers;
