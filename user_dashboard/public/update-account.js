@@ -100,6 +100,6 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
 // Onclick function so that pressing "cancel" redirects to user dashboard with email appended to URL
 function cancelEdit(email)
 {
-    var homeAddr = "http://localhost:5000/?uid=" + encodeURIComponent(email);
+    var homeAddr = "http://localhost:5000/?uid=" + getUrlParameter('uid');
     window.location.replace(homeAddr);
 }
