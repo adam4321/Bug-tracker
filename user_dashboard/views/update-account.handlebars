@@ -16,19 +16,19 @@
             <fieldset>
         
                 <label for="programmer-fname">First name</label>
-                <input required type="text" name="programmerFName" id="programmer-fname-field"> <br>
+                <input required type="text" name="programmerFName" id="programmer-fname-field" value="{{firstName}}"> <br>
 
                 <label for="programmer-lname">Last name</label>
-                <input required type="text" name="programmerLName" id="programmer-lname-field"> <br>
+                <input required type="text" name="programmerLName" id="programmer-lname-field" value="{{lastName}}"> <br>
 
                 <label for="programmer-email">Email</label>
-                <input required type="text" name="userEmail" id="programmer-email-field"> <br>
+                <input required type="text" name="userEmail" id="programmer-email-field" value="{{email}}"> <br>
 
                 <label for="user-phone">Mobile Number</label>
-                <input type="text" name="user-phone" id="programmer-phone-field"> <br>
+                <input type="text" name="user-phone" id="programmer-phone-field" value="{{phone}}"> <br>
         
                 <label for="started-date">Date Started</label>
-                <input class="submitBtn" required type="date" name="startedDate" id="project-date-started-field" placeholder="yyyy-mm-dd"> <br>
+                <input class="submitBtn" required type="date" name="startedDate" id="project-date-started-field" placeholder="yyyy-mm-dd" value="{{dateStarted}}"> <br>
 
                 <label for="programmer-access">Access Level</label>
                 <select class="submitBtn" required name="programmerAccess" id="programmer-access-field">
@@ -44,7 +44,7 @@
         </form>
         <br>
         <input type="submit" id="save" value="Save" 
-                    onclick="insertUser(
+                    onclick="updateUser(
                         document.getElementById('programmer-fname-field').value,
                         document.getElementById('programmer-lname-field').value, 
                         document.getElementById('programmer-email-field').value, 

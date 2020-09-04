@@ -24,47 +24,25 @@ function getUrlParameter(name) {
 
 
 // Onclick function to process form data when user clicks "Save."
-function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
+function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel) {
     const uid = getUrlParameter('uid');
-    // If user deleted name and left field blank, display error message and return
-    if (name === "") {
-        alert("The name field cannot be left blank.");
-        return;
-    }
+    // // If user deleted name and left field blank, display error message and return
+    // if (name === "") {
+    //     alert("The name field cannot be left blank.");
+    //     return;
+    // }
     
     // If user left phone field blank, set to NULL
     if (phone === "") {
         phone = null;
     }
     
-    // If user left birthday field blank, display error message and return
-    if (birthday === "") {
-        alert("The birthday field cannot be left blank.");
-        return;
-    }
-    
-    // Determine boolean value to assign to subscribe
-    var subscribe;
-    if (subscribeArr[0].checked) {
-        subscribe = 1;
-    }
-    else {
-        subscribe = 0;
-    }
-    
-    // Determine boolean value to assign to alerts
-    var alerts;
-    if (alertsArr[0].checked) {
-        alerts = 1;
-        if (phone === null)
-        {
-            alert("You must enter a phone number if you choose to receive text alerts.");
-            return;
-        }
-    }
-    else {
-        alerts = 0;
-    }
+    // // If user left birthday field blank, display error message and return
+    // if (birthday === "") {
+    //     alert("The birthday field cannot be left blank.");
+    //     return;
+    // }
+
     
     // Make AJAX request to server to add data
     var req = new XMLHttpRequest();
@@ -72,12 +50,12 @@ function updateUser(name, email, phone, birthday, subscribeArr, alertsArr) {
     req.setRequestHeader("Content-Type", "application/json");
     
     var reqBody = {
-        "name":name,
-        "email":email,
-        "phone":phone, 
-        "birthday":birthday, 
-        "subscribe":subscribe,
-        "alerts":alerts
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "mobile_number": phone, 
+        "dateStarted": dateStarted,
+        "accessLevel": accessLevel
     };
     
     reqBody = JSON.stringify(reqBody);

@@ -110,16 +110,16 @@ app.get('/update-account', function renderUpdateForm(req, res) {
             else
             {
                 // Initialize empty context array
-                var context = [];
+                let context = [];
             
                 // Fill context array
-                context.email = decodeURIComponent([req.query.uid]);
-                context.name = rows[0].firstName + " " + rows[0].lastName;
+                context.uid = req.query.uid;
+                context.firstName = rows[0].firstName;
+                context.lastName = rows[0].lastName;
+                context.email = rows[0].email;
                 context.phone = rows[0].mobile_number;
-                // var birthdayISOString = rows[0].date_of_birth;
-                // context.birthday = birthdayISOString.slice(0, 10);
-                // context.subscribe = rows[0].subscribe_to_newsletter;
-                // context.alerts = rows[0].receive_mobile_alerts;
+                context.dateStarted = rows[0].dateStarted;
+                context.accessLevel = rows[0].accessLevel;
 
                 // Render update account page
                 res.render("update-account", context); 
@@ -136,12 +136,12 @@ app.post('/update-user', function updateData(req, res, next) {
     
     mysql.pool.query(query, 
         [
-            req.body.name,
+            req.body.firstName,
+            req.body.lastName,
+            req.body.email,
             req.body.phone, 
-            req.body.birthday, 
-            req.body.subscribe, 
-            req.body.alerts, 
-            req.body.email
+            req.body.dateStarted, 
+            req.body.accessLevel 
         ], 
         function(err, result) {
             if (err) {
