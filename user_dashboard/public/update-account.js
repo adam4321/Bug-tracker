@@ -25,24 +25,8 @@ function getUrlParameter(name) {
 
 // Onclick function to process form data when user clicks "Save."
 function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel) {
+    // Gather the uid from the query string
     const uid = getUrlParameter('uid');
-    // // If user deleted name and left field blank, display error message and return
-    // if (name === "") {
-    //     alert("The name field cannot be left blank.");
-    //     return;
-    // }
-    
-    // If user left phone field blank, set to NULL
-    if (phone === "") {
-        phone = null;
-    }
-    
-    // // If user left birthday field blank, display error message and return
-    // if (birthday === "") {
-    //     alert("The birthday field cannot be left blank.");
-    //     return;
-    // }
-
     
     // Make AJAX request to server to add data
     var req = new XMLHttpRequest();
@@ -77,7 +61,7 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
 
 
 // Onclick function so that pressing "cancel" redirects to user dashboard with email appended to URL
-function cancelEdit(email)
+function cancelEdit()
 {
     var homeAddr = "http://localhost:5000/?uid=" + getUrlParameter('uid');
     window.location.replace(homeAddr);

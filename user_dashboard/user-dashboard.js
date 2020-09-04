@@ -62,18 +62,18 @@ app.get('/', function renderHome(req, res) {
 
 // Create route to create new user in the database
 app.post('/add-user', function insertData(req, res, next) {
-    const query = `INSERT INTO Programmers (programmerId, email, firstName, lastName, mobile_number, startDate, accessLevel)
+    const query = `INSERT INTO Programmers (programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel)
                         VALUES (?, ?, ?, ?, ?, ?, ?)`
     
     mysql.pool.query(query, 
         [
             req.body.uid,
-            req.body.email,
-            req.body.name, 
-            req.body.phone, 
-            req.body.birthday, 
-            req.body.subscribe, 
-            req.body.alerts
+            req.body.firstName,
+            req.body.lastName,
+            req.body.email, 
+            req.body.mobile_number, 
+            req.body.dateStarted, 
+            req.body.accessLevel
         ], 
         function(err, result) {
             if (err) {
@@ -141,7 +141,6 @@ app.post('/update-user', function updateData(req, res, next) {
             req.body.email,
             req.body.mobile_number, 
             req.body.dateStarted, 
-            // req.body.accessLevel,
             req.body.uid 
         ], 
         function(err, result) {

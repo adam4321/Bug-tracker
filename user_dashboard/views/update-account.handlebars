@@ -31,12 +31,8 @@
                 <input class="submitBtn" required type="date" name="startedDate" id="project-date-started-field" placeholder="yyyy-mm-dd" value="{{dateStarted}}"> <br>
 
                 <label for="programmer-access">Access Level</label>
-                <select disabled class="submitBtn" required name="programmerAccess" id="programmer-access-field" value="{{accessLevel}}">
-                    <option value="" disabled selected>Select an access level (Highest: 4)</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                <select disabled class="submitBtn" name="programmerAccess" id="programmer-access-field" value="{{accessLevel}}">
+                    <option value="" disabled selected>{{accessLevel}}</option>
                 </select> <br>
 
                 
