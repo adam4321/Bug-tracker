@@ -55,7 +55,8 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
         "email": email,
         "mobile_number": phone, 
         "dateStarted": dateStarted,
-        "accessLevel": accessLevel
+        "accessLevel": accessLevel,
+        "uid": uid
     };
     
     reqBody = JSON.stringify(reqBody);

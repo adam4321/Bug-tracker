@@ -131,7 +131,7 @@ app.get('/update-account', function renderUpdateForm(req, res) {
 
 // Create route to update information for an existing user in the database
 app.post('/update-user', function updateData(req, res, next) {
-    const query = `UPDATE Programmers SET firstName = ?, lastName = ?, email = ?, mobile_number = ?, dateStarted = ?, accessLevel = ?
+    const query = `UPDATE Programmers SET firstName = ?, lastName = ?, email = ?, mobile_number = ?, dateStarted = ?
                     WHERE programmerId = ?`
     
     mysql.pool.query(query, 
@@ -139,9 +139,10 @@ app.post('/update-user', function updateData(req, res, next) {
             req.body.firstName,
             req.body.lastName,
             req.body.email,
-            req.body.phone, 
+            req.body.mobile_number, 
             req.body.dateStarted, 
-            req.body.accessLevel 
+            // req.body.accessLevel,
+            req.body.uid 
         ], 
         function(err, result) {
             if (err) {
