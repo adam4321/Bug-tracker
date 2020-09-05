@@ -48,7 +48,7 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
     // Callback function for once request returns
     req.addEventListener("load", function redirectHome() {
         if (req.status >= 200 && req.status < 400) {
-            var homeAddr = "http://localhost:5000/?uid=" + uid;
+            var homeAddr = "http://localhost:5000/bug_tracker/?uid=" + uid;
             window.location.replace(homeAddr);
         }
         else {
@@ -63,6 +63,6 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
 // Onclick function so that pressing "cancel" redirects to user dashboard with email appended to URL
 function cancelEdit()
 {
-    var homeAddr = "http://localhost:5000/?uid=" + getUrlParameter('uid');
+    var homeAddr = "http://localhost:5000/bug_tracker/?uid=" + getUrlParameter('uid');
     window.location.replace(homeAddr);
 }
