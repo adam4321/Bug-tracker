@@ -105,7 +105,7 @@ function renderHome(req, res, next) {
                 context.bugs = bugsDbData;
                 context.programmers = programmersDbData;
                 context.projects = projectDbData;
-                res.render('user-home', context);
+                res.render('all-bugs', context);
             });
         });
     });
@@ -181,7 +181,7 @@ function deleteBug(req, res, next) {
                 return;
             }
             context.results = JSON.stringify(rows);
-            res.render('user-home', context);
+            res.render('all-bugs', context);
         });
     });
 }

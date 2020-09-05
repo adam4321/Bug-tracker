@@ -33,10 +33,24 @@
                     </span>
                     <div class="mdl-layout-spacer"></div>
                         <nav class="mdl-navigation mdl-layout--large-screen-only">
-                            <a class="page-links" href="/bug_tracker/">Bugs</a>
+                            <a class="page-links" href="/bug_tracker/?uid={{{uid}}}">Your Bugs</a>
+                            <a class="page-links" href="/bug_tracker/all_bugs?uid={{{uid}}}">All Bugs</a>
+                            <a 
+                                class="page-links" 
+                                href="http://localhost:5000/bug_tracker/update-account?uid={{{uid}}}" 
+                                id="update-account-link">Settings
+                            </a>
+                            <button 
+                                class="mdl-button mdl-js-button mdl-button--raised" 
+                                id="logout-button" 
+                                onclick="window.location.href = `http://localhost:5500/auth_service`" 
+                            >Log Out
+                            </button>
+
+                            {{!-- <a class="page-links" href="/bug_tracker/">Bugs</a>
                             <a class="page-links" href="/bug_tracker/programmers">Programmers</a>
                             <a class="page-links" href="/bug_tracker/projects">Projects</a>
-                            <a class="page-links" href="/bug_tracker/companies">Companies</a>
+                            <a class="page-links" href="/bug_tracker/companies">Companies</a> --}}
                         </nav>
                     </div>
                 </header>

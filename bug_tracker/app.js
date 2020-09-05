@@ -32,14 +32,17 @@ app.set('mysql', mysql);
 app.use('/bug_tracker', express.static('public'));
 
 // PORT NUMBER - Set static port for the appliction 
-app.set('port', 50000);
+app.set('port', 5000);
 
 
 /* PAGE ROUTES ---------------------------------------------------------------*/
 
 
 // MAIN BUG PAGE ROUTES
-app.use('/bug_tracker/', require('./routes/bugs-page.js'));
+app.use('/bug_tracker/', require('./routes/user-home.js'));
+
+//All BUGS PAGE ROUTES
+app.use('/bug_tracker/all_bugs', require('./routes/bugs-page.js'));
 
 // EDIT BUG PAGE ROUTES
 app.use('/bug_tracker/edit-bug', require('./routes/edit-bug-page.js'));

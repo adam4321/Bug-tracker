@@ -29,6 +29,10 @@
     margin-right: 40px;
 }
 
+#logout-button {
+    background-color: #d1d1d1;
+}
+
 .mdl-layout__drawer-button {
     padding-top: 20px;
 }
@@ -170,3 +174,20 @@ select {
 .div-label {
     padding-top: 5px;
 }
+
+
+/* ELEMENTS FROM OTHER VERSION */
+
+/* #login-box {
+    margin: auto;
+    width: 96%;
+    margin-top: 2%;
+}
+
+#user-history-chart {
+    height: 500px;
+}
+
+#submit {
+    margin-top: 30px;
+} */

@@ -126,8 +126,8 @@ function initApp() {
             currentUser = new URLSearchParams(currentUser).toString();
 
             // URL with query string
-            let url = "http://localhost:5000/?" + currentUser;
-            // let url = "http://localhost:50000/bug_tracker/?" + currentUser;
+            // let url = "http://localhost:5000/?" + currentUser;
+            let url = "http://localhost:5000/bug_tracker/?" + currentUser;
 
             
             // Test auth service

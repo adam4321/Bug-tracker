@@ -30,7 +30,7 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
     
     // Make AJAX request to server to add data
     var req = new XMLHttpRequest();
-    req.open("POST", "http://localhost:5000/update-user", true);
+    req.open("POST", "http://localhost:5000/bug_tracker/update-user", true);
     req.setRequestHeader("Content-Type", "application/json");
     
     var reqBody = {
