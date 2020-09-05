@@ -42,28 +42,10 @@ function insertUser(firstName, lastName, email, phone, dateStarted, accessLevel)
     // Get the user's unique ID
     const uid = getUrlParameter('uid');
 
-    // // If user did not enter name, display error message and return
-    // if (name === "") {
-    //     alert("The name field cannot be left blank.");
-    //     return;
-    // }
-    
-    // // If user did not enter phone number, set to NULL
-    // if (phone === "") {
-    //     phone = null;
-    // }
-    
-    // // If user did not enter birthday, display error message and return
-    // if (birthday === "") {
-    //     alert("The birthday field cannot be left blank.");
-    //     return;
-    // }
-    
 
-    
     // Make AJAX request to server to add data
     var req = new XMLHttpRequest();
-    req.open("POST", "http://localhost:5000/add-user", true);
+    req.open("POST", "http://localhost:5000/bug_tracker/add-user", true);
     req.setRequestHeader("Content-Type", "application/json");
     
     var reqBody = {
@@ -81,7 +63,7 @@ function insertUser(firstName, lastName, email, phone, dateStarted, accessLevel)
     // Callback function for once request returns
     req.addEventListener("load", function redirectHome() {
         if (req.status >= 200 && req.status < 400) {
-            var homeAddr = "http://localhost:5000/?uid=" + getUrlParameter('uid');
+            var homeAddr = "http://localhost:5000/?uid=" + uid;
             window.location.replace(homeAddr);
         }
         else {
