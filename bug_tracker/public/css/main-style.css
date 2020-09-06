@@ -45,12 +45,12 @@
 /* Drawer settings --------------------------------------------------------- */
 
 .mdl-layout__drawer {
-    width: 350px;
     left: -70px;
 }
   
 .mdl-layout__drawer.is-visible {
     left: 0;
+    width: 300px;
 }
 
 
