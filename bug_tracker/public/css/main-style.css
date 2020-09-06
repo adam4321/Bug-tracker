@@ -45,8 +45,8 @@
 /* Drawer settings --------------------------------------------------------- */
 
 .mdl-layout__drawer {
-    width: 300px;
-    left: -60px;
+    width: 350px;
+    left: -70px;
 }
   
 .mdl-layout__drawer.is-visible {

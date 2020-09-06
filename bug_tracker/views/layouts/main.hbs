@@ -46,11 +46,6 @@
                                 onclick="window.location.href = `http://localhost:5500/auth_service`" 
                             >Log Out
                             </button>
-
-                            {{!-- <a class="page-links" href="/bug_tracker/">Bugs</a>
-                            <a class="page-links" href="/bug_tracker/programmers">Programmers</a>
-                            <a class="page-links" href="/bug_tracker/projects">Projects</a>
-                            <a class="page-links" href="/bug_tracker/companies">Companies</a> --}}
                         </nav>
                     </div>
                 </header>
@@ -58,10 +53,19 @@
                 <div class="mdl-layout__drawer">
                     <span class="mdl-layout-title">Software Bug Tracker</span>
                     <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="/bug_tracker/">Bugs</a>
-                    <a class="mdl-navigation__link" href="/bug_tracker/programmers">Programmers</a>
-                    <a class="mdl-navigation__link" href="/bug_tracker/projects">Projects</a>
-                    <a class="mdl-navigation__link" href="/bug_tracker/companies">Companies</a>
+                        <a class="mdl-navigation__link" href="/bug_tracker/?uid={{{uid}}}">Your Bugs</a>
+                        <a class="mdl-navigation__link" href="/bug_tracker/all_bugs?uid={{{uid}}}">All Bugs</a>
+                        <a 
+                            class="mdl-navigation__link" 
+                            href="http://localhost:5000/bug_tracker/update-account?uid={{{uid}}}" 
+                            >Settings
+                        </a>
+                        <button 
+                            class="mdl-button mdl-js-button mdl-button--raised" 
+                            id="logout-button" 
+                            onclick="window.location.href = `http://localhost:5500/auth_service`" 
+                        >Log Out
+                        </button>
                     </nav>        
                 </div>
             </div>
