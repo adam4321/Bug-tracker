@@ -48,7 +48,7 @@
                 document.getElementById('project-date-started-field').value,
                 document.getElementById('programmer-access-field').value)"
         >
-        <input class="submitBtn" type="submit" id="save" value="Cancel" onclick="cancelEdit()">
+        <input class="submitBtn btn-style" type="submit" id="cancel" value="Cancel" onclick="cancelEdit()">
 
     </div>
 </div>
@@ -76,9 +76,10 @@
             </a>
         </p>
         <br>
-        <p>Restore Database to initial values</p>
+        <p id="reset-msg">Restore Database to initial values</p>
+            <button class="submitBtn btn-style" id="reset-table">Restore Database</button>
+            <div id="spinner2" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
     </div>
-    
 </div>
 
 <script src="js/update-account.js"></script>

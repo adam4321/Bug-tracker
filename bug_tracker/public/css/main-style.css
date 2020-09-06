@@ -117,6 +117,23 @@
     background-color: #226078;
 }
 
+#cancel {
+    width: 100px;
+}
+
+.btn-style {
+    /* width: 100px !important; */
+    background-color: rgb(52, 144, 180);
+    color: #fff;
+    border: none;
+    margin-top: 10px !important;
+    padding: 10px !important;
+}
+
+.btn-style:hover {
+    background-color: #226078;
+}
+
 .radio-input {
     width: 20px !important;
 }
@@ -171,6 +188,10 @@ select {
     margin-left: 25px;
 }
 
+#reset-msg {
+    display: inline-block;
+}
+
 
 /* Submit buttons ------------------------------------------------------------- */
 
@@ -181,20 +202,3 @@ select {
 .div-label {
     padding-top: 5px;
 }
-
-
-/* ELEMENTS FROM OTHER VERSION */
-
-/* #login-box {
-    margin: auto;
-    width: 96%;
-    margin-top: 2%;
-}
-
-#user-history-chart {
-    height: 500px;
-}
-
-#submit {
-    margin-top: 30px;
-} */

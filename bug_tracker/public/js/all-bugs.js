@@ -65,7 +65,7 @@ recordForm.addEventListener('submit', (e) => {
     e.preventDefault();
     spinner.style.visibility = "visible"; 
     let req = new XMLHttpRequest();
-    let path = '/bug_tracker/insertBug';
+    let path = '/bug_tracker/all_bugs/insertBug';
 
     // Iterate over the checked programmers to create http query sub-string
     let programmerArr = [];
@@ -241,7 +241,7 @@ function deleteBug(tbl, curRow, bugId) {
     let table = document.getElementById(tbl);
     let rowCount = table.rows.length;
     let req = new XMLHttpRequest();
-    let path = "/bug_tracker/deleteBug";
+    let path = "/bug_tracker/all_bugs/deleteBug";
 
     reqBody = JSON.stringify({bugId: bugId});
 
@@ -274,7 +274,7 @@ let viewAllButton = document.getElementById("clear-search");
 viewAllButton.setAttribute('onclick', 'viewAllBugs()');
 
 function viewAllBugs() {
-    path = "/bug_tracker/viewAllBugs";
+    path = "/bug_tracker/all_bugs/viewAllBugs";
     let req = new XMLHttpRequest();
 
     req.open("POST", path, true);   
@@ -320,7 +320,7 @@ searchButton.addEventListener('click', searchBug);
 
 function searchBug() {
     let searchString = document.getElementById("search-input").value;
-    let path = "/bug_tracker/searchBug";
+    let path = "/bug_tracker/all_bugs/searchBug";
     let req = new XMLHttpRequest();
     let reqBody = JSON.stringify({searchString: searchString});
 
@@ -461,58 +461,6 @@ searchInput.addEventListener('keydown', function(event) {
         document.getElementById('search-btn').click();
     }
 });
-
-
-/* RESET DATABASE CLIENT SIDE ---------------------------------------------- */
-
-// Function to drop and repopulate all database tables
-let resetBtn = document.getElementById("reset-table");
-resetBtn.addEventListener('click', resetTable);
-let spinner2 = document.getElementById('spinner2');
-spinner2.style.visibility = "hidden";
-
-function resetTable() {
-    let path = "/bug_tracker/resetTable";
-    let req = new XMLHttpRequest();
-
-    // Prompt the user for a confirmation before resetting the db
-    let confirmVal;
-    confirmVal = confirm("This button RESETS the database and repopulates it with sample data!\n\nPress cancel to abort.");
-    if (!confirmVal) {
-        return;
-    } else {
-        // Display the spinner
-        spinner2.style.visibility = "visible";
-
-        // Make the ajax request
-        req.open("POST", path, true);   
-        req.setRequestHeader("Content-Type", "application/json");
-        req.send(); 
-
-        req.addEventListener("load", () => {
-            if (req.status >= 200 && req.status < 400) {
-                let response = JSON.parse(req.responseText);
-                let bugsArray = JSON.parse(req.responseText).bugs;
-
-                // Clear table before building search results
-                let tableBody = document.getElementById("table-body");
-                tableBody.innerHTML = '';
-
-                // Build rows for each bug if there is at least one result
-                bugsArray.forEach(element => {
-                    createRow(tableBody, element);
-                });
-
-                // Rehide the spinner
-                setTimeout(() => { spinner2.style.visibility = "hidden"; }, 1000);
-                updateChartReset();
-            } 
-            else {
-                console.error("Reset table request error.");
-            }
-        })
-    }
-}
 
 
 /* FIXED BUGS DOUGHNUT CHART ----------------------------------------------- */

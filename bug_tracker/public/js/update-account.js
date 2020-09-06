@@ -66,3 +66,55 @@ function cancelEdit()
     var homeAddr = "http://localhost:5000/bug_tracker/?uid=" + getUrlParameter('uid');
     window.location.replace(homeAddr);
 }
+
+
+/* RESET DATABASE CLIENT SIDE ---------------------------------------------- */
+
+// Function to drop and repopulate all database tables
+let resetBtn = document.getElementById("reset-table");
+resetBtn.addEventListener('click', resetTable);
+let spinner2 = document.getElementById('spinner2');
+spinner2.style.visibility = "hidden";
+
+function resetTable() {
+    let path = "/bug_tracker/all_bugs/resetTable";
+    let req = new XMLHttpRequest();
+
+    // Prompt the user for a confirmation before resetting the db
+    let confirmVal;
+    confirmVal = confirm("This button RESETS the database and repopulates it with sample data!\n\nPress cancel to abort.");
+    if (!confirmVal) {
+        return;
+    } else {
+        // Display the spinner
+        spinner2.style.visibility = "visible";
+
+        // Make the ajax request
+        req.open("POST", path, true);   
+        req.setRequestHeader("Content-Type", "application/json");
+        req.send(); 
+
+        req.addEventListener("load", () => {
+            if (req.status >= 200 && req.status < 400) {
+                let response = JSON.parse(req.responseText);
+                let bugsArray = JSON.parse(req.responseText).bugs;
+
+                // Clear table before building search results
+                let tableBody = document.getElementById("table-body");
+                tableBody.innerHTML = '';
+
+                // Build rows for each bug if there is at least one result
+                bugsArray.forEach(element => {
+                    createRow(tableBody, element);
+                });
+
+                // Rehide the spinner
+                setTimeout(() => { spinner2.style.visibility = "hidden"; }, 1000);
+                updateChartReset();
+            } 
+            else {
+                console.error("Reset table request error.");
+            }
+        })
+    }
+}
