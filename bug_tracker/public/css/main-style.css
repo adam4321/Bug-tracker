@@ -53,6 +53,13 @@
     width: 300px;
 }
 
+#logout-button-drawer {
+    background-color: #e0e0e0;
+    width: 200px;
+    margin-top: 20px;
+    margin-left: 35px;
+}
+
 
 /* Component Box settings -------------------------------------------------- */
 
