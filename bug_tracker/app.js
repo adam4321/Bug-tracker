@@ -41,7 +41,7 @@ app.set('port', 5000);
 // MAIN BUG PAGE ROUTES
 app.use('/bug_tracker/', require('./routes/user-home.js'));
 
-//All BUGS PAGE ROUTES
+// All BUGS PAGE ROUTES
 app.use('/bug_tracker/all_bugs', require('./routes/bugs-page.js'));
 
 // EDIT BUG PAGE ROUTES
