@@ -1,6 +1,6 @@
 /**********************************************************************************
-**  Description:   Node.js web server for cs340 Summer 2020 Group 34 Project. This
-**                 file is the entry point for the application.
+**  Description:   Node.js web server for the server-side rendered bug tracker
+**                 dashboard. This file is the entry point for the application.
 **
 **                 Path of forever binary file: ./node_modules/forever/bin/forever
 **********************************************************************************/
