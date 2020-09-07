@@ -37,7 +37,6 @@ app.set('port', 5000);
 
 /* PAGE ROUTES ---------------------------------------------------------------*/
 
-
 // USER'S BUG PAGE ROUTES
 app.use('/bug_tracker/', require('./routes/user-home.js'));
 

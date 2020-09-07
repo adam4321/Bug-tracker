@@ -39,7 +39,7 @@
             </fieldset>
         </form>
         <br>
-        <input class="submitBtn" type="submit" id="save" value="Save" 
+        <input class="submitBtn btn-style" type="submit" id="save" value="Save" 
             onclick="updateUser(
                 document.getElementById('programmer-fname-field').value,
                 document.getElementById('programmer-lname-field').value, 
@@ -60,25 +60,29 @@
         <h2 class="mdl-card__title-text">Admin pages</h2>
     </div>
     <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-        <p>Add or update programmers
-            <a href="http://localhost:5000/bug_tracker/programmers">
-                <button class="submitBtn" id="save">Programmers</button>
-            </a>
-        </p>
-        <p>Add or update projects
-            <a href="http://localhost:5000/bug_tracker/projects">
-                <button class="submitBtn" id="save">Projects</button>
-            </a>
-        </p>
-        <p>Add or update companies
-            <a href="http://localhost:5000/bug_tracker/companies">
-                <button class="submitBtn" id="save">Companies</button>
-            </a>
-        </p>
+        
+        <a href="http://localhost:5000/bug_tracker/programmers">
+            <button class="submitBtn btn-style" id="save">Programmers</button>
+        </a>
+        <p class="inline-btn-msg">Add or update programmers</p>
         <br>
-        <p id="reset-msg">Restore Database to initial values</p>
-            <button class="submitBtn btn-style" id="reset-table">Restore Database</button>
-            <div id="spinner2" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+
+        <a href="http://localhost:5000/bug_tracker/projects">
+            <button class="submitBtn btn-style" id="save">Projects</button>
+        </a>
+        <p class="inline-btn-msg">Add or update projects</p>
+        <br>
+        
+        <a href="http://localhost:5000/bug_tracker/companies">
+            <button class="submitBtn btn-style" id="save">Companies</button>
+        </a>
+        <p class="inline-btn-msg">Add or update companies</p>
+        <br>
+        <br>
+
+        <button class="submitBtn btn-style" id="reset-table">Restore Database</button>
+        <p class="inline-btn-msg">Restore Database to initial values</p>    
+        <div id="spinner2" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
     </div>
 </div>
 

@@ -4,6 +4,10 @@
 
 /* Main container settings ------------------------------------------------- */
 
+a {
+    text-decoration: none;
+}
+
 #top-bar {
     background-color: rgb(45, 122, 153);
     padding: 20px 0 15px 0;
@@ -106,15 +110,6 @@
 
 #save {
     width: 100px !important;
-    background-color: rgb(52, 144, 180);
-    color: #fff;
-    border: none;
-    margin-top: 10px !important;
-    padding: 10px !important;
-}
-
-#save:hover {
-    background-color: #226078;
 }
 
 #cancel {
@@ -122,12 +117,13 @@
 }
 
 .btn-style {
-    /* width: 100px !important; */
     background-color: rgb(52, 144, 180);
     color: #fff;
     border: none;
+    border-radius: 2px;
     margin-top: 10px !important;
     padding: 10px !important;
+    cursor: pointer;
 }
 
 .btn-style:hover {
@@ -188,7 +184,7 @@ select {
     margin-left: 25px;
 }
 
-#reset-msg {
+.inline-btn-msg {
     display: inline-block;
 }
 
