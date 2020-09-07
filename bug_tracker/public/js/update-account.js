@@ -96,21 +96,8 @@ function resetTable() {
 
         req.addEventListener("load", () => {
             if (req.status >= 200 && req.status < 400) {
-                let response = JSON.parse(req.responseText);
-                let bugsArray = JSON.parse(req.responseText).bugs;
-
-                // Clear table before building search results
-                let tableBody = document.getElementById("table-body");
-                tableBody.innerHTML = '';
-
-                // Build rows for each bug if there is at least one result
-                bugsArray.forEach(element => {
-                    createRow(tableBody, element);
-                });
-
-                // Rehide the spinner
-                setTimeout(() => { spinner2.style.visibility = "hidden"; }, 1000);
-                updateChartReset();
+                // Return the user to the bugs page
+                window.location.href = "http://localhost:5000/bug_tracker?uid=" + getUrlParameter('uid');
             } 
             else {
                 console.error("Reset table request error.");

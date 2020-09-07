@@ -38,7 +38,7 @@ app.set('port', 5000);
 /* PAGE ROUTES ---------------------------------------------------------------*/
 
 
-// MAIN BUG PAGE ROUTES
+// USER'S BUG PAGE ROUTES
 app.use('/bug_tracker/', require('./routes/user-home.js'));
 
 // All BUGS PAGE ROUTES
@@ -47,13 +47,13 @@ app.use('/bug_tracker/all_bugs', require('./routes/all-bugs-page.js'));
 // EDIT BUG PAGE ROUTES
 app.use('/bug_tracker/edit-bug', require('./routes/edit-bug-page.js'));
 
-// PROGRAMMERS PAGE ROUTES
+// UPDATE OR ADD PROGRAMMERS PAGE ROUTES
 app.use('/bug_tracker/programmers', require('./routes/update-programmers-page.js'));
 
-// PROJECTS PAGE ROUTES
+// UPDATE OR ADD PROJECTS PAGE ROUTES
 app.use('/bug_tracker/projects', require('./routes/update-projects-page.js'));
 
-// COMPANIES PAGE ROUTES
+// UPDATE OR ADD COMPANIES PAGE ROUTES
 app.use('/bug_tracker/companies', require('./routes/update-company-page.js'));
 
 
