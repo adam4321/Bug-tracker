@@ -207,7 +207,7 @@ recordForm.addEventListener('submit', (e) => {
             updateCell.appendChild(updateBtn);
             updateBtn.text = "Update"
             updateBtn.className = "update-btn";
-            updateBtn.href = `/bug_tracker/edit-bug?bugId=${response.id}`;
+            updateBtn.href = `/bug_tracker/edit_bug?bugId=${response.id}`;
             
 
             // Delete button element
@@ -439,7 +439,7 @@ function createRow(tableBody, bugData) {
     updateCell.appendChild(updateBtn);
     updateBtn.text = "Update";
     updateBtn.className = "update-btn";
-    updateBtn.href = `/bug_tracker/edit-bug?bugId=${bugData.bugId}`;
+    updateBtn.href = `/bug_tracker/edit_bug?bugId=${bugData.bugId}`;
 
     // Delete button element
     let deleteCell = document.createElement('td');

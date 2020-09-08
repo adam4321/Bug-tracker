@@ -1,5 +1,5 @@
 /*************************************************************
-**  Description: EDIT-BUG client-side JavaScript file
+**  Description: EDIT_BUG client-side JavaScript file
 **************************************************************/
 
 // INSERT BUG VERIFY PROGRAMMER CHECKED - Function to verify that at least 1 programmer is checked
@@ -43,7 +43,7 @@ bugId = document.getElementById("save");
 recordForm.addEventListener('submit', (e) => {
     e.preventDefault();
     let req = new XMLHttpRequest();
-    let path = '/bug_tracker/edit-bug/updateBug';
+    let path = '/bug_tracker/edit_bug/updateBug';
 
     // Iterate over the checked programmers to create http query sub-string
     let programmerArr = [];

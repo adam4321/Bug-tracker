@@ -1,7 +1,7 @@
 /******************************************************************************
 **  Description: EDIT BUG PAGE - server side node.js routes
 **
-**  Root path:   localhost:5000/bug_tracker/edit-bug
+**  Root path:   localhost:5000/bug_tracker/edit_bug
 **
 **  Contains:    /
 **               /updateBug

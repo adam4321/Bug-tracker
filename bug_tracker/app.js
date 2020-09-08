@@ -46,7 +46,7 @@ app.use('/bug_tracker/', require('./routes/user-home.js'));
 app.use('/bug_tracker/all_bugs', require('./routes/all-bugs-page.js'));
 
 // EDIT BUG PAGE ROUTES
-app.use('/bug_tracker/edit-bug', require('./routes/edit-bug-page.js'));
+app.use('/bug_tracker/edit_bug', require('./routes/edit-bug-page.js'));
 
 // UPDATE OR ADD PROGRAMMERS PAGE ROUTES
 app.use('/bug_tracker/programmers', require('./routes/update-programmers-page.js'));
