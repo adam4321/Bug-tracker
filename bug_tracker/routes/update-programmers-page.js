@@ -1,8 +1,10 @@
 /*************************************************************
 **  Description: PROGRAMMERS PAGE - server side node.js routes
 **
-**  Contains:    /programmers/
-**               /programmers/insertProgrammer
+**  Root path:   localhost:5000/bug_tracker/programmers
+**
+**  Contains:    /
+**               /insertProgrammer
 **************************************************************/
 
 const express = require('express');

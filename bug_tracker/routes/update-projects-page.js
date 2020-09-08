@@ -1,8 +1,10 @@
 /*************************************************************
 **  Description: PROJECTS PAGE - server side node.js routes
 **
-**  Contains:    /projects/
-**               /projects/insertProject
+**  Root path:   localhost:5000/bug_tracker/projects
+**
+**  Contains:    /
+**               /insertProject
 **************************************************************/
 
 const express = require('express');

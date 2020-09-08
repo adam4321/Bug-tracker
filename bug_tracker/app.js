@@ -1,9 +1,11 @@
-/**********************************************************************************
+/******************************************************************************
 **  Description:   Node.js web server for the server-side rendered bug tracker
 **                 dashboard. This file is the entry point for the application.
+**                 This is reached when the user is redirected after entering
+**                 an email and password into the authentication service.
 **
-**                 Path of forever binary file: ./node_modules/forever/bin/forever
-**********************************************************************************/
+**  Path of forever binary file:    ./node_modules/forever/bin/forever
+******************************************************************************/
 
 // Set up express
 const express = require('express');

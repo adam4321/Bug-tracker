@@ -1,5 +1,7 @@
-/*************************************************************
-**  Description: BUGS PAGE - server side node.js routes
+/******************************************************************************
+**  Description: ALL BUGS PAGE - server side node.js routes
+**
+**  Root path:   localhost:5000/bug_tracker/all_bugs
 **
 **  Contains:    /
 **               /insertBug
@@ -7,13 +9,13 @@
 **               /searchBug
 **               /viewAllBugs
 **               /resetTable
-**************************************************************/
+******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// RENDER BUGS MAIN PAGE - Function to render the bugs page
+// RENDER ALL BUGS PAGE - Function to render the bugs page ----------------- */
 function renderHome(req, res, next) {
     // 1st query gathers the projects for the dropdown
     let sql_query_1 = `SELECT projectName, projectId FROM Projects`;
@@ -112,7 +114,7 @@ function renderHome(req, res, next) {
 }
 
 
-// INSERT NEW BUG MAIN PAGE - Function to insert a new bug
+// INSERT NEW BUG PAGE - Function to insert a new bug --------------------- */
 function submitBug(req, res, next) {
     // Query to insert the bug data
     let sql_query_1 = `INSERT INTO Bugs (bugSummary, bugDescription, projectId, dateStarted, priority, fixed, resolution) 
@@ -160,7 +162,7 @@ function submitBug(req, res, next) {
 }
 
 
-// BUGS MAIN PAGE DELETE ROW - Route to delete a row from the bug list
+// ALL BUGS PAGE DELETE ROW - Route to delete a row from the bug list ----- */
 function deleteBug(req, res, next) {
     // Delete the row with the passed in bugId
     let sql_query_1 = `DELETE FROM Bugs WHERE bugId=?`;
@@ -187,7 +189,7 @@ function deleteBug(req, res, next) {
 }
 
 
-// BUGS MAIN PAGE SEARCH BUG - Function to search for string in bugs table
+// BUGS PAGE SEARCH BUG - Function to search for string in bugs table ----- */
 function searchBug(req, res, next) {
     // query to find bug entries that contain substring
     let searchQuery = 'SELECT bugId FROM Bugs WHERE CONCAT(bugSummary, bugDescription, resolution) LIKE "%' + 
@@ -267,7 +269,7 @@ function searchBug(req, res, next) {
 }
 
 
-// BUGS MAIN PAGE VIEW ALL BUGS - Function to clear search results and display all bugs
+// BUGS PAGE VIEW ALL BUGS - Function to redisplay all bugs --------------- */
 function viewAllBugs(req, res, next) {
     let viewAllQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
                         b.dateStarted, b.resolution, b.priority, b.fixed 
@@ -327,7 +329,7 @@ function viewAllBugs(req, res, next) {
 }
 
 
-// BUGS MAIN PAGE RESET TABLES - Function to drop and repopulate database
+// BUGS PAGE RESET TABLES - Function to drop and repopulate database ------ */
 function resetTable(req, res, next) {
     // Query to display the table after reset
     let viewAllQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 

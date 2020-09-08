@@ -1,9 +1,11 @@
-/*************************************************************
+/******************************************************************************
 **  Description: COMPANIES PAGE - server side node.js routes
 **
-**  Contains:    /companies
-**               /companies/insertCompany
-**************************************************************/
+**  Root path:   localhost:5000/bug_tracker/companies
+**
+**  Contains:    /
+**               /insertCompany
+******************************************************************************/
 
 const express = require('express');
 const router = express.Router();

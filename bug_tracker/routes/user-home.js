@@ -1,15 +1,20 @@
-/*************************************************************
-**  Description: USER HOME PAGE - server side node.js routes
+/******************************************************************************
+**  Description: HOME PAGE - USER BUGS - server side node.js routes
 **
-**  Contains:    /
-
-**************************************************************/
+**  Root path:  localhost:5000/bug_tracker
+**
+**  Contains:   /
+**              /add-user
+**              /update-account
+**              /update-user
+**              /login-redirect
+******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// Create route for simple get request to render the home page.
+// USER BUGS - Function to render user's bugs ------------------------------ */
 function renderHome(req, res) {
     const query = `SELECT firstName, lastName, programmerId FROM Programmers WHERE programmerId = ?`
     const mysql = req.app.get('mysql');
@@ -42,7 +47,7 @@ function renderHome(req, res) {
 };
 
 
-// Create route to create new user in the database
+// USER BUGS - Function to create new user in the database ----------------- */
 function insertData(req, res, next) {
     const query = `INSERT INTO Programmers (programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel)
                         VALUES (?, ?, ?, ?, ?, ?, ?)`
@@ -70,7 +75,7 @@ function insertData(req, res, next) {
 };
 
 
-// Create route for get request to render update account page
+// UPDATE USER SETTINGS - Function to render update account page ----------- */
 function renderUpdateForm(req, res) {
     const query = `SELECT programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel
                     FROM Programmers
@@ -113,7 +118,7 @@ function renderUpdateForm(req, res) {
 };
 
 
-// Create route to update information for an existing user in the database
+// UPDATE USER SETTINGS - Function to update settings for an existing user - */
 function updateData(req, res, next) {
     const query = `UPDATE Programmers SET firstName = ?, lastName = ?, email = ?, mobile_number = ?, dateStarted = ?
                     WHERE programmerId = ?`
@@ -140,7 +145,7 @@ function updateData(req, res, next) {
 };
 
 
-// Create route for serving login redirection page if script sends users here
+// USER BUGS - Function to display a redirection view ---------------------- */
 function renderLogin(req, res) {
     res.render("login-redirect");
 };

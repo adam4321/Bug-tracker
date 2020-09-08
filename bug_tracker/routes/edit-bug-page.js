@@ -1,9 +1,11 @@
-/*************************************************************
+/******************************************************************************
 **  Description: EDIT BUG PAGE - server side node.js routes
 **
-**  Contains:    /edit-bug/
-**               /edit-bug/updateBug
-**************************************************************/
+**  Root path:   localhost:5000/bug_tracker/edit-bug
+**
+**  Contains:    /
+**               /updateBug
+******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
