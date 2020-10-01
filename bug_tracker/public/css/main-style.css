@@ -198,3 +198,7 @@ select {
 .div-label {
     padding-top: 5px;
 }
+
+.btn-space {
+    margin-right: 15px;
+}
