@@ -1,6 +1,6 @@
 {{!--  Edit bug page view - using express handlebars  --}}
 
-<title>Bug Dashboard</title>
+<title>Bug Tracker | Edit Bug</title>
 <link type="text/css" rel="stylesheet" href="css/user-home.css">
       
 {{!-- Container for the dashboard --}}
@@ -10,7 +10,7 @@
     </div>
 
     <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-        <form id="recordForm" action="/bug_tracker/updateBug">
+        <form id="recordForm" action="/bug_tracker/edit_bug/updateBug">
             <div class="grid-container">
                 <div><label class="textarea-label" for="bugSummary">Bug Summary</label></div>
                 <div><textarea required name="bugSummary" id="bug-summary-field">{{editBug.bugSummary}}</textarea></div>

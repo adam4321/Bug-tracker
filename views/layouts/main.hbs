@@ -26,24 +26,24 @@
                     <div class="mdl-layout__header-row">
                     <span class="mdl-layout-title">
                         <h3>
-                        <a id="page-title" href="/bug_tracker/"><img  id="bug-logo" src="images/bug-logo.png" alt="White bug icon">
+                        <a id="page-title" href="/bug_tracker/home"><img  id="bug-logo" src="images/bug-logo.png" alt="White bug icon">
                             Software Bug Tracker
                         </a>
                         </h3>
                     </span>
                     <div class="mdl-layout-spacer"></div>
                         <nav class="mdl-navigation mdl-layout--large-screen-only">
-                            <a class="page-links" href="/bug_tracker/?uid={{{uid}}}">Your Bugs</a>
-                            <a class="page-links" href="/bug_tracker/all_bugs?uid={{{uid}}}">All Bugs</a>
+                            <a class="page-links" href="/bug_tracker/home">Home</a>
+                            <a class="page-links" href="/bug_tracker/all_bugs">All Bugs</a>
                             <a 
                                 class="page-links" 
-                                href="http://localhost:5000/bug_tracker/update-account?uid={{{uid}}}" 
+                                href="/bug_tracker/settings" 
                                 id="update-account-link">Settings
                             </a>
                             <button 
                                 class="mdl-button mdl-js-button mdl-button--raised" 
                                 id="logout-button" 
-                                onclick="window.location.href = `http://localhost:5500/auth_service`" 
+                                onclick="window.location.href = `http://localhost:5000/bug_tracker/login`" 
                             >Log Out
                             </button>
                         </nav>
@@ -53,17 +53,16 @@
                 <div class="mdl-layout__drawer">
                     <span class="mdl-layout-title">Software Bug Tracker</span>
                     <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="/bug_tracker/?uid={{{uid}}}">Your Bugs</a>
-                        <a class="mdl-navigation__link" href="/bug_tracker/all_bugs?uid={{{uid}}}">All Bugs</a>
+                        <a class="mdl-navigation__link" href="/bug_tracker/home">Home</a>
+                        <a class="mdl-navigation__link" href="/bug_tracker/all_bugs">All Bugs</a>
                         <a 
                             class="mdl-navigation__link" 
-                            href="http://localhost:5000/bug_tracker/update-account?uid={{{uid}}}" 
-                            >Settings
+                            href="/bug_tracker/settings">Settings
                         </a>
                         <button 
                             class="mdl-button mdl-js-button mdl-button--raised" 
                             id="logout-button-drawer" 
-                            onclick="window.location.href = `http://localhost:5500/auth_service`" 
+                            onclick="window.location.href = `http://localhost:5000/bug_tracker/login`" 
                         >Log Out
                         </button>
                     </nav>        

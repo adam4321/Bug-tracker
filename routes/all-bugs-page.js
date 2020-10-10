@@ -9,13 +9,15 @@
 **               /searchBug
 **               /viewAllBugs
 **               /resetTable
+**
+**  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// RENDER ALL BUGS PAGE - Function to render the bugs page ----------------- */
+/* RENDER ALL BUGS PAGE - Function to render the bugs page ----------------- */
 function renderHome(req, res, next) {
     // 1st query gathers the projects for the dropdown
     let sql_query_1 = `SELECT projectName, projectId FROM Projects`;
@@ -114,7 +116,7 @@ function renderHome(req, res, next) {
 }
 
 
-// INSERT NEW BUG PAGE - Function to insert a new bug --------------------- */
+/* INSERT NEW BUG PAGE - Function to insert a new bug --------------------- */
 function submitBug(req, res, next) {
     // Query to insert the bug data
     let sql_query_1 = `INSERT INTO Bugs (bugSummary, bugDescription, projectId, dateStarted, priority, fixed, resolution) 
@@ -162,7 +164,7 @@ function submitBug(req, res, next) {
 }
 
 
-// ALL BUGS PAGE DELETE ROW - Route to delete a row from the bug list ----- */
+/* ALL BUGS PAGE DELETE ROW - Route to delete a row from the bug list ----- */
 function deleteBug(req, res, next) {
     // Delete the row with the passed in bugId
     let sql_query_1 = `DELETE FROM Bugs WHERE bugId=?`;
@@ -189,7 +191,7 @@ function deleteBug(req, res, next) {
 }
 
 
-// BUGS PAGE SEARCH BUG - Function to search for string in bugs table ----- */
+/* BUGS PAGE SEARCH BUG - Function to search for string in bugs table ----- */
 function searchBug(req, res, next) {
     // query to find bug entries that contain substring
     let searchQuery = 'SELECT bugId FROM Bugs WHERE CONCAT(bugSummary, bugDescription, resolution) LIKE "%' + 
@@ -269,7 +271,7 @@ function searchBug(req, res, next) {
 }
 
 
-// BUGS PAGE VIEW ALL BUGS - Function to redisplay all bugs --------------- */
+/* BUGS PAGE VIEW ALL BUGS - Function to redisplay all bugs --------------- */
 function viewAllBugs(req, res, next) {
     let viewAllQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
                         b.dateStarted, b.resolution, b.priority, b.fixed 
@@ -329,7 +331,7 @@ function viewAllBugs(req, res, next) {
 }
 
 
-// BUGS PAGE RESET TABLES - Function to drop and repopulate database ------ */
+/* BUGS PAGE RESET TABLES - Function to drop and repopulate database ------ */
 function resetTable(req, res, next) {
     // Query to display the table after reset
     let viewAllQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
@@ -393,13 +395,19 @@ function resetTable(req, res, next) {
 }
 
 
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
+
+
 /* PROJECTS PAGE ROUTES ---------------------------------------------------- */
 
-router.get('/', renderHome);
-router.post('/insertBug', submitBug);
-router.post('/deleteBug', deleteBug);
-router.post('/searchBug', searchBug);
-router.post('/viewAllBugs', viewAllBugs);
-router.post('/resetTable', resetTable);
+router.get('/', checkUserLoggedIn, renderHome);
+router.post('/insertBug', checkUserLoggedIn, submitBug);
+router.post('/deleteBug', checkUserLoggedIn, deleteBug);
+router.post('/searchBug', checkUserLoggedIn, searchBug);
+router.post('/viewAllBugs', checkUserLoggedIn, viewAllBugs);
+router.post('/resetTable', checkUserLoggedIn, resetTable);
 
 module.exports = router;

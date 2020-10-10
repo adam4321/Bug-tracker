@@ -5,13 +5,15 @@
 **
 **  Contains:    /
 **               /updateBug
+**
+**  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// EDIT BUG PAGE - Route where the edit bug page is rendered
+/* EDIT BUG PAGE - Route where the edit bug page is rendered --------------- */
 function renderEditBug(req, res, next) {
     // 1st query gathers the projects for the dropdown
     let sql_query_1 = `SELECT projectName, projectId FROM Projects`;
@@ -120,7 +122,7 @@ function renderEditBug(req, res, next) {
 }
 
 
-// SUBMIT BUG EDIT - Function to submit a bug update
+/* SUBMIT BUG EDIT - Function to submit a bug update ----------------------- */
 function submitBugEdit(req, res, next) {
     // Query to insert the bug data
     let sql_query_1 = `UPDATE Bugs SET bugSummary=?, bugDescription=?, projectId=?, dateStarted=?, priority=?, fixed=?, resolution=?
@@ -178,9 +180,15 @@ function submitBugEdit(req, res, next) {
 }
 
 
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
+
+
 /* EDIT BUG PAGE ROUTES ---------------------------------------------------- */
 
-router.get('/', renderEditBug);
-router.post('/updateBug', submitBugEdit);
+router.get('/', checkUserLoggedIn, renderEditBug);
+router.post('/updateBug', checkUserLoggedIn, submitBugEdit);
 
 module.exports = router;

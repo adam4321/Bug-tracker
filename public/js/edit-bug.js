@@ -98,7 +98,7 @@ recordForm.addEventListener('submit', (e) => {
     req.addEventListener('load', () => {
         if (req.status >= 200 && req.status < 400) {
             // Return the user to the bugs page
-            window.location.href = "http://localhost:5000/bug_tracker?uid=" + getUrlParameter('uid');
+            window.location.href = "http://localhost:5000/bug_tracker/all_bugs";
     
         } else {
             console.error('Database return error');

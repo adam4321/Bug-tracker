@@ -5,13 +5,15 @@
 **
 **  Contains:    /
 **               /insertCompany
+**
+**  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// COMPANIES PAGE RENDER - function to view all existing companies
+/* COMPANIES PAGE RENDER - function to view all existing companies --------- */
 function displayCompanyPage(req, res, next) {
     // Find all of the current companies
     const mysql = req.app.get('mysql');
@@ -39,7 +41,7 @@ function displayCompanyPage(req, res, next) {
 }
 
 
-// COMPANIES PAGE INSERT NEW COMPANY - function to insert a new company
+/* COMPANIES PAGE INSERT NEW COMPANY - function to insert a new company ---- */
 function submitCompany(req, res, next) {
     const mysql = req.app.get('mysql');
     let sql_query = `INSERT INTO Companies (companyName, dateJoined) VALUES (?, ?)`;
@@ -57,9 +59,15 @@ function submitCompany(req, res, next) {
 }
 
 
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
+
+
 /* COMPANIES PAGE ROUTES ----------------------------------------------------- */
 
-router.get('/', displayCompanyPage);
-router.post('/insertCompany', submitCompany);
+router.get('/', checkUserLoggedIn, displayCompanyPage);
+router.post('/insertCompany', checkUserLoggedIn, submitCompany);
 
 module.exports = router;

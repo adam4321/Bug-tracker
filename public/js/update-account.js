@@ -30,7 +30,7 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
     
     // Make AJAX request to server to add data
     var req = new XMLHttpRequest();
-    req.open("POST", "http://localhost:5000/bug_tracker/update-user", true);
+    req.open("POST", "http://localhost:5000/bug_tracker/home/update-user", true);
     req.setRequestHeader("Content-Type", "application/json");
     
     var reqBody = {
@@ -48,7 +48,7 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
     // Callback function for once request returns
     req.addEventListener("load", function redirectHome() {
         if (req.status >= 200 && req.status < 400) {
-            var homeAddr = "http://localhost:5000/bug_tracker/?uid=" + uid;
+            var homeAddr = "http://localhost:5000/bug_tracker/home";
             window.location.replace(homeAddr);
         }
         else {
@@ -63,7 +63,7 @@ function updateUser(firstName, lastName, email, phone, dateStarted, accessLevel)
 // Onclick function so that pressing "cancel" redirects to user dashboard with email appended to URL
 function cancelEdit()
 {
-    var homeAddr = "http://localhost:5000/bug_tracker/?uid=" + getUrlParameter('uid');
+    var homeAddr = "http://localhost:5000/bug_tracker/home";
     window.location.replace(homeAddr);
 }
 
@@ -97,7 +97,7 @@ function resetTable() {
         req.addEventListener("load", () => {
             if (req.status >= 200 && req.status < 400) {
                 // Return the user to the bugs page
-                window.location.href = "http://localhost:5000/bug_tracker?uid=" + getUrlParameter('uid');
+                window.location.href = "http://localhost:5000/bug_tracker/home";
             } 
             else {
                 console.error("Reset table request error.");

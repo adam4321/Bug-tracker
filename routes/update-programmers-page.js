@@ -1,17 +1,19 @@
-/*************************************************************
+/******************************************************************************
 **  Description: PROGRAMMERS PAGE - server side node.js routes
 **
 **  Root path:   localhost:5000/bug_tracker/programmers
 **
 **  Contains:    /
 **               /insertProgrammer
-**************************************************************/
+**
+**  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
+******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// RENDER PROGRAMMER PAGE - Function to render the programmers page
+/* RENDER PROGRAMMER PAGE - Function to render the programmers page -------- */
 function renderProgrammers(req, res, next) {
     // Find all of the programmers
     let sql_query = `SELECT * FROM Programmers`;
@@ -42,7 +44,7 @@ function renderProgrammers(req, res, next) {
 }
 
 
-// PROGRAMMERS PAGE INSERT NEW PROGRAMMER - Function to insert a new programmer
+/* INSERT NEW PROGRAMMER - Function to insert a new programmer ------------- */
 function submitProgrammer(req, res, next) {
     // Insert the form data into the Programmers table
     let sql_query = `INSERT INTO Programmers (firstName, lastName, email, dateStarted, accessLevel) 
@@ -69,9 +71,15 @@ function submitProgrammer(req, res, next) {
 }
 
 
-/* PROGRAMMERS PAGE ROUTES ---------------------------------------------------- */
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
 
-router.get('/', renderProgrammers);
-router.post('/insertProgrammer', submitProgrammer);
+
+/* PROGRAMMERS PAGE ROUTES ------------------------------------------------- */
+
+router.get('/', checkUserLoggedIn, renderProgrammers);
+router.post('/insertProgrammer', checkUserLoggedIn, submitProgrammer);
 
 module.exports = router;

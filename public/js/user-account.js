@@ -45,7 +45,7 @@ function insertUser(firstName, lastName, email, phone, dateStarted, accessLevel)
 
     // Make AJAX request to server to add data
     let req = new XMLHttpRequest();
-    req.open("POST", "http://localhost:5000/bug_tracker/add-user", true);
+    req.open("POST", "http://localhost:5000/bug_tracker/home/add-user", true);
     req.setRequestHeader("Content-Type", "application/json");
     
     let reqBody = {
@@ -63,7 +63,7 @@ function insertUser(firstName, lastName, email, phone, dateStarted, accessLevel)
     // Callback function for once request returns
     req.addEventListener("load", function redirectHome() {
         if (req.status >= 200 && req.status < 400) {
-            let homeAddr = "http://localhost:5000/bug_tracker/?uid=" + uid;
+            let homeAddr = "http://localhost:5000/bug_tracker/home";
             window.location.replace(homeAddr);
         }
         else {

@@ -56,13 +56,16 @@ app.use(passport.session());
 app.use('/bug_tracker/login', require('./routes/login-page.js'));
 
 // USER'S BUG PAGE ROUTES
-app.use('/bug_tracker/dashboard', require('./routes/user-home.js'));
+app.use('/bug_tracker/home', require('./routes/user-home.js'));
 
 // All BUGS PAGE ROUTES
 app.use('/bug_tracker/all_bugs', require('./routes/all-bugs-page.js'));
 
 // EDIT BUG PAGE ROUTES
 app.use('/bug_tracker/edit_bug', require('./routes/edit-bug-page.js'));
+
+// UPDATE ACCOUNT PAGE ROUTES
+app.use('/bug_tracker/settings', require('./routes/update-account-page.js'));
 
 // UPDATE OR ADD PROGRAMMERS PAGE ROUTES
 app.use('/bug_tracker/programmers', require('./routes/update-programmers-page.js'));
@@ -82,7 +85,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 // POST-AUTH REDIRECT
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login/failed' }),
     function(req, res) {
-        res.redirect('/dashboard');
+        res.redirect('/bug_tracker/home');
     }
 );
 

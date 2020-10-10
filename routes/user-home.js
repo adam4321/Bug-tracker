@@ -1,26 +1,28 @@
 /******************************************************************************
 **  Description: HOME PAGE - USER BUGS - server side node.js routes
 **
-**  Root path:  localhost:5000/bug_tracker
+**  Root path:  localhost:5000/bug_tracker/home
 **
 **  Contains:   /
 **              /add-user
 **              /update-account
 **              /update-user
 **              /login-redirect
+**
+**  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// USER BUGS - Function to render user's bugs ------------------------------ */
+/* USER BUGS - Function to render user's bugs ------------------------------ */
 function renderHome(req, res) {
     const query = `SELECT firstName, lastName, programmerId FROM Programmers WHERE programmerId = ?`
     const mysql = req.app.get('mysql');
 
     // See if user with email at end of query string exists in database
-    mysql.pool.query(query, req.query.uid,
+    mysql.pool.query(query, req.user.id,
     function(err, rows, fields) {
         if (err) {
            next(err);
@@ -28,7 +30,7 @@ function renderHome(req, res) {
         }
         
         // Initialize empty context array
-        let context = [];
+        let context = req.user;
         
         // If the user does not exist in the database, render user-account page
         if (rows.length === 0) {
@@ -44,10 +46,15 @@ function renderHome(req, res) {
             res.render("user-home", context);
 	    }
     });
+
+    // let context = {};
+    // context = req.user;
+    // console.log(context);
+    // res.render("user-home", context);
 };
 
 
-// USER BUGS - Function to create new user in the database ----------------- */
+/* USER BUGS - Function to create new user in the database ----------------- */
 function insertData(req, res, next) {
     const query = `INSERT INTO Programmers (programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel)
                         VALUES (?, ?, ?, ?, ?, ?, ?)`
@@ -55,7 +62,7 @@ function insertData(req, res, next) {
 
     mysql.pool.query(query, 
         [
-            req.body.uid,
+            req.user.id,
             req.body.firstName,
             req.body.lastName,
             req.body.email, 
@@ -75,7 +82,7 @@ function insertData(req, res, next) {
 };
 
 
-// UPDATE USER SETTINGS - Function to render update account page ----------- */
+/* UPDATE USER SETTINGS - Function to render update account page ----------- */
 function renderUpdateForm(req, res) {
     const query = `SELECT programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel
                     FROM Programmers
@@ -86,8 +93,8 @@ function renderUpdateForm(req, res) {
     mysql.pool.query(query, decodeURIComponent([req.query.uid]),
         function(err, rows, fields) {
             if (err) {
-            next(err);
-            return;
+                next(err);
+                return;
             }
             
             // If the user does not exist in the database, redirect to login page
@@ -118,7 +125,7 @@ function renderUpdateForm(req, res) {
 };
 
 
-// UPDATE USER SETTINGS - Function to update settings for an existing user - */
+/* UPDATE USER SETTINGS - Function to update settings for an existing user - */
 function updateData(req, res, next) {
     const query = `UPDATE Programmers SET firstName = ?, lastName = ?, email = ?, mobile_number = ?, dateStarted = ?
                     WHERE programmerId = ?`
@@ -145,18 +152,24 @@ function updateData(req, res, next) {
 };
 
 
-// USER BUGS - Function to display a redirection view ---------------------- */
+/* USER BUGS - Function to display a redirection view ---------------------- */
 function renderLogin(req, res) {
     res.render("login-redirect");
 };
 
 
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
+
+
 /* USER HOME PAGE ROUTES --------------------------------------------------- */
 
-router.get('/', renderHome);
-router.post('/add-user', insertData);
-router.get('/update-account', renderUpdateForm);
-router.post('/update-user', updateData);
-router.get('/login-redirect', renderLogin);
+router.get('/', checkUserLoggedIn, renderHome);
+router.post('/add-user', checkUserLoggedIn, insertData);
+router.get('/update-account', checkUserLoggedIn, renderUpdateForm);
+router.post('/update-user', checkUserLoggedIn, updateData);
+router.get('/login-redirect', checkUserLoggedIn, renderLogin);
 
 module.exports = router;

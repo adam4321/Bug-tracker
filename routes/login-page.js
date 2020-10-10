@@ -4,7 +4,7 @@
 **  Root path:   localhost:5000/bug_tracker/login
 **
 **  Contains:    /
-**              /failed
+**               /failed
 **              
 **  UNSECURED ROUTES!
 ******************************************************************************/
@@ -13,7 +13,7 @@ const express = require('express');
 const router = express.Router();
 
 
-// LOGIN - Function to render the login page ------------------------------- */
+/* LOGIN - Function to render the login page ------------------------------- */
 function renderLogin(req, res, next) {
     let context = {};
 
@@ -21,7 +21,7 @@ function renderLogin(req, res, next) {
 };
 
 
-// FAILED - Function to render a failed login ------------------------------ */
+/* FAILED - Function to render a failed login ------------------------------ */
 function renderFailedLogin(req, res, next) {
     let context = {};
 

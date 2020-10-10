@@ -1,17 +1,19 @@
-/*************************************************************
+/******************************************************************************
 **  Description: PROJECTS PAGE - server side node.js routes
 **
 **  Root path:   localhost:5000/bug_tracker/projects
 **
 **  Contains:    /
 **               /insertProject
-**************************************************************/
+**
+**  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
+******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
 
 
-// RENDER PROJECTS PAGE - Function to render the project page
+/* RENDER PROJECTS PAGE - Function to render the project page -------------- */
 function renderProjects(req, res, next) {
     // Find all of the projects and their associated companies
     let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId`;
@@ -63,7 +65,7 @@ function renderProjects(req, res, next) {
 }
 
 
-// PROJECTS PAGE INSERT NEW PROJECT - Route to insert a new project
+/* PROJECTS PAGE INSERT NEW PROJECT - Route to insert a new project -------- */
 function submitProject(req, res, next) {
     // Insert the form data into the Projects table
     let sql_query = `INSERT INTO Projects (projectName, companyId, dateStarted, lastUpdated, inMaintenance)
@@ -73,26 +75,32 @@ function submitProject(req, res, next) {
     let context = {};
 
     mysql.pool.query(sql_query, [
-            req.body.projectName,
-            req.body.companyName,
-            req.body.dateStarted,
-            req.body.lastUpdated,
-            req.body.inMaintenance
-        ], (err, result) => {
-            if (err) {
-                next(err);
-                return;
-            }
-            
-            context.projects = result.insertId;
-            res.send(JSON.stringify(context));
-        });
+        req.body.projectName,
+        req.body.companyName,
+        req.body.dateStarted,
+        req.body.lastUpdated,
+        req.body.inMaintenance
+    ], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        
+        context.projects = result.insertId;
+        res.send(JSON.stringify(context));
+    });
+}
+
+
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
 }
 
 
 /* PROJECTS PAGE ROUTES ---------------------------------------------------- */
 
-router.get('/', renderProjects);
-router.post('/insertProject', submitProject);
+router.get('/', checkUserLoggedIn, renderProjects);
+router.post('/insertProject', checkUserLoggedIn, submitProject);
 
 module.exports = router;
