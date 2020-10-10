@@ -43,7 +43,7 @@ app.set('port', 5000);
 app.use('/bug_tracker/login', require('./routes/login-page.js'));
 
 // USER'S BUG PAGE ROUTES
-app.use('/bug_tracker/', require('./routes/user-home.js'));
+app.use('/bug_tracker/dashboard', require('./routes/user-home.js'));
 
 // All BUGS PAGE ROUTES
 app.use('/bug_tracker/all_bugs', require('./routes/all-bugs-page.js'));
