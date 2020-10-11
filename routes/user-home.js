@@ -21,21 +21,23 @@ function renderHome(req, res) {
     const sql_query_1 = `SELECT firstName, lastName, programmerId FROM Programmers WHERE programmerId = ?`
 
     // 2nd query populates the bug list
-    const sql_query_2 = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
-                        b.dateStarted, b.resolution, b.priority, b.fixed 
-	                    FROM Programmers p 
-		                JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
-		                JOIN Bugs b ON bp.bugId = b.bugId
+    const sql_query_2 = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, 
+                        b.bugDescription, b.dateStarted, b.resolution, b.priority, b.fixed 
+	                    FROM Programmers p
+                        JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId  
+                        JOIN Bugs b ON bp.bugId = b.bugId
                         LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
+                            WHERE p.programmerId = ?
                             ORDER BY bugId`;
 
     const mysql = req.app.get('mysql');
 
     // Initialize empty context array
-    let context = req.user;
+    let context = {};
+    context.user = req.user;
 
     // See if user with email at end of query string exists in database
-    mysql.pool.query(sql_query_1, req.user.id, (err, rows, fields) => {
+    mysql.pool.query(sql_query_1, context.user.id, (err, rows, fields) => {
         if (err) {
            next(err);
            return;
@@ -48,7 +50,7 @@ function renderHome(req, res) {
 	    
         // Otherwise, render user home page
         else {
-            mysql.pool.query(sql_query_2, (err, rows) => {
+            mysql.pool.query(sql_query_2, context.user.id, (err, rows) => {
                 if (err) {
                     next(err);
                     return;
@@ -83,7 +85,7 @@ function renderHome(req, res) {
                         });
                     }
                 }
-
+                context.bugs = bugsDbData;
                 res.render("user-home", context);
             });
 	    }
@@ -140,8 +142,7 @@ function renderUpdateForm(req, res) {
             }
             
             // Otherwise, pull the user's information from returned results to send to handlebars page
-            else
-            {
+            else {
                 // Initialize empty context array
                 let context = [];
             
