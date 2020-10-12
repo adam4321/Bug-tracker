@@ -35,6 +35,7 @@ function renderHome(req, res) {
     // Initialize empty context array
     let context = {};
     context.user = req.user;
+    console.log(context)
 
     // See if user with email at end of query string exists in database
     mysql.pool.query(sql_query_1, context.user.id, (err, rows, fields) => {
