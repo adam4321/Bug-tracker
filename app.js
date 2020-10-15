@@ -56,7 +56,7 @@ app.use(passport.session());
 app.use('/bug_tracker/login', require('./routes/login-page.js'));
 
 // USER'S BUG PAGE ROUTES
-app.use('/bug_tracker/home', require('./routes/user-home.js'));
+app.use('/bug_tracker/home', require('./routes/user-home-page.js'));
 
 // All BUGS PAGE ROUTES
 app.use('/bug_tracker/all_bugs', require('./routes/all-bugs-page.js'));

@@ -32,13 +32,27 @@ function renderHome(req, res) {
 
     const mysql = req.app.get('mysql');
 
-    // Initialize empty context array
+    // Initialize empty context object
     let context = {};
-    context.user = req.user;
-    console.log(context)
+
+    // Test for the auth provider (Google vs Facebook) and create context object
+    if (req.user.provider == 'google') {
+        context.id = req.user.id;
+        context.email = req.user.email;
+        context.name = req.user.displayName;
+        context.photo = req.user.picture;
+    } else {
+        context.id = req.user.id;
+        context.email = req.user.emails[0].value;
+        context.name = req.user.displayName;
+        context.photo = req.user.photos[0].value;
+    }
+    
+    console.log(req.user);
+    // console.log(context);
 
     // See if user with email at end of query string exists in database
-    mysql.pool.query(sql_query_1, context.user.id, (err, rows, fields) => {
+    mysql.pool.query(sql_query_1, context.id, (err, rows, fields) => {
         if (err) {
            next(err);
            return;
@@ -51,7 +65,7 @@ function renderHome(req, res) {
 	    
         // Otherwise, render user home page
         else {
-            mysql.pool.query(sql_query_2, context.user.id, (err, rows) => {
+            mysql.pool.query(sql_query_2, context.id, (err, rows) => {
                 if (err) {
                     next(err);
                     return;
