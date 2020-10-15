@@ -37,6 +37,10 @@ a {
     background-color: #f0efef;
 }
 
+#logout-button:hover {
+    background-color: #cecece;
+}
+
 .mdl-layout__drawer-button {
     padding-top: 20px;
 }
@@ -62,6 +66,10 @@ a {
     width: 200px;
     margin-top: 20px;
     margin-left: 35px;
+}
+
+#logout-button-drawer:hover {
+    background-color: #cecece;
 }
 
 
