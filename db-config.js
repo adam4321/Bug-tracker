@@ -2,7 +2,7 @@
 **  Description:  MySql database configuration
 **********************************************************/
 
-const credentials = require('./LOCAL-credentials.js');
+const credentials = require('./LOCAL-DB-credentials.js');
 
 const mysql = require('mysql');
 

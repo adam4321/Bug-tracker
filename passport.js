@@ -3,7 +3,7 @@
 **                passport.js
 ******************************************************************************/
 
-const GOOG_CREDS = require('./GOOGLE-credentials.js');
+const AUTH_CREDS = require('./AUTH-credentials.js');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
@@ -16,11 +16,11 @@ passport.deserializeUser(function(user, done) {
 });
 
 passport.use(new GoogleStrategy({
-        clientID: GOOG_CREDS.CLIENT_ID,
-        clientSecret: GOOG_CREDS.CLIENT_SECRET,
-        callbackURL: GOOG_CREDS.CALLBACK_URL
+        clientID: AUTH_CREDS.GOOGLE_CLIENT_ID,
+        clientSecret: AUTH_CREDS.GOOGLE_CLIENT_SECRET,
+        callbackURL: AUTH_CREDS.GOOGLE_CALLBACK_URL
     },
-    function(accessToken, refreshToken, profile, cb) {
-        return cb(null, profile);
+    function(accessToken, refreshToken, profile, done) {
+        return done(null, profile);
     }
 ));
