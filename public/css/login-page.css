@@ -1,0 +1,58 @@
+/******************************************************************************
+**  Description:    Login Page CSS styles
+******************************************************************************/
+
+#login-container {
+    width: 450px;
+    margin-top: 60px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.signin-btn-text {
+    margin-top: 45px;
+    margin-left: -15px;
+    font-size: large;
+    font-weight: bold;
+}
+
+.login-btns {
+    margin-left: -15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+#g-signin-text {
+    margin-top: 20px;
+    font-size: large;
+    font-weight: bold;
+}
+
+#g-signin {
+    height: 40px;
+    width: 166px;
+}
+
+#f-signin {
+    height: 35px;
+    width: 165px;
+}
+
+#register-button {
+    width: 170px;
+    margin-bottom: 20px;
+}
+
+#attribution {
+    margin-top: -10px;
+    margin-bottom: -20px;
+}
+
+@media only screen and (max-width: 600px) {
+    #login-container {
+        width: 250px;
+        margin-top: 40px;
+    }
+}
