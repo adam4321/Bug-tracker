@@ -12,10 +12,8 @@
 const express = require('express');
 const app = express();
 
-
 // PORT NUMBER - Set static port for the appliction 
 app.set('port', 5000);
-
 
 // Set up express-handlebars
 const handlebars = require('express-handlebars');
@@ -26,21 +24,17 @@ app.engine('.hbs', handlebars({
     extname: '.hbs'
 }));
 
-
 // Set up body-parser
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 // Set up MySQL using dbcon.js file
 const mysql = require('./db-config.js');
 app.set('mysql', mysql);
 
-
 // Set up route to static files
 app.use('/bug_tracker', express.static('public'));
-
 
 // Set up cookie session and configure session storage
 const cookieSession = require('cookie-session');
@@ -48,7 +42,6 @@ app.use(cookieSession({
     name: 'session-name',
     keys: ['key1', 'key2']
 }))
-
 
 // Include and configure passport
 const passport = require('passport');
