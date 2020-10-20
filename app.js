@@ -79,11 +79,21 @@ app.use('/bug_tracker/companies', require('./routes/update-company-page.js'));
 
 /* AUTHENTICATION ROUTES ---------------------------------------------------- */
 
-// REQUEST AUTH
+// GOOGLE AUTH REQUEST 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// POST-AUTH REDIRECT
+// GOOGLE POST-AUTH REDIRECT
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login/failed' }),
+    function(req, res) {
+        res.redirect('/bug_tracker/home');
+    }
+);
+
+// FACEBOOK AUTH REQUEST 
+app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
+
+// FACEBOOK POST-AUTH REDIRECT
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login/failed' }),
     function(req, res) {
         res.redirect('/bug_tracker/home');
     }
