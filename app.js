@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 const mysql = require('./db-config.js');
 app.set('mysql', mysql);
 
-// Set up route to static files
+// Set up path to static files
 app.use('/bug_tracker', express.static('public'));
 
 // Set up cookie session and configure session storage
