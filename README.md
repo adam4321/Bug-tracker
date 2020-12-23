@@ -1,9 +1,9 @@
 # Software Bug Tracker
 
-Application for adding cataloging software bugs and assigning them
-to one or more programmers to be fixed. It displays the percentage of
-open bugs for each programmer and for the overall bug list, to allow
-the users to understand the backlog.
+This is an application for cataloging software bugs and assigning them
+to one or more programmers to be fixed. To allow the users to understand
+the backlog, the interface displays the percentage of open bugs for each
+programmer and also for the overall bug list.
 
 The application uses Handlebars to server-side render each
 of its pages and then vanilla JavaScript on the client-side
