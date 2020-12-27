@@ -1,7 +1,15 @@
-
+/******************************************************************************
+**  Description:    Programmers page CSS styles
+******************************************************************************/
 
 .form-card {
     width: 530px !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table-card {
+    width: 620px !important;
     margin-left: auto;
     margin-right: auto;
 }
