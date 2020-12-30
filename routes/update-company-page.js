@@ -20,6 +20,19 @@ function displayCompanyPage(req, res, next) {
     let sql_query = `SELECT * FROM Companies`;
     let context = {};
 
+    // Test for the auth provider (Google vs Facebook) and create context object
+    if (req.user.provider == 'google') {
+        context.id = req.user.id;
+        context.email = req.user.email;
+        context.name = req.user.displayName;
+        context.photo = req.user.picture;
+    } else {
+        context.id = req.user.id;
+        context.email = req.user.emails[0].value;
+        context.name = req.user.displayName;
+        context.photo = req.user.photos[0].value;
+    }
+
     mysql.pool.query(sql_query, (err, rows) => {
         if (err) {
             next(err);
