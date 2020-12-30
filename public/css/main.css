@@ -13,7 +13,8 @@ html, body {
 }
 
 .demo-layout .mdl-layout__header .mdl-layout__drawer-button {
-    color: rgba(0, 0, 0, 0.54);
+    color: white;
+    background-color:  rgb(45, 122, 153);
 }
 
 .mdl-layout__drawer .avatar {
@@ -69,7 +70,7 @@ html, body {
 }
 
 .demo-layout .demo-navigation .mdl-navigation__link:hover {
-    background-color: rgba(52, 144, 180, 0.658);
+    background-color: rgba(52, 144, 180, 0.651);
     color: #37474F;
 }
 
@@ -136,6 +137,7 @@ html, body {
 .demo-options li {
     margin: 4px 0;
 }
+
 .demo-options .material-icons {
     color: rgba(255, 255, 255, 0.89);
 }
@@ -165,12 +167,12 @@ a {
 }
 
 #bug-logo {
-    height: 70px;
+    height: 40px;
     margin-right: 5px;
 }
 
 .dashboard-top-bar {
-    background-color: rgb(52, 144, 180);
+    background-color: rgb(45, 122, 153);
 }
 
 #page-title {
