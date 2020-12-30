@@ -47,9 +47,6 @@ function renderHome(req, res) {
         context.name = req.user.displayName;
         context.photo = req.user.photos[0].value;
     }
-    
-    console.log(req.user);
-    // console.log(context);
 
     // See if user with email at end of query string exists in database
     mysql.pool.query(sql_query_1, context.id, (err, rows, fields) => {
