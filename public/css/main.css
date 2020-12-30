@@ -159,6 +159,11 @@ a {
     padding: 20px 0 15px 0;
 }
 
+.top-bar {
+    background-color: rgb(45, 122, 153);
+    color: white;
+}
+
 #bug-logo {
     height: 70px;
     margin-right: 5px;
