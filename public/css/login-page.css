@@ -2,6 +2,23 @@
 **  Description:    Login Page CSS styles
 ******************************************************************************/
 
+#top-bar {
+    height: 64px;
+}
+
+.mdl-layout-header-row {
+    height: 64px;
+    max-height: 64px;
+}
+
+#bug-logo {
+    margin-top: -35px;
+}
+
+.mdl-layout-title {
+    margin-top: -33px;
+}
+
 #login-container {
     width: 450px;
     margin-top: 60px;
