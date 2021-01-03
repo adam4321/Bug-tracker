@@ -51,6 +51,7 @@
 }
 
 #gh-link {
+    text-decoration: none;
     background-color: black;
     color: white;
     text-align: center;
