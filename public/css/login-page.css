@@ -107,6 +107,26 @@
 /* Media queries for verticle phones --------------------------------------- */
 
 @media only screen and (max-width: 600px) {
+    .mdl-layout__header-row {
+        width: 260px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0;
+    }
+
+    .dashboard-top-bar {
+        height: 45px;
+    }
+
+    .mdl-card__title-text {
+        margin-bottom: -5px;
+    }
+
+    #bug-logo {
+        margin-top: -28px;
+        margin-left: 0;
+    }
+
     #login-container {
         width: 250px;
         margin-top: 20px;
