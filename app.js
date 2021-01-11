@@ -53,28 +53,31 @@ app.use(passport.session());
 /* PAGE ROUTES ---------------------------------------------------------------*/
 
 // LOGIN PAGE ROUTES
-app.use('/bug_tracker/login', require('./routes/login-page.js'));
+app.use('/bug_tracker/login', require('./routes/login-routes.js'));
 
 // USER'S BUG PAGE ROUTES
-app.use('/bug_tracker/home', require('./routes/user-home-page.js'));
+app.use('/bug_tracker/home', require('./routes/your-bug-routes.js'));
 
 // All BUGS PAGE ROUTES
-app.use('/bug_tracker/all_bugs', require('./routes/all-bugs-page.js'));
+app.use('/bug_tracker/all_bugs', require('./routes/all-bug-routes.js'));
+
+// // ADD BUG ROUTES
+// app.use('/bug_tracker/add_bug', require('./routes/add-bug-routes.js'));
 
 // EDIT BUG PAGE ROUTES
-app.use('/bug_tracker/edit_bug', require('./routes/edit-bug-page.js'));
+app.use('/bug_tracker/edit_bug', require('./routes/edit-bug-routes.js'));
 
 // UPDATE ACCOUNT PAGE ROUTES
-app.use('/bug_tracker/settings', require('./routes/update-account-page.js'));
+app.use('/bug_tracker/settings', require('./routes/update-account-routes.js'));
 
 // UPDATE OR ADD PROGRAMMERS PAGE ROUTES
-app.use('/bug_tracker/programmers', require('./routes/update-programmers-page.js'));
+app.use('/bug_tracker/programmers', require('./routes/update-programmers-routes.js'));
 
 // UPDATE OR ADD PROJECTS PAGE ROUTES
-app.use('/bug_tracker/projects', require('./routes/update-projects-page.js'));
+app.use('/bug_tracker/projects', require('./routes/update-projects-routes.js'));
 
 // UPDATE OR ADD COMPANIES PAGE ROUTES
-app.use('/bug_tracker/companies', require('./routes/update-company-page.js'));
+app.use('/bug_tracker/companies', require('./routes/update-company-routes.js'));
 
 
 /* AUTHENTICATION ROUTES ---------------------------------------------------- */
