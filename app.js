@@ -61,8 +61,8 @@ app.use('/bug_tracker/home', require('./routes/your-bug-routes.js'));
 // All BUGS PAGE ROUTES
 app.use('/bug_tracker/all_bugs', require('./routes/all-bug-routes.js'));
 
-// // ADD BUG ROUTES
-// app.use('/bug_tracker/add_bug', require('./routes/add-bug-routes.js'));
+// ADD BUG ROUTES
+app.use('/bug_tracker/add_bug', require('./routes/add-bug-routes.js'));
 
 // EDIT BUG PAGE ROUTES
 app.use('/bug_tracker/edit_bug', require('./routes/edit-bug-routes.js'));
