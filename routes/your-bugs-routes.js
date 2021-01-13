@@ -98,7 +98,7 @@ function renderHome(req, res) {
                     }
                 }
                 context.bugs = bugsDbData;
-                res.render("user-home", context);
+                res.render("your-bugs", context);
             });
 	    }
     });
