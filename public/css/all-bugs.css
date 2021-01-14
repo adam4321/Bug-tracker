@@ -1,5 +1,5 @@
 /******************************************************************************
-**  Description:  All Bugs Page css styles
+**  Description:  User-home css styles
 ******************************************************************************/
 
 /* Searchbar -------------------------------------------------------------- */
@@ -120,16 +120,19 @@ li {
     margin-right: auto;
 }
 
-/* .form-card {
-    width: 450px !important;
+/* .mdl-card__supporting-text {
+    width: 900px;
 } */
 
-#add-bug-container {
+/* .table-card {
+    width: 800px !important;
+} */
+
+#table-container {
     margin-right: 20px;
     /* min-width: 530px; */
     /* flex-grow: 1; */
-    width: 525px !important;
-    height: 635px;
+    width: 1130px !important;
 }
 
 #bug-chart-container {
@@ -148,11 +151,7 @@ li {
 
 #bug-chart-text {
     width: 300px;
-    height: 300px;
-}
-
-.table-card {
-    width: 1130px !important;
+    height: 100%;
 }
 
 /* Fixed radio button ------------------------------------------------------ */
