@@ -2,6 +2,10 @@
 **  Description:    Project page CSS styles
 ******************************************************************************/
 
+.page-content {
+    width: 85%;
+}
+
 .form-card {
     width: 530px !important;
     margin-left: auto;
