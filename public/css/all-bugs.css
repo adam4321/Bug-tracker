@@ -120,9 +120,9 @@ li {
     margin-right: auto;
 }
 
-/* .mdl-card__supporting-text {
-    width: 900px;
-} */
+.mdl-card__supporting-text {
+    width: 95%;
+}
 
 /* .table-card {
     width: 800px !important;
