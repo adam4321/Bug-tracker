@@ -467,6 +467,13 @@ searchInput.addEventListener('keydown', function(event) {
 
 // Function using D3.js to render a new doughnut chart with svg
 function printChart(fixedCount, brokenCount, countSize) {
+    
+    // Set a new user with no bugs to 100% fixed (without this it displays NAN and no chart)
+    if (countSize <= 0) {
+        countSize = 1;
+        fixedCount = 1;
+    }
+
     // Set the dimensions and margins of the graph
     let width = 380
         height = 380
