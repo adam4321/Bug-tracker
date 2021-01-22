@@ -42,7 +42,7 @@
 }
 
 #g-signin-text {
-    margin-top: 20px;
+    margin-top: 30px;
     font-size: large;
     font-weight: bold;
 }
@@ -50,6 +50,7 @@
 #g-signin {
     height: 40px;
     width: 166px;
+    margin-bottom: 40px;
 }
 
 #f-signin {
