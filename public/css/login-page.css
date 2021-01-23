@@ -21,7 +21,7 @@
 
 #login-container {
     width: 450px;
-    margin-top: 60px;
+    margin-top: 65px;
     padding: 0;
     margin-left: auto;
     margin-right: auto;
@@ -50,12 +50,7 @@
 #g-signin {
     height: 40px;
     width: 166px;
-    margin-bottom: 40px;
-}
-
-#f-signin {
-    height: 35px;
-    width: 165px;
+    margin-bottom: 30px;
 }
 
 #register-button {
@@ -64,8 +59,7 @@
 }
 
 #attribution {
-    margin-top: -10px;
-    margin-bottom: -20px;
+    margin: -10px 0 -20px -15px;
 }
 
 #gh-link {
