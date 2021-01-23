@@ -92,16 +92,6 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
     }
 );
 
-// FACEBOOK AUTH REQUEST 
-app.get('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
-
-// FACEBOOK POST-AUTH REDIRECT
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login/failed' }),
-    function(req, res) {
-        res.redirect('/bug_tracker/home');
-    }
-);
-
 // LOG OUT ROUTE - for all pages
 app.get('/logout', (req, res) => {
     req.session = null;
