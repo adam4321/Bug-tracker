@@ -149,8 +149,8 @@ li {
 }
 
 #bug-chart-container {
-    width: 450px;
-    height: 450px;
+    width: 320px;
+    height: 360px;
     text-align: center;
 }
 
@@ -159,7 +159,7 @@ li {
 }
 
 #my_dataviz {
-    margin: 10px 0 0 30px;
+    margin: 30px 0 0 20px;
 }
 
 #bug-chart-text {
