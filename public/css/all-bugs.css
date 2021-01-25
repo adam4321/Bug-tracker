@@ -124,14 +124,8 @@ li {
     width: 95%;
 }
 
-/* .table-card {
-    width: 800px !important;
-} */
-
 #table-container {
-    margin-right: 20px;
-    /* min-width: 530px; */
-    /* flex-grow: 1; */
+    margin-right: 5%;
     width: 1130px !important;
 }
 
