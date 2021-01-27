@@ -148,7 +148,7 @@ LOCK TABLES Bugs WRITE,
     Projects AS p20 WRITE;
 
 INSERT INTO Bugs (projectId, bugSummary, bugDescription, dateStarted, resolution, fixed, priority) VALUES
-    ((SELECT projectId FROM Projects AS p1 WHERE projectName = 'MicroSheets'), 'Window close error', 'When the use tries to set preferences/useraccount/business number the windows just exits', '2002-09-22', '', 0, 3),
+    ((SELECT projectId FROM Projects AS p1 WHERE projectName = 'MicroSheets'), 'Window close error', 'When the user tries to set preferences/useraccount/business number the windows just exits', '2002-09-22', '', 0, 3),
     ((SELECT projectId FROM Projects AS p2 WHERE projectName = '1N\-router firmware'), 'CLI error', 'The documentation says to pass -3 for configuration, but it is not working for the user', '2020-05-08', '', 0, 5),
     ((SELECT projectId FROM Projects AS p3 WHERE projectName = 'NetDash'), 'Logging error', 'Logs not being generated of Fridays!!', '2015-03-02', '', 0, 4),
     ((SELECT projectId FROM Projects AS p4 WHERE projectName = 'Force CRM'), 'Button location', 'The button should be 50px to the right', '2018-11-05', 'Fixed sql syntax and the new query fixed the problem', 1, 1),
