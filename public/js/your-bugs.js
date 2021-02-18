@@ -223,8 +223,8 @@ try {
     // Change behavior of pressing 'Enter' on search bar. 
     let searchInput = document.getElementById("search-input");
 
-    searchInput.addEventListener('keydown', function(event) {
-        if (event.keyCode === 13) {
+    searchInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.keyCode === 13) {
             event.preventDefault();
             document.getElementById('search-btn').click();
         }
