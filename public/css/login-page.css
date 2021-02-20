@@ -3,7 +3,7 @@
 ******************************************************************************/
 
 #top-bar {
-    height: 64px;
+    height: 84px;
 }
 
 .mdl-layout-header-row {
@@ -12,11 +12,13 @@
 }
 
 #bug-logo {
-    margin-top: -35px;
+    margin-top: -15px;
+    height: 50px;
 }
 
 .mdl-layout-title {
-    margin-top: -37px;
+    margin-top: -19px;
+    font-size: 25px;
 }
 
 #login-container {
@@ -86,16 +88,22 @@
 /* Media queries for tablets ----------------------------------------------- */
 
 @media only screen and (max-width: 1024px) {
+    #top-bar {
+        height: 64px;
+    }
+
     #login-container {
         margin-top: 30px;
     }
 
     #bug-logo {
         margin-top: -28px;
+        height: 35px;
     }
     
     .mdl-layout-title {
         margin-top: -30px;
+        font-size: 22px;
     }
 }
 
@@ -125,6 +133,18 @@
     #login-container {
         width: 250px;
         margin-top: 20px;
+    }
+
+    .mdl-card__supporting-text {
+        width: 80%;
+    }
+
+    .signin-btn-text {
+        margin-left: 0px;
+    }
+
+    .login-btns {
+        margin-left: 0;
     }
 
     #gh-link {
