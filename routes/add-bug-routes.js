@@ -14,7 +14,7 @@ const router = express.Router();
 
 
 /* RENDER ALL BUGS PAGE - Function to render the bugs page ----------------- */
-function renderHome(req, res, next) {
+function renderAddBug(req, res, next) {
     // 1st query gathers the projects for the dropdown
     let sql_query_1 = `SELECT projectName, projectId FROM Projects`;
 
@@ -181,7 +181,7 @@ const checkUserLoggedIn = (req, res, next) => {
 
 /* PROJECTS PAGE ROUTES ---------------------------------------------------- */
 
-router.get('/', checkUserLoggedIn, renderHome);
+router.get('/', checkUserLoggedIn, renderAddBug);
 router.post('/insertBug', checkUserLoggedIn, submitBug);
 
 module.exports = router;

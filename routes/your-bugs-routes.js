@@ -16,9 +16,24 @@ const express = require('express');
 const router = express.Router();
 
 
+/* USER BUGS - Function to display a redirection view ---------------------- */
+function renderLogin(req, res) {
+    res.render("login-redirect");
+};
+
+
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
+
+
 /* USER BUGS - Function to render user's bugs ------------------------------ */
 function renderHome(req, res) {
-    const sql_query_1 = `SELECT firstName, lastName, programmerId FROM Programmers WHERE programmerId = ?`
+    // Look for the Google authorized user in the database
+    const sql_query_1 = `SELECT firstName, lastName, programmerId, email, mobile_number, dateStarted, accessLevel 
+                        FROM Programmers 
+                        WHERE programmerId = ?`
 
     // 2nd query populates the bug list
     const sql_query_2 = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, 
@@ -29,6 +44,11 @@ function renderHome(req, res) {
                         LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
                             WHERE p.programmerId = ?
                             ORDER BY bugId`;
+
+    // Register the Google user into the database if they are a new user
+    const sql_query_3 = `INSERT INTO Programmers 
+                        (programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)`
 
     const mysql = req.app.get('mysql');
 
@@ -55,13 +75,36 @@ function renderHome(req, res) {
            return;
         }
         
-        // If the user does not exist in the database, render user-account page
+        // If the user does not exist in the database, add them and render user-account page
         if (rows.length === 0) {
-            res.render("user-account", context);
+            // Get today's date
+            const date = new Date();
+            const formatted_date = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+            // Insert the new user
+            mysql.pool.query(sql_query_3, 
+                [
+                    context.id,
+                    req.user.given_name,
+                    req.user.family_name,
+                    context.email, 
+                    null, 
+                    date, 
+                    3
+                ], 
+                function(err, result) {
+                    if (err) {
+                        next(err);
+                        return;
+                    }
+                
+                    // Then just render user home page, since a new user won't have bugs
+                    res.render("your-bugs", context);
+                }
+            );
         }
-	    
-        // Otherwise, render user home page
         else {
+            // Otherwise, find if the user has assigned bugs
             mysql.pool.query(sql_query_2, context.id, (err, rows) => {
                 if (err) {
                     next(err);
@@ -73,11 +116,11 @@ function renderHome(req, res) {
                 let bugsDbData = [];          // Put the mysql data into an array for rendering
         
                 for (let i in rows) {
-                    // If this is the same entry as the last, then only add the programmer to the array
+                    // If this is the same bug as the last, then only add the programmer to the array
                     if (prevEntryBugId == rows[i].bugId) {
                         bugProgrammers.push(rows[i].firstName + ' ' + rows[i].lastName);
                     }
-                    // This is a new entry
+                    // This is a different bug than the last
                     else {
                         prevEntryBugId = rows[i].bugId;         // Cache the bugId
                         bugProgrammers = [];                    // Add the programmer to the array
@@ -97,10 +140,12 @@ function renderHome(req, res) {
                         });
                     }
                 }
+                
+                // Render user home page with any assigned bugs
                 context.bugs = bugsDbData;
                 res.render("your-bugs", context);
             });
-	    }
+        }
     });
 };
 
@@ -200,18 +245,6 @@ function updateData(req, res, next) {
         }
     );
 };
-
-
-/* USER BUGS - Function to display a redirection view ---------------------- */
-function renderLogin(req, res) {
-    res.render("login-redirect");
-};
-
-
-/* Middleware - Function to Check user is Logged in ------------------------ */
-const checkUserLoggedIn = (req, res, next) => {
-    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
-}
 
 
 /* USER HOME PAGE ROUTES --------------------------------------------------- */

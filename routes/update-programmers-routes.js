@@ -72,7 +72,8 @@ function submitProgrammer(req, res, next) {
         req.body.email, 
         req.body.dateStarted, 
         req.body.accessLevel
-    ], (err, result) => {
+    ], 
+    (err, result) => {
         if (err) {
             next(err);
             return;
