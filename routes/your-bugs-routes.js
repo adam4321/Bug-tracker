@@ -16,12 +16,6 @@ const express = require('express');
 const router = express.Router();
 
 
-/* USER BUGS - Function to display a redirection view ---------------------- */
-function renderLogin(req, res) {
-    res.render("login-redirect");
-};
-
-
 /* Middleware - Function to Check user is Logged in ------------------------ */
 const checkUserLoggedIn = (req, res, next) => {
     req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
@@ -89,7 +83,7 @@ function renderHome(req, res) {
                     req.user.family_name,
                     context.email, 
                     null, 
-                    date, 
+                    date,
                     3
                 ], 
                 function(err, result) {
@@ -253,6 +247,5 @@ router.get('/', checkUserLoggedIn, renderHome);
 router.post('/add-user', checkUserLoggedIn, insertData);
 router.get('/update-account', checkUserLoggedIn, renderUpdateForm);
 router.post('/update-user', checkUserLoggedIn, updateData);
-router.get('/login-redirect', checkUserLoggedIn, renderLogin);
 
 module.exports = router;
