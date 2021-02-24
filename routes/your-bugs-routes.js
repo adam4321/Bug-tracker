@@ -49,18 +49,11 @@ function renderHome(req, res) {
     // Initialize empty context object
     let context = {};
 
-    // Test for the auth provider (Google vs Facebook) and create context object
-    if (req.user.provider == 'google') {
-        context.id = req.user.id;
-        context.email = req.user.email;
-        context.name = req.user.displayName;
-        context.photo = req.user.picture;
-    } else {
-        context.id = req.user.id;
-        context.email = req.user.emails[0].value;
-        context.name = req.user.displayName;
-        context.photo = req.user.photos[0].value;
-    }
+    // Add Google user props to the context object
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
 
     // See if user with email at end of query string exists in database
     mysql.pool.query(sql_query_1, context.id, (err, rows, fields) => {

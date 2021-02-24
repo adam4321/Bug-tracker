@@ -109,13 +109,31 @@ const checkUserLoggedIn = (req, res, next) => {
 
 // PAGE NOT FOUND - Route for bad path error page
 app.use(checkUserLoggedIn, (req, res) => {
-    res.status(404).render('404');
+    // Initialize empty context object
+    let context = {};
+
+    // Add Google user props to the context object
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
+
+    res.status(404).render('404', context);
 });
    
 // INTERNAL SERVER ERROR - Route for a server-side error
 app.use((err, req, res, next) => {
+    // Initialize empty context object
+    let context = {};
+
+    // Add Google user props to the context object
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
+
     console.error(err.stack);
-    res.status(err.status || 500).render('500');
+    res.status(err.status || 500).render('500', context);
 });
 
 
