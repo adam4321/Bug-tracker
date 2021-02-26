@@ -30,13 +30,19 @@ module.exports = {
         a.length === b.length &&
         a.every((val, index) => val === b[index]);
     },
-    'inc': () => {
-        const args = Array.prototype.slice.call(arguments, 0, -1);
-        let index = args[0];
-            return index + 1;
+    'greater': (a, b) => {
+        if (a > b) {
+            return true;
+        }
+        else {
+            return false;
+        }
     },
-    'dec': (length) => {
-        return length - 1;
+    'inc': (size) => {
+        return size + 1;
+    },
+    'dec': (size) => {
+        return size - 1;
     },
     'round': (num) => {
         return Math.round(parseFloat(num));
