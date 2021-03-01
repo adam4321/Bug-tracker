@@ -23,6 +23,36 @@
     <body>
         <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
 
+            {{!-- About Modal --}}
+            <div id="aboutModal" class="modal">
+
+                {{!-- Modal content --}}
+                <div class="aboutModal-content">
+                    <span class="aboutClose">&times;</span>
+                    <p>About Modal - This is a bug tracker!</p>
+                </div>
+            </div>
+
+            {{!-- Contact Modal --}}
+            <div id="contactModal" class="modal">
+
+                {{!-- Modal content --}}
+                <div class="contactModal-content">
+                    <span class="contactClose">&times;</span>
+                    <p>Contact Modal - Reach out to me here!</p>
+                </div>
+            </div>
+
+            {{!-- Info Modal --}}
+            <div id="infoModal" class="modal">
+
+                {{!-- Modal content --}}
+                <div class="infoModal-content">
+                    <span class="infoClose">&times;</span>
+                    <p>Info Modal - Here's what to do with this thing!</p>
+                </div>
+            </div>
+
             <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
                 <div class="top-bar mdl-layout__header-row">
                     <img  id="bug-logo" src="images/bug-logo.png" alt="White bug icon">
@@ -30,23 +60,13 @@
 
                     <div class="mdl-layout-spacer"></div>
 
-                    {{!-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-                        <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-                        <i class="material-icons">search</i>
-                        </label>
-                        <div class="mdl-textfield__expandable-holder">
-                        <input class="mdl-textfield__input" type="text" id="search">
-                        <label class="mdl-textfield__label" for="search">Enter your query...</label>
-                        </div>
-                    </div> --}}
-
                     <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
                         <i class="material-icons">more_vert</i>
                     </button>
 
                     <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-                        <li class="mdl-menu__item">About</li>
-                        <li class="mdl-menu__item">Contact</li>
+                        <li class="mdl-menu__item" id="aboutBtn">About</li>
+                        <li class="mdl-menu__item" id="contactBtn">Contact</li>
                     </ul>
                     
                 </div>
@@ -78,17 +98,21 @@
                     <a class="mdl-navigation__link" href="/bug_tracker/settings"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Admin</a>
                 {{/if}}
                 <div class="mdl-layout-spacer"></div>
-                <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+                {{!-- Info Modal --}}
+                <a class="mdl-navigation__link" id="infoBtn"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
                 </nav>
             </div>
         
             {{!-- Content Box to load the other views into --}}
             <main class="mdl-layout__content">
-                <div class="page-content">
+                <div class="page-content"> 
                     {{{body}}}
                 </div>
             </main>
 
         </div>
     </body>
+
+    <script src="js/main.js"></script>
+
 </html>

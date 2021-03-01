@@ -370,3 +370,98 @@ select {
 .btn-space {
     margin-right: 15px;
 }
+
+
+/* MAIN LAYOUT MODALS ------------------------------------------------------ */
+
+/* The 3 Modal backgrounds */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* About Modal Content/Box ------------------------------------------------- */
+.aboutModal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 55%; /* Could be more or less, depending on screen size */
+}
+
+/* About Modal Close Button */
+.aboutClose {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.aboutClose:hover,
+.aboutClose:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 
+
+
+/* Contact Modal Content/Box ----------------------------------------------- */
+.contactModal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 55%; /* Could be more or less, depending on screen size */
+}
+
+/* Contact Modal Close Button */
+.contactClose {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.contactClose:hover,
+.contactClose:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 
+
+
+/* Modal Content/Box ------------------------------------------------------- */
+.infoModal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 55%; /* Could be more or less, depending on screen size */
+}
+
+#infoBtn {
+    cursor: pointer;
+}
+
+/* Info Modal Close Button */
+.infoClose {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.infoClose:hover,
+.infoClose:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 
