@@ -13,6 +13,12 @@ const express = require('express');
 const router = express.Router();
 
 
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
+
+
 /* RENDER ALL BUGS PAGE - Function to render the bugs page ----------------- */
 function renderAddBug(req, res, next) {
     // 1st query gathers the projects for the dropdown
@@ -31,21 +37,16 @@ function renderAddBug(req, res, next) {
                             ORDER BY bugId`;
 
     const mysql = req.app.get('mysql');                 
+
+    // Initialize empty context object with Google user props
     let context = {};
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
+    context.accessLevel = req.session.accessLevel;
 
-    // Test for the auth provider (Google vs Facebook) and create context object
-    if (req.user.provider == 'google') {
-        context.id = req.user.id;
-        context.email = req.user.email;
-        context.name = req.user.displayName;
-        context.photo = req.user.picture;
-    } else {
-        context.id = req.user.id;
-        context.email = req.user.emails[0].value;
-        context.name = req.user.displayName;
-        context.photo = req.user.photos[0].value;
-    }
-
+    // Populate the bug list
     mysql.pool.query(sql_query_3, (err, rows) => {
         if (err) {
             next(err);
@@ -170,12 +171,6 @@ function submitBug(req, res, next) {
         context.bugs = result.insertId;
         res.send(JSON.stringify(context));
     });
-}
-
-
-/* Middleware - Function to Check user is Logged in ------------------------ */
-const checkUserLoggedIn = (req, res, next) => {
-    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
 }
 
 
