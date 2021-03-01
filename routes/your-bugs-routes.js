@@ -4,10 +4,6 @@
 **  Root path:  localhost:5000/bug_tracker/home
 **
 **  Contains:   /
-**              /add-user
-**              /update-account
-**              /update-user
-**              /login-redirect
 **
 **  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
@@ -46,10 +42,8 @@ function renderHome(req, res) {
 
     const mysql = req.app.get('mysql');
 
-    // Initialize empty context object
+    // Initialize empty context object with Google user props
     let context = {};
-
-    // Add Google user props to the context object
     context.id = req.user.id;
     context.email = req.user.email;
     context.name = req.user.displayName;
@@ -61,7 +55,7 @@ function renderHome(req, res) {
            next(err);
            return;
         }
-        
+
         // If the user does not exist in the database, add them and render user-account page
         if (rows.length === 0) {
             // Get today's date
@@ -76,14 +70,18 @@ function renderHome(req, res) {
                     req.user.family_name,
                     context.email, 
                     null, 
-                    date,
+                    formatted_date,
                     3
                 ], 
-                function(err, result) {
+                (err, result) => {
                     if (err) {
                         next(err);
                         return;
                     }
+
+                    // Add access level to the cookie session
+                    req.session.accessLevel = 3;
+                    context.accessLevel = 3;
                 
                     // Then just render user home page, since a new user won't have bugs
                     res.render("your-bugs", context);
@@ -91,6 +89,10 @@ function renderHome(req, res) {
             );
         }
         else {
+            // Add access level to the cookie session and context object
+            req.session.accessLevel = rows[0].accessLevel;
+            context.accessLevel = rows[0].accessLevel;
+
             // Otherwise, find if the user has assigned bugs
             mysql.pool.query(sql_query_2, context.id, (err, rows) => {
                 if (err) {
@@ -137,108 +139,8 @@ function renderHome(req, res) {
 };
 
 
-/* USER BUGS - Function to create new user in the database ----------------- */
-function insertData(req, res, next) {
-    const query = `INSERT INTO Programmers (programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel)
-                        VALUES (?, ?, ?, ?, ?, ?, ?)`
-    const mysql = req.app.get('mysql');
-
-    mysql.pool.query(query, 
-        [
-            req.user.id,
-            req.body.firstName,
-            req.body.lastName,
-            req.body.email, 
-            req.body.mobile_number, 
-            req.body.dateStarted, 
-            req.body.accessLevel
-        ], 
-        function(err, result) {
-            if (err) {
-                next(err);
-                return;
-            }
-        
-            res.end()
-        }
-    );
-};
-
-
-/* UPDATE USER SETTINGS - Function to render update account page ----------- */
-function renderUpdateForm(req, res) {
-    const query = `SELECT programmerId, firstName, lastName, email, mobile_number, dateStarted, accessLevel
-                    FROM Programmers
-                    WHERE programmerId = ?`
-    const mysql = req.app.get('mysql');
-
-    // See if user with email at end of query string exists in database
-    mysql.pool.query(query, decodeURIComponent([req.query.uid]),
-        function(err, rows, fields) {
-            if (err) {
-                next(err);
-                return;
-            }
-            
-            // If the user does not exist in the database, redirect to login page
-            if (rows.length === 0) {
-                res.render('login-redirect');
-            }
-            
-            // Otherwise, pull the user's information from returned results to send to handlebars page
-            else {
-                // Initialize empty context array
-                let context = [];
-            
-                // Fill context array
-                context.uid = req.query.uid;
-                context.firstName = rows[0].firstName;
-                context.lastName = rows[0].lastName;
-                context.email = rows[0].email;
-                context.phone = rows[0].mobile_number;
-                context.dateStarted = rows[0].dateStarted;
-                context.accessLevel = rows[0].accessLevel;
-
-                // Render update account page
-                res.render("update-account", context); 
-            }
-        }
-    );
-};
-
-
-/* UPDATE USER SETTINGS - Function to update settings for an existing user - */
-function updateData(req, res, next) {
-    const query = `UPDATE Programmers SET firstName = ?, lastName = ?, email = ?, mobile_number = ?, dateStarted = ?
-                    WHERE programmerId = ?`
-    const mysql = req.app.get('mysql');
-    
-    mysql.pool.query(query, 
-        [
-            req.body.firstName,
-            req.body.lastName,
-            req.body.email,
-            req.body.mobile_number, 
-            req.body.dateStarted, 
-            req.body.uid 
-        ], 
-        function(err, result) {
-            if (err) {
-                next(err);
-                return;
-            }
-            
-            res.end()
-        }
-    );
-};
-
-
 /* USER HOME PAGE ROUTES --------------------------------------------------- */
 
 router.get('/', checkUserLoggedIn, renderHome);
-router.post('/add-user', checkUserLoggedIn, insertData);
-router.get('/update-account', checkUserLoggedIn, renderUpdateForm);
-router.post('/update-user', checkUserLoggedIn, updateData);
 
 module.exports = router;
