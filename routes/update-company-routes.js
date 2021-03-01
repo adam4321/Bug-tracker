@@ -13,25 +13,25 @@ const express = require('express');
 const router = express.Router();
 
 
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
+
+
 /* COMPANIES PAGE RENDER - function to view all existing companies --------- */
 function displayCompanyPage(req, res, next) {
     // Find all of the current companies
     const mysql = req.app.get('mysql');
     let sql_query = `SELECT * FROM Companies`;
-    let context = {};
 
-    // Test for the auth provider (Google vs Facebook) and create context object
-    if (req.user.provider == 'google') {
-        context.id = req.user.id;
-        context.email = req.user.email;
-        context.name = req.user.displayName;
-        context.photo = req.user.picture;
-    } else {
-        context.id = req.user.id;
-        context.email = req.user.emails[0].value;
-        context.name = req.user.displayName;
-        context.photo = req.user.photos[0].value;
-    }
+    // Initialize empty context object with Google user props
+    let context = {};
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
+    context.accessLevel = req.session.accessLevel;
 
     mysql.pool.query(sql_query, (err, rows) => {
         if (err) {
@@ -49,7 +49,7 @@ function displayCompanyPage(req, res, next) {
             });
         }
         context.companies = companyDbData;
-        res.render('add-company', context);
+        res.render('companies', context);
     });
 }
 
@@ -69,12 +69,6 @@ function submitCompany(req, res, next) {
         context.companies = result.insertId;
         res.send(JSON.stringify(context));
     });
-}
-
-
-/* Middleware - Function to Check user is Logged in ------------------------ */
-const checkUserLoggedIn = (req, res, next) => {
-    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
 }
 
 
