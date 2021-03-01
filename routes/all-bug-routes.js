@@ -4,17 +4,21 @@
 **  Root path:   localhost:5000/bug_tracker/all_bugs
 **
 **  Contains:    /
-**               /insertBug
 **               /deleteBug
 **               /searchBug
 **               /viewAllBugs
-**               /resetTable
 **
 **  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
 
 const express = require('express');
 const router = express.Router();
+
+
+/* Middleware - Function to Check user is Logged in ------------------------ */
+const checkUserLoggedIn = (req, res, next) => {
+    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
+}
 
 
 /* RENDER ALL BUGS PAGE - Function to render the bugs page ----------------- */
@@ -35,21 +39,16 @@ function renderHome(req, res, next) {
                             ORDER BY bugId`;
 
     const mysql = req.app.get('mysql');                 
+
+    // Initialize empty context object with Google user props
     let context = {};
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
+    context.accessLevel = req.session.accessLevel;
 
-    // Test for the auth provider (Google vs Facebook) and create context object
-    if (req.user.provider == 'google') {
-        context.id = req.user.id;
-        context.email = req.user.email;
-        context.name = req.user.displayName;
-        context.photo = req.user.picture;
-    } else {
-        context.id = req.user.id;
-        context.email = req.user.emails[0].value;
-        context.name = req.user.displayName;
-        context.photo = req.user.photos[0].value;
-    }
-
+    // Populate the bug list
     mysql.pool.query(sql_query_3, (err, rows) => {
         if (err) {
             next(err);
@@ -125,54 +124,6 @@ function renderHome(req, res, next) {
                 res.render('all-bugs', context);
             });
         });
-    });
-}
-
-
-/* INSERT NEW BUG PAGE - Function to insert a new bug --------------------- */
-function submitBug(req, res, next) {
-    // Query to insert the bug data
-    let sql_query_1 = `INSERT INTO Bugs (bugSummary, bugDescription, projectId, dateStarted, priority, fixed, resolution) 
-                            VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    // Query to run in loop to create Bugs_Programmers instances
-    let sql_query_2 = `INSERT INTO Bugs_Programmers (bugId, programmerId) 
-                            VALUES (?, ?)`;
-
-    const mysql = req.app.get('mysql');
-    let context = {};
-    let bugId;
-
-    // Insert new bug data
-    mysql.pool.query(sql_query_1, [
-        req.body.bugSummary,
-        req.body.bugDescription,
-        req.body.bugProject,
-        req.body.bugStartDate,
-        req.body.bugPriority,
-        req.body.bugFixed,
-        req.body.bugResolution
-    ], (err, result) => {
-        if (err) {
-            next(err);
-            return;
-        }
-
-        // Retrieve the bugId from the previous query's result
-        bugId = result.insertId;
-
-        // Run the Bugs_Programmers insertion for each programmer
-        for (let i in req.body.programmerArr) {
-            mysql.pool.query(sql_query_2, [result.insertId, req.body.programmerArr[i]], (err, result) => {
-                if (err) {
-                    next(err);
-                    return;
-                }
-            });
-        }
-
-        context.id = bugId;
-        context.bugs = result.insertId;
-        res.send(JSON.stringify(context));
     });
 }
 
@@ -344,83 +295,11 @@ function viewAllBugs(req, res, next) {
 }
 
 
-/* BUGS PAGE RESET TABLES - Function to drop and repopulate database ------ */
-function resetTable(req, res, next) {
-    // Query to display the table after reset
-    let viewAllQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
-                        b.dateStarted, b.resolution, b.priority, b.fixed 
-                        FROM Programmers p 
-                        JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
-                        JOIN Bugs b ON bp.bugId = b.bugId
-                        LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                            ORDER BY bugId`;
-
-    let recreateQuery = require('../sql/reset_database.js');
-    const mysql = req.app.get('mysql');                 
-    
-    mysql.pool.query(recreateQuery, (err, result) => {
-        if(err) {
-            next(err);
-            return;
-        }
-
-        const mysql = req.app.get('mysql');                 
-        let context = {};
-
-        mysql.pool.query(viewAllQuery, (err, result) => {
-            if(err) {
-                next(err);
-                return;
-            }
-
-            let rows = result;
-            let prevEntryBugId;
-            let bugProgrammers = [];
-            let matchingBugsData = [];
-
-            for (let i in rows) {
-                if (prevEntryBugId == rows[i].bugId) {
-                    bugProgrammers.push(rows[i].firstName + ' ' + rows[i].lastName);
-                }
-                else {
-                    prevEntryBugId = rows[i].bugId;
-                    bugProgrammers = [];
-                    bugProgrammers.push(rows[i].firstName + ' ' + rows[i].lastName);
-
-                    matchingBugsData.push({
-                        bugId: rows[i].bugId,
-                        bugSummary: rows[i].bugSummary,
-                        bugDescription: rows[i].bugDescription,
-                        projectName: rows[i].projectName,
-                        programmers: bugProgrammers,
-                        dateStarted: rows[i].dateStarted,
-                        priority: rows[i].priority,
-                        fixed: rows[i].fixed,
-                        resolution: rows[i].resolution
-                    }) 
-                }
-            }
-
-            context.bugs = matchingBugsData;
-            res.send(JSON.stringify(context));
-        });
-    })
-}
-
-
-/* Middleware - Function to Check user is Logged in ------------------------ */
-const checkUserLoggedIn = (req, res, next) => {
-    req.user ? next(): res.status(401).render('unauthorized-page', {layout: 'login'});
-}
-
-
 /* PROJECTS PAGE ROUTES ---------------------------------------------------- */
 
 router.get('/', checkUserLoggedIn, renderHome);
-router.post('/insertBug', checkUserLoggedIn, submitBug);
 router.post('/deleteBug', checkUserLoggedIn, deleteBug);
 router.post('/searchBug', checkUserLoggedIn, searchBug);
 router.post('/viewAllBugs', checkUserLoggedIn, viewAllBugs);
-router.post('/resetTable', checkUserLoggedIn, resetTable);
 
 module.exports = router;
