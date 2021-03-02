@@ -36,7 +36,8 @@ const mysql = require('./db-config.js');
 app.set('mysql', mysql);
 
 // Set up path to static files
-app.use('/bug_tracker', express.static('public'));
+let path = require('path');
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 // Set up cookie session and configure session storage
 const cookieSession = require('cookie-session');
