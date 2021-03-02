@@ -1,7 +1,7 @@
 {{!-- Update user profile and links to update projects, programmers, and companies - using express handlebars --}}
 
 <title>Bug Tracker | Update Profile</title>
-<link type="text/css" rel="stylesheet" href="css/update.css">
+<link type="text/css" rel="stylesheet" href="css/admin.css">
         
         
 {{!-- Container for the dashboard --}}
@@ -66,30 +66,12 @@
     <div class="mdl-card__title mdl-color-text--white dashboard-top-bar">
         <h2 class="mdl-card__title-text">Admin pages</h2>
     </div>
-    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-        
-        <a href="http://localhost:5000/bug_tracker/programmers">
-            <button class="submitBtn btn-style btn-space" id="save">Programmers</button>
-        </a>
-        <p class="inline-btn-msg">Add or update programmers</p>
-        <br>
-
-        <a href="http://localhost:5000/bug_tracker/projects">
-            <button class="submitBtn btn-style btn-space" id="save">Projects</button>
-        </a>
-        <p class="inline-btn-msg">Add or update projects</p>
-        <br>
-        
-        <a href="http://localhost:5000/bug_tracker/companies">
-            <button class="submitBtn btn-style btn-space" id="save">Companies</button>
-        </a>
-        <p class="inline-btn-msg">Add or update companies</p>
-        <br>
-        <br>
+    <div class="mdl-card__supporting-text mdl-color-text--grey-600 admin-card">
 
         <button class="submitBtn btn-style btn-space" id="reset-table">Restore Database</button>
         <p class="inline-btn-msg">Restore Database to initial values</p>    
         <div id="spinner2" class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+
     </div>
 </div>
 
