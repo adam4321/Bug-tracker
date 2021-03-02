@@ -17,11 +17,13 @@ app.set('port', 5000);
 
 // Set up express-handlebars
 const handlebars = require('express-handlebars');
+const HANDLEBARS_HELPERS = require('./HANDLEBARS_HELPERS.js');
 app.set('view engine', '.hbs');
 app.engine('.hbs', handlebars({
     layoutsDir: __dirname + '/views/layouts',
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: HANDLEBARS_HELPERS
 }));
 
 // Set up body-parser
@@ -67,17 +69,17 @@ app.use('/bug_tracker/add_bug', require('./routes/add-bug-routes.js'));
 // EDIT BUG PAGE ROUTES
 app.use('/bug_tracker/edit_bug', require('./routes/edit-bug-routes.js'));
 
-// UPDATE ACCOUNT PAGE ROUTES
-app.use('/bug_tracker/settings', require('./routes/update-account-routes.js'));
+// PROGRAMMERS PAGE ROUTES - DISPLAY, ADD, UPDATE, DELETE 
+app.use('/bug_tracker/programmers', require('./routes/programmers-routes.js'));
 
-// UPDATE OR ADD PROGRAMMERS PAGE ROUTES
-app.use('/bug_tracker/programmers', require('./routes/update-programmers-routes.js'));
+// PROJECTS PAGE ROUTES - DISPLAY, ADD, UPDATE, DELETE
+app.use('/bug_tracker/projects', require('./routes/projects-routes.js'));
 
-// UPDATE OR ADD PROJECTS PAGE ROUTES
-app.use('/bug_tracker/projects', require('./routes/update-projects-routes.js'));
+// COMPANIES PAGE ROUTES - DISPLAY, ADD, UPDATE, DELETE
+app.use('/bug_tracker/companies', require('./routes/company-routes.js'));
 
-// UPDATE OR ADD COMPANIES PAGE ROUTES
-app.use('/bug_tracker/companies', require('./routes/update-company-routes.js'));
+// ADMIN PAGE ROUTES
+app.use('/bug_tracker/admin', require('./routes/admin-routes.js'));
 
 
 /* AUTHENTICATION ROUTES ---------------------------------------------------- */
@@ -87,7 +89,8 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 
 // GOOGLE POST-AUTH REDIRECT
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login/failed' }),
-    function(req, res) {
+    (req, res) => {
+        // Route the user to the homepage
         res.redirect('/bug_tracker/home');
     }
 );
