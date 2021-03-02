@@ -3,7 +3,7 @@
 ******************************************************************************/
 
 .page-content {
-    width: 85%;
+    width: 83%;
 }
 
 .form-card {
@@ -14,6 +14,15 @@
 
 .table-card {
     width: 320px !important;
+    /* height: 70%; */
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
+}
+
+#add-btn {
+    width: 140px;
+    display: block;
+    margin: 0px auto 0px auto;
+    background-color:rgb(45, 122, 153);
 }
