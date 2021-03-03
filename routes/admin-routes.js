@@ -30,7 +30,7 @@ function renderSettings(req, res, next) {
     context.photo = req.user.picture;
     context.accessLevel = req.session.accessLevel;
 
-    res.render("update-account", context);
+    res.render("admin", context);
 };
 
 
