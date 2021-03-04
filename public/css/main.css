@@ -350,6 +350,17 @@ select {
     background-color: rgba(0,0,0,0.4);  /* Black w/ opacity */
 }
 
+.modal-title {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 5px;
+}
+
+.modal-text {
+    font-size: 18px;
+    margin: 25px 10px 20px 10px;
+}
+
 /* About Modal Content/Box ------------------------------------------------- */
 .aboutModal-content {
     background-color: #fefefe;
