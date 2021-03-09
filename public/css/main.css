@@ -351,32 +351,38 @@ select {
 }
 
 .modal-title {
+    background-color: rgb(45, 122, 153);
     text-align: center;
     font-size: 24px;
-    margin-top: 5px;
+    padding: 15px 20px 0 20px;
+    margin: -20px 0 0 -20px;
+    width: 320px;
+    height: 35px;
 }
 
 .modal-text {
     font-size: 18px;
-    margin: 25px 10px 20px 10px;
+    margin: 35px 10px 20px 10px;
 }
 
 /* About Modal Content/Box ------------------------------------------------- */
 .aboutModal-content {
+    position: relative;
     background-color: #fefefe;
     margin: 10% auto; /* 15% from the top and centered */
-    padding: 20px;
+    padding: 20px 20px 20px 20px;
     border: 1px solid #888;
-    max-width: 320px; /* Could be more or less, depending on screen size */
+    width: 320px; /* Could be more or less, depending on screen size */
     text-align: justify;
 }
 
 /* About Modal Close Button */
 .aboutClose {
-    color: #aaa;
+    color: white;
     float: right;
     font-size: 28px;
     font-weight: bold;
+    margin-top: -5px;
 }
 
 .aboutClose:hover,
