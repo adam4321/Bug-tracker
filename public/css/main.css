@@ -350,6 +350,21 @@ select {
     background-color: rgba(0,0,0,0.4);  /* Black w/ opacity */
 }
 
+.close {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: -5px;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .modal-title {
     background-color: rgb(45, 122, 153);
     text-align: center;
@@ -369,79 +384,47 @@ select {
 .aboutModal-content {
     position: relative;
     background-color: #fefefe;
-    margin: 10% auto; /* 15% from the top and centered */
+    margin: 10% auto; /* 10% from the top and centered */
     padding: 20px 20px 20px 20px;
     border: 1px solid #888;
     width: 320px; /* Could be more or less, depending on screen size */
     text-align: justify;
 }
 
-/* About Modal Close Button */
-.aboutClose {
-    color: white;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: -5px;
+.aboutTitle {
+    width: 320px;
 }
-
-.aboutClose:hover,
-.aboutClose:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-} 
 
 
 /* Contact Modal Content/Box ----------------------------------------------- */
 .contactModal-content {
+    position: relative;
     background-color: #fefefe;
-    margin: 10% auto; /* 15% from the top and centered */
-    padding: 20px;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px 20px 20px 20px;
     border: 1px solid #888;
-    width: 55%; /* Could be more or less, depending on screen size */
+    width: 320px; /* Could be more or less, depending on screen size */
+    text-align: justify;
 }
 
-/* Contact Modal Close Button */
-.contactClose {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+.contactTitle {
+    width: 320px;
 }
-
-.contactClose:hover,
-.contactClose:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-} 
 
 
 /* Modal Content/Box ------------------------------------------------------- */
 .infoModal-content {
     background-color: #fefefe;
-    margin: 10% auto; /* 15% from the top and centered */
+    margin: 10% auto; /* 10% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 55%; /* Could be more or less, depending on screen size */
+    width: 600px; /* Could be more or less, depending on screen size */
+}
+
+.infoTitle {
+    width: 600px;
 }
 
 #infoBtn {
     cursor: pointer;
 }
-
-/* Info Modal Close Button */
-.infoClose {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.infoClose:hover,
-.infoClose:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-} 
