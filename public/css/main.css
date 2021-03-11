@@ -384,7 +384,7 @@ select {
 .aboutModal-content {
     position: relative;
     background-color: #fefefe;
-    margin: 10% auto; /* 10% from the top and centered */
+    margin: 130px auto; /* 10% from the top and centered */
     padding: 20px 20px 20px 20px;
     border: 1px solid #888;
     width: 320px; /* Could be more or less, depending on screen size */
@@ -400,7 +400,7 @@ select {
 .contactModal-content {
     position: relative;
     background-color: #fefefe;
-    margin: 10% auto; /* 10% from the top and centered */
+    margin: 130px auto; /* 10% from the top and centered */
     padding: 20px 20px 20px 20px;
     border: 1px solid #888;
     width: 320px; /* Could be more or less, depending on screen size */
@@ -415,7 +415,7 @@ select {
 /* Modal Content/Box ------------------------------------------------------- */
 .infoModal-content {
     background-color: #fefefe;
-    margin: 10% auto; /* 10% from the top and centered */
+    margin: 50px auto 0 auto; /* 10% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 600px; /* Could be more or less, depending on screen size */
