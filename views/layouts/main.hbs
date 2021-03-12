@@ -112,6 +112,27 @@
                     <p class="mdl-color-text--grey-600 modal-text">
                         The Add a Bug page allows a user to enter a new bug into the system. 
                     </p>
+
+                    <h4 class="mdl-color-text--grey-600">Projects</h4>
+                    <p class="mdl-color-text--grey-600 modal-text">
+                        The Projects page allows a user to enter a new Project into the system. 
+                    </p>
+
+                    <h4 class="mdl-color-text--grey-600">Companies</h4>
+                    <p class="mdl-color-text--grey-600 modal-text">
+                        The Companies page allows a user to enter a new Company into the system. 
+                    </p>
+                    
+                    <h4 class="mdl-color-text--grey-600">Programmers</h4>
+                    <p class="mdl-color-text--grey-600 modal-text">
+                        The Programmers page allows a user to enter a new bug into the system. 
+                    </p>
+
+                    <h4 class="mdl-color-text--grey-600">Admin</h4>
+                    <p class="mdl-color-text--grey-600 modal-text">
+                        The Admin page is only visible for users with an access level of 3 and it 
+                        allows a user to reset the database to its default initially populated data. 
+                    </p>
                 </div>
             </div>
 
@@ -157,10 +178,10 @@
                     <a class="mdl-navigation__link" href="/bug_tracker/home"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Your Bugs</a>
                     <a class="mdl-navigation__link" href="/bug_tracker/all_bugs"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>All Bugs</a>
                     <a class="mdl-navigation__link" href="/bug_tracker/add_bug"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Add a Bug</a>
-                    <a class="mdl-navigation__link" href="/bug_tracker/programmers"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Programmers</a>
                     <a class="mdl-navigation__link" href="/bug_tracker/projects"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Projects</a>
                     <a class="mdl-navigation__link" href="/bug_tracker/companies"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Companies</a>
-                    
+                    <a class="mdl-navigation__link" href="/bug_tracker/programmers"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Programmers</a>
+
                     {{#if (greater accessLevel 2)}}
                         <a class="mdl-navigation__link" href="/bug_tracker/admin"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Admin</a>
                     {{/if}}
