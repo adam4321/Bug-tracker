@@ -22,3 +22,13 @@
     margin-top: 18px;
     margin-left: 25px;
 }
+
+
+/* Modile layouts ---------------------------------------------------------- */
+
+@media only screen and (max-width: 1024px) {
+    .page-content {
+        width: 100%;
+        margin: 25px auto 0 auto;
+    }
+}
