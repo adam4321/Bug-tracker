@@ -6,6 +6,9 @@
 **  Contains:    /
 **               /add_company
 **               /add_company/insertCompany
+**               /deleteCompany
+**               /edit_company
+**               /edit_company/updateCompany
 **
 **  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
@@ -169,57 +172,22 @@ function deleteCompany(req, res, next) {
 /* SUBMIT COMPANY EDIT - Function to submit a company update --------------- */
 function updateCompany(req, res, next) {
     // Query to insert the bug data
-    let sql_query_1 = `UPDATE Bugs SET bugSummary=?, bugDescription=?, projectId=?, dateStarted=?, priority=?, fixed=?, resolution=?
-                            WHERE bugId = ?`;
+    let sql_query = `UPDATE Companies SET companyName=?, dateJoined=? WHERE companyId = ?`;
     
-    // Query to delete all Bugs_Programmers for the current bugId
-    let sql_query_2 = `DELETE FROM Bugs_Programmers WHERE bugId=?`;
-
-    // Query to run in loop to create Bugs_Programmers instances for the current bugId
-    let sql_query_3 = `INSERT INTO Bugs_Programmers (bugId, programmerId) 
-                            VALUES (?, ?)`;
-
     const mysql = req.app.get('mysql');
-    let context = {};
 
     // Insert updated bug data
-    mysql.pool.query(sql_query_1, [
-        req.body.bugSummary,
-        req.body.bugDescription,
-        req.body.bugProject,
-        req.body.bugStartDate,
-        req.body.bugPriority,
-        req.body.bugFixed,
-        req.body.bugResolution,
-        req.body.bugId
+    mysql.pool.query(sql_query, [
+        req.body.companyName,
+        req.body.dateJoined,
+        req.body.companyId
     ], (err, result) => {
         if (err) {
             next(err);
             return;
         }
 
-        // Delete all existing Bugs_Programmers rows
-        mysql.pool.query(sql_query_2, [req.body.bugId], (err, result) => {
-            if (err) {
-                next(err);
-                return;
-            }
-
-            // Run the Bugs_Programmers insertion for each programmer
-            for (let i in req.body.programmerArr) {
-                mysql.pool.query(sql_query_3, [req.body.bugId, req.body.programmerArr[i]], (err, result) => {
-                    if (err) {
-                        next(err);
-                        return;
-                    }
-                    
-                })
-            }
-
-            context.id = req.body.bugId;
-            context.bugs = result.insertId;
-            res.send(JSON.stringify(context));
-        });
+        res.end();
     });
 }
 
