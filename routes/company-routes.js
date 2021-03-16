@@ -1,10 +1,11 @@
 /******************************************************************************
-**  Description: COMPANIES PAGE - server side node.js routes
+**  Description: COMPANIES PAGES - server side node.js routes
 **
 **  Root path:   localhost:5000/bug_tracker/companies
 **
 **  Contains:    /
-**               /insertCompany
+**               /add_company
+**               /add_company/insertCompany
 **
 **  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
@@ -83,6 +84,7 @@ function displayAddCompanyPage(req, res, next) {
                 dateJoined: rows[i].dateJoined,
             });
         }
+
         context.companies = companyDbData;
         res.render('add-company', context);
     });
@@ -107,10 +109,128 @@ function submitCompany(req, res, next) {
 }
 
 
+/* EDIT COMPANY PAGE - Route where the edit company page is rendered ------- */
+function displayEditCompanyPage(req, res, next) {
+    // 1st query gathers the projects for the dropdown
+    let sql_query = `SELECT companyName, dateJoined FROM Companies WHERE companyId = ?`;
+
+    const mysql = req.app.get('mysql');
+    
+    // Initialize empty context object with Google user props
+    let context = {};
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
+    context.accessLevel = req.session.accessLevel;
+
+    mysql.pool.query(sql_query, [req.query.companyId], (err, rows) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        context.companyId = req.query.companyId;
+        context.companyName = rows[0].companyName;
+        context.dateJoined = rows[0].dateJoined;
+
+        res.render('edit-company', context);
+    });
+}
+
+
+/* COMPANIES PAGE DELETE - Route to delete a row from the company list ----- */
+function deleteCompany(req, res, next) {
+    // Delete the row with the passed in bugId
+    let sql_query_1 = `DELETE FROM Companies WHERE companyId=?`;
+    let sql_query_2 = `SELECT * FROM Companies`;
+
+    const mysql = req.app.get('mysql');
+    var context = {};
+
+    mysql.pool.query(sql_query_1, [req.body.companyId], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        mysql.pool.query(sql_query_2, (err, rows) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            context.results = JSON.stringify(rows);
+            res.render('companies', context);
+        });
+    });
+}
+
+
+/* SUBMIT COMPANY EDIT - Function to submit a company update --------------- */
+function updateCompany(req, res, next) {
+    // Query to insert the bug data
+    let sql_query_1 = `UPDATE Bugs SET bugSummary=?, bugDescription=?, projectId=?, dateStarted=?, priority=?, fixed=?, resolution=?
+                            WHERE bugId = ?`;
+    
+    // Query to delete all Bugs_Programmers for the current bugId
+    let sql_query_2 = `DELETE FROM Bugs_Programmers WHERE bugId=?`;
+
+    // Query to run in loop to create Bugs_Programmers instances for the current bugId
+    let sql_query_3 = `INSERT INTO Bugs_Programmers (bugId, programmerId) 
+                            VALUES (?, ?)`;
+
+    const mysql = req.app.get('mysql');
+    let context = {};
+
+    // Insert updated bug data
+    mysql.pool.query(sql_query_1, [
+        req.body.bugSummary,
+        req.body.bugDescription,
+        req.body.bugProject,
+        req.body.bugStartDate,
+        req.body.bugPriority,
+        req.body.bugFixed,
+        req.body.bugResolution,
+        req.body.bugId
+    ], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        // Delete all existing Bugs_Programmers rows
+        mysql.pool.query(sql_query_2, [req.body.bugId], (err, result) => {
+            if (err) {
+                next(err);
+                return;
+            }
+
+            // Run the Bugs_Programmers insertion for each programmer
+            for (let i in req.body.programmerArr) {
+                mysql.pool.query(sql_query_3, [req.body.bugId, req.body.programmerArr[i]], (err, result) => {
+                    if (err) {
+                        next(err);
+                        return;
+                    }
+                    
+                })
+            }
+
+            context.id = req.body.bugId;
+            context.bugs = result.insertId;
+            res.send(JSON.stringify(context));
+        });
+    });
+}
+
+
 /* COMPANIES PAGE ROUTES ----------------------------------------------------- */
 
 router.get('/', checkUserLoggedIn, displayCompanyPage);
 router.get('/add_company', checkUserLoggedIn, displayAddCompanyPage);
 router.post('/add_company/insertCompany', checkUserLoggedIn, submitCompany);
+router.post('/deleteCompany', checkUserLoggedIn, deleteCompany);
+router.get('/edit_company', checkUserLoggedIn, displayEditCompanyPage);
+router.post('/edit_company/updateCompany', checkUserLoggedIn, updateCompany);
 
 module.exports = router;

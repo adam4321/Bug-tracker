@@ -13,11 +13,21 @@
 }
 
 .table-card {
-    width: 320px !important;
+    width: 500px !important;
     /* height: 70%; */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 30px;
+}
+
+.update-btn {
+    background-color: #2d7a99;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    padding: 5px;
+    text-decoration: none;
+    color: #fff;
 }
 
 #add-btn {

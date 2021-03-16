@@ -20,6 +20,15 @@
                 <tr>
                     <td class="mdl-data-table__cell--non-numeric">{{this.companyName}}</td>
                     <td>{{this.dateJoined}}</td>
+                    <td><a class="update-btn" href="/bug_tracker/companies/edit_company?companyId={{this.companyId}}">Update</a></td>
+                    <td>
+                        <input 
+                            type="button" 
+                            value="Delete" 
+                            class="update-btn" 
+                            onclick="deleteCompany('recordTable', this, {{this.companyId}})"
+                        >
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -34,3 +43,6 @@
     </button>
     <br>
 {{/if}}
+
+
+<script src="/js/company.js"></script>
