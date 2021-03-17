@@ -112,6 +112,33 @@ function submitCompany(req, res, next) {
 }
 
 
+/* COMPANIES PAGE DELETE - Route to delete a row from the company list ----- */
+function deleteCompany(req, res, next) {
+    // Delete the row with the passed in bugId
+    let sql_query_1 = `DELETE FROM Companies WHERE companyId=?`;
+    let sql_query_2 = `SELECT * FROM Companies`;
+
+    const mysql = req.app.get('mysql');
+    var context = {};
+
+    mysql.pool.query(sql_query_1, [req.body.companyId], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        mysql.pool.query(sql_query_2, (err, rows) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            context.results = JSON.stringify(rows);
+            res.render('companies', context);
+        });
+    });
+}
+
+
 /* EDIT COMPANY PAGE - Route where the edit company page is rendered ------- */
 function displayEditCompanyPage(req, res, next) {
     // 1st query gathers the projects for the dropdown
@@ -138,33 +165,6 @@ function displayEditCompanyPage(req, res, next) {
         context.dateJoined = rows[0].dateJoined;
 
         res.render('edit-company', context);
-    });
-}
-
-
-/* COMPANIES PAGE DELETE - Route to delete a row from the company list ----- */
-function deleteCompany(req, res, next) {
-    // Delete the row with the passed in bugId
-    let sql_query_1 = `DELETE FROM Companies WHERE companyId=?`;
-    let sql_query_2 = `SELECT * FROM Companies`;
-
-    const mysql = req.app.get('mysql');
-    var context = {};
-
-    mysql.pool.query(sql_query_1, [req.body.companyId], (err, result) => {
-        if (err) {
-            next(err);
-            return;
-        }
-
-        mysql.pool.query(sql_query_2, (err, rows) => {
-            if (err) {
-                next(err);
-                return;
-            }
-            context.results = JSON.stringify(rows);
-            res.render('companies', context);
-        });
     });
 }
 

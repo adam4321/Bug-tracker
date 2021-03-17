@@ -2,9 +2,9 @@
 **  Description: COMPANY - Client-side JavaScript file
 **************************************************************/
 
-/* DELETE BUG CLIENT SIDE -------------------------------------------------- */
+/* DELETE COMPANY CLIENT SIDE -------------------------------------------------- */
 
-// Function call to delete a row from bug
+// Function call to delete a row from companies
 function deleteCompany(tbl, curRow, companyId) {
     let delete_confirm = confirm("Are you sure?");
 
