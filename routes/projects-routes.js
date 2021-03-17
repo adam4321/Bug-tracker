@@ -24,8 +24,8 @@ const checkUserLoggedIn = (req, res, next) => {
 /* RENDER PROJECTS PAGE - Function to render the project page -------------- */
 function renderProjects(req, res, next) {
     // Find all of the projects and their associated companies
-    let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId`;
     let sql_query_1 = `SELECT companyId, companyName FROM Companies`;
+    let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId`;
 
     const mysql = req.app.get('mysql');
     
@@ -83,8 +83,8 @@ function renderProjects(req, res, next) {
 /* RENDER ADD PROJECTS PAGE - Function to render the project page ---------- */
 function renderAddProjects(req, res, next) {
     // Find all of the projects and their associated companies
-    let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId`;
     let sql_query_1 = `SELECT companyId, companyName FROM Companies`;
+    let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId`;
 
     const mysql = req.app.get('mysql');
     
@@ -194,11 +194,68 @@ function deleteProject(req, res, next) {
 }
 
 
+/* RENDER EDIT PROJECTS PAGE - Function to render the edit project page ---- */
+function renderEditProject(req, res, next) {
+    // Find all of the projects and their associated companies
+    let sql_query_1 = `SELECT companyId, companyName FROM Companies`;
+    let sql_query_2 = `SELECT c.companyName, p.projectName, p.dateStarted, p.lastUpdated, p.inMaintenance
+                        FROM Projects p JOIN Companies c ON p.companyId = c.companyId
+                        WHERE p.projectId = ?`;
+
+    const mysql = req.app.get('mysql');
+    
+    // Initialize empty context object with Google user props
+    let context = {};
+    context.id = req.user.id;
+    context.email = req.user.email;
+    context.name = req.user.displayName;
+    context.photo = req.user.picture;
+    context.accessLevel = req.session.accessLevel;
+
+    // Query projects
+    mysql.pool.query(sql_query_2, [req.query.projectId], (err, rows) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        
+        // Add project data to context object
+        context.projectId = rows[0].projectId;
+        context.projectName = rows[0].projectName;
+        context.companyName = rows[0].companyName;
+        context.dateStarted = rows[0].dateStarted;
+        context.lastUpdated = rows[0].lastUpdated;
+        context.inMaintenance = rows[0].inMaintenance;
+
+        // Query for the list of companies
+        mysql.pool.query(sql_query_1,  (err, rows) => {
+            if (err) {
+                next(err);
+                return;
+            }
+            let companyDbData = [];
+            for (let i in rows) {
+                companyDbData.push({
+                    companyId: rows[i].companyId,
+                    companyName: rows[i].companyName
+                });
+            }
+            
+            // Add company array to context object
+            context.companies = companyDbData;
+
+            res.render('edit-project', context);
+        });
+    });
+}
+
+
 /* PROJECTS PAGE ROUTES ---------------------------------------------------- */
 
 router.get('/', checkUserLoggedIn, renderProjects);
 router.get('/add_project', checkUserLoggedIn, renderAddProjects);
 router.post('/add_project/insertProject', checkUserLoggedIn, submitProject);
 router.post('/deleteProject', checkUserLoggedIn, deleteProject);
+router.get('/edit_project', checkUserLoggedIn, renderEditProject);
 
 module.exports = router;
