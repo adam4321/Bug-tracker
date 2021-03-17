@@ -4,7 +4,9 @@
 **  Root path:   localhost:5000/bug_tracker/projects
 **
 **  Contains:    /
-**               /insertProject
+**               /add_project
+**               /add_project/insertProject
+**               /deleteProject
 **
 **  SECURED ROUTES!  --  All routes must call checkUserLoggedIn
 ******************************************************************************/
@@ -164,10 +166,39 @@ function submitProject(req, res, next) {
 }
 
 
+/* PROJECTS PAGE DELETE - Route to delete a row from the projects list ----- */
+function deleteProject(req, res, next) {
+    // Delete the row with the passed in bugId
+    let sql_query_1 = `DELETE FROM Projects WHERE projectId=?`;
+    let sql_query_2 = `SELECT * FROM Projects`;
+
+    const mysql = req.app.get('mysql');
+    var context = {};
+
+    mysql.pool.query(sql_query_1, [req.body.projectId], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        mysql.pool.query(sql_query_2, (err, rows) => {
+            if (err) {
+                next(err);
+                return;
+            }
+
+            context.results = JSON.stringify(rows);
+            res.render('projects', context);
+        });
+    });
+}
+
+
 /* PROJECTS PAGE ROUTES ---------------------------------------------------- */
 
 router.get('/', checkUserLoggedIn, renderProjects);
 router.get('/add_project', checkUserLoggedIn, renderAddProjects);
-router.post('/insertProject', checkUserLoggedIn, submitProject);
+router.post('/add_project/insertProject', checkUserLoggedIn, submitProject);
+router.post('/deleteProject', checkUserLoggedIn, deleteProject);
 
 module.exports = router;
