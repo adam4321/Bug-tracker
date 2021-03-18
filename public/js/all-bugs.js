@@ -22,32 +22,36 @@ if (window.history.state != null && window.history.state.hasOwnProperty('histori
 
 // Function call to delete a row from bug
 function deleteBug(tbl, curRow, bugId) {
-    let table = document.getElementById(tbl);
-    let rowCount = table.rows.length;
-    let req = new XMLHttpRequest();
-    let path = "/bug_tracker/all_bugs/deleteBug";
+    let del_confirm = confirm("Are you SURE you want to delete this?");
 
-    reqBody = JSON.stringify({bugId: bugId});
+    if (del_confirm) {
+        let table = document.getElementById(tbl);
+        let rowCount = table.rows.length;
+        let req = new XMLHttpRequest();
+        let path = "/bug_tracker/all_bugs/deleteBug";
 
-    req.open("POST", path, true);
-    req.setRequestHeader("Content-Type", "application/json");
-    req.addEventListener("load", () => {
-        if (req.status >= 200 && req.status < 400) {
-            for (let i = 0; i < rowCount; i++) {
-                let row = table.rows[i];
-        
-                if (row == curRow.parentNode.parentNode) {
-                    table.deleteRow(i);
+        reqBody = JSON.stringify({bugId: bugId});
+
+        req.open("POST", path, true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.addEventListener("load", () => {
+            if (req.status >= 200 && req.status < 400) {
+                for (let i = 0; i < rowCount; i++) {
+                    let row = table.rows[i];
+            
+                    if (row == curRow.parentNode.parentNode) {
+                        table.deleteRow(i);
+                    }
                 }
+                updateChartDelete();
+            } 
+            else {
+                console.error("Delete request error");
             }
-            updateChartDelete();
-        } 
-        else {
-            console.error("Delete request error");
-        }
-    });
+        });
 
-    req.send(reqBody);
+        req.send(reqBody);
+    }
 } 
 
 
@@ -58,7 +62,7 @@ let viewAllButton = document.getElementById("clear-search");
 viewAllButton.setAttribute('onclick', 'viewAllBugs()');
 
 function viewAllBugs() {
-    path = "/bug_tracker/all_bugs/viewAllBugs";
+    let path = "/bug_tracker/all_bugs/viewAllBugs";
     let req = new XMLHttpRequest();
 
     req.open("POST", path, true);   
@@ -104,6 +108,12 @@ searchButton.addEventListener('click', searchBug);
 
 function searchBug() {
     let searchString = document.getElementById("search-input").value;
+
+    // End the search if the string is empty
+    if (searchString == '') {
+        return;
+    }
+
     let path = "/bug_tracker/all_bugs/searchBug";
     let req = new XMLHttpRequest();
     let reqBody = JSON.stringify({searchString: searchString});
@@ -121,7 +131,7 @@ function searchBug() {
             tableBody.innerHTML = '';
 
             // if no results are found
-            if(bugsArray.length == 0) {
+            if (bugsArray.length == 0) {
                 let newRow = tableBody.insertRow(-1);
                 let summaryCell = document.createElement('td');
                 summaryCell.textContent = "No results found!";
@@ -236,7 +246,7 @@ function createRow(tableBody, bugData) {
     deleteBtn.setAttribute('onclick', `deleteBug('recordTable', this, ${bugData.bugId})`);
 }
 
-// Change behavior of pressing 'Enter' on search bar. 
+// Change behavior of pressing 'Enter' on search bar 
 let searchInput = document.getElementById("search-input");
 
 searchInput.addEventListener('keydown', (event) => {
