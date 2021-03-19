@@ -13,8 +13,11 @@ recordForm.addEventListener('submit', (e) => {
     let req = new XMLHttpRequest();
     let path = '/bug_tracker/projects/edit_project/updateProject';
 
+    const urlParams = new URLSearchParams(window.location.search);
+
     // String that holds the form data
     let reqBody = {
+        projectId: urlParams.get('projectId'),
         projectName: recordForm.elements.projectName.value,
         companyName: recordForm.elements.projectCompany.value,
         dateStarted: recordForm.elements.startedDate.value,
