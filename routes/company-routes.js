@@ -27,7 +27,7 @@ const checkUserLoggedIn = (req, res, next) => {
 function displayCompanyPage(req, res, next) {
     // Find all of the current companies
     const mysql = req.app.get('mysql');
-    let sql_query = `SELECT * FROM Companies`;
+    let sql_query = `SELECT * FROM Companies ORDER BY dateJoined DESC`;
 
     // Initialize empty context object with Google user props
     let context = {};
