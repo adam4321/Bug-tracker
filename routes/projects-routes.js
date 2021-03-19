@@ -25,7 +25,8 @@ const checkUserLoggedIn = (req, res, next) => {
 function renderProjects(req, res, next) {
     // Find all of the projects and their associated companies
     let sql_query_1 = `SELECT companyId, companyName FROM Companies`;
-    let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId`;
+    let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId
+                            ORDER BY dateStarted DESC`;
 
     const mysql = req.app.get('mysql');
     
@@ -250,6 +251,35 @@ function renderEditProject(req, res, next) {
 }
 
 
+/* PROJECTS PAGE UPDATE PROJECT - Route to update a project ---------------- */
+function submitUpdateProject(req, res, next) {
+    // Update the project instance
+    let sql_query = `UPDATE Projects SET 
+                    projectName=?, companyId=(SELECT companyId FROM Companies WHERE companyName=?), dateStarted=?, lastUpdated=?, inMaintenance=?
+                    WHERE projectId=?`;
+    
+    const mysql = req.app.get('mysql');
+    let context = {};
+
+    mysql.pool.query(sql_query, [
+        req.body.projectName,
+        req.body.companyName,
+        req.body.dateStarted,
+        req.body.lastUpdated,
+        req.body.inMaintenance,
+        req.body.projectId
+    ], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+        
+        context.projects = result.insertId;
+        res.send(JSON.stringify(context));
+    });
+}
+
+
 /* PROJECTS PAGE ROUTES ---------------------------------------------------- */
 
 router.get('/', checkUserLoggedIn, renderProjects);
@@ -257,5 +287,6 @@ router.get('/add_project', checkUserLoggedIn, renderAddProjects);
 router.post('/add_project/insertProject', checkUserLoggedIn, submitProject);
 router.post('/deleteProject', checkUserLoggedIn, deleteProject);
 router.get('/edit_project', checkUserLoggedIn, renderEditProject);
+router.post('/edit_project/updateProject', checkUserLoggedIn, submitUpdateProject);
 
 module.exports = router;
