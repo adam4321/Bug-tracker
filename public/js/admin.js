@@ -29,7 +29,7 @@ function resetTable() {
         req.addEventListener("load", () => {
             if (req.status >= 200 && req.status < 400) {
                 // Return the user to the bugs page
-                window.location.href = "http://localhost:5000/bug_tracker/logout";
+                window.location.href = "/bug_tracker/logout";
             } 
             else {
                 console.error("Reset table request error.");

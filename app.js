@@ -97,7 +97,7 @@ app.get('/auth/google/callback', passport.authenticate('google', { failureRedire
 );
 
 // LOG OUT ROUTE - for all pages
-app.get('/logout', (req, res) => {
+app.get('/bug_tracker/logout', (req, res) => {
     req.session = null;
     req.logout();
     res.redirect('/bug_tracker/login');
