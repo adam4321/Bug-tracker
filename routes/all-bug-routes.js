@@ -36,7 +36,7 @@ function renderHome(req, res, next) {
 		                JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
 		                JOIN Bugs b ON bp.bugId = b.bugId
                         LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                            ORDER BY bugId`;
+                            ORDER BY dateStarted DESC`;
 
     const mysql = req.app.get('mysql');                 
 
