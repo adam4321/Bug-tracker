@@ -127,7 +127,7 @@ li {
 #table-container {
     margin: 0 3% 0 0;
     width: 1210px;
-    height: 85vh;
+    /* height: 85vh; */
     overflow-y: hidden;
 }
 
