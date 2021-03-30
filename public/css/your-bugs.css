@@ -3,7 +3,7 @@
 ******************************************************************************/
 
 #empty-txt-start {
-    margin-top: 15%;
+    margin-top: 110px;
 }
 
 .empty-txt {
@@ -140,6 +140,7 @@ li {
 #table-container {
     margin: 0 3% 0 0;
     width: 1210px;
+    /* height: 270px; */
     /* height: 85vh; */
     overflow-y: hidden;
 }
