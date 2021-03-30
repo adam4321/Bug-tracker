@@ -35,7 +35,7 @@ function renderHome(req, res) {
                             JOIN Bugs b ON b.bugId = bp2.bugId
                             LEFT OUTER JOIN programmers AS p ON bp2.programmerId = p.programmerId
                             LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                                WHERE bp.programmerId = 103102464071053261592
+                                WHERE bp.programmerId = ?
                                 ORDER BY dateStarted DESC`;
 
     // Register the Google user into the database if they are a new user
