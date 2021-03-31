@@ -137,10 +137,17 @@ li {
     width: 95%;
 }
 
+#table-container-one-row {
+    margin: 0 3% 0 0;
+    width: 1210px;
+    height: 280px;
+    /* height: 85vh; */
+    overflow-y: hidden;
+}
+
 #table-container {
     margin: 0 3% 0 0;
     width: 1210px;
-    /* height: 270px; */
     /* height: 85vh; */
     overflow-y: hidden;
 }
