@@ -86,10 +86,10 @@ app.use('/bug_tracker/admin', require('./routes/admin-routes.js'));
 /* AUTHENTICATION ROUTES ---------------------------------------------------- */
 
 // GOOGLE AUTH REQUEST 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get('/bug_tracker/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // GOOGLE POST-AUTH REDIRECT
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login/failed' }),
+app.get('/bug_tracker/auth/google/callback', passport.authenticate('google', { failureRedirect: '/bug_tracker/login/failed' }),
     (req, res) => {
         // Route the user to the homepage
         res.redirect('/bug_tracker/home');
