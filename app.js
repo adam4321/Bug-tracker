@@ -37,7 +37,7 @@ app.set('mysql', mysql);
 
 // Set up path to static files
 let path = require('path');
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/bug_tracker/', express.static(path.join(__dirname, 'public')));
 
 // Set up cookie session and configure session storage
 const cookieSession = require('cookie-session');
@@ -70,14 +70,29 @@ app.use('/bug_tracker/add_bug', require('./routes/add-bug-routes.js'));
 // EDIT BUG PAGE ROUTES
 app.use('/bug_tracker/edit_bug', require('./routes/edit-bug-routes.js'));
 
-// PROGRAMMERS PAGE ROUTES - DISPLAY, ADD, UPDATE, DELETE 
-app.use('/bug_tracker/programmers', require('./routes/programmers-routes.js'));
-
 // PROJECTS PAGE ROUTES - DISPLAY, ADD, UPDATE, DELETE
 app.use('/bug_tracker/projects', require('./routes/projects-routes.js'));
 
-// COMPANIES PAGE ROUTES - DISPLAY, ADD, UPDATE, DELETE
+// ADD_PROJECT PAGE ROUTES - DISPLAY, ADD
+app.use('/bug_tracker/add_project', require('./routes/add-project-routes.js'));
+
+// EDIT_PROJECT PAGE ROUTES - DISPLAY, ADD
+app.use('/bug_tracker/edit_project', require('./routes/edit-project-routes.js'));
+
+// COMPANIES PAGE ROUTES - DISPLAY, DELETE
 app.use('/bug_tracker/companies', require('./routes/company-routes.js'));
+
+// ADD_COMPANY PAGE ROUTES - DISPLAY, ADD
+app.use('/bug_tracker/add_company', require('./routes/add-company-routes.js'));
+
+// EDIT_COMPANY PAGE ROUTES - DISPLAY, UPDATE
+app.use('/bug_tracker/edit_company', require('./routes/edit-company-routes.js'));
+
+// PROGRAMMERS PAGE ROUTES - DISPLAY, UPDATE, DELETE 
+app.use('/bug_tracker/programmers', require('./routes/programmers-routes.js'));
+
+// EDIT_PROGRAMMER PAGE ROUTES - DISPLAY, UPDATE 
+app.use('/bug_tracker/edit_programmer', require('./routes/edit-programmer-routes.js'));
 
 // ADMIN PAGE ROUTES
 app.use('/bug_tracker/admin', require('./routes/admin-routes.js'));
