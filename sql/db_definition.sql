@@ -39,8 +39,7 @@ INSERT INTO Programmers VALUES
     ('test7', 'Kate', 'Hooper', 'kate_h@gmail.com', NULL, '2000-07-06', 2),
     ('test8', 'Ben', 'Kent', 'ben_k@yahoo.com', NULL, '1999-03-20', 3),
     ('test9', 'Kyle', 'Gable', 'kyle_g@gmail.com', NULL, '1996-05-03', 2),
-    ('test10', 'Jen', 'Thomas', 'jen_t@gmail.com', NULL, '1998-09-20', 3),
-    ('eqyvguhIaBZ3ouxN7SjZwshAkPp1', 'Adam', 'Wright', 'wrighada@oregonstate.edu', NULL, '2000-01-01', 2);
+    ('test10', 'Jen', 'Thomas', 'jen_t@gmail.com', NULL, '1998-09-20', 3);
 
 UNLOCK TABLES;
 
