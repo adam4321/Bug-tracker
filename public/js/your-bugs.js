@@ -58,12 +58,12 @@ try {
             if (req.status >= 200 && req.status < 400) {
                 let bugsArray = JSON.parse(req.responseText).bugs;
 
-                // clear table before building search results
+                // Clear table before building search results
                 let tableBody = document.getElementById("table-body");
                 tableBody.innerHTML = '';
 
-                // if no existing bugs
-                if(bugsArray.length == 0) {
+                // If no existing bugs
+                if (bugsArray.length == 0) {
                     let newRow = tableBody.insertRow(-1);
                     let summaryCell = document.createElement('td');
                     summaryCell.textContent = "No current bugs!";
@@ -73,7 +73,7 @@ try {
                     return;
                 }
 
-                // build rows for each bug if there is at least one result
+                // Build rows for each bug if there is at least one result
                 bugsArray.forEach(element => {
                     createRow(tableBody, element);
                 });
@@ -111,11 +111,11 @@ try {
             if (req.status >= 200 && req.status < 400) {
                 let bugsArray = JSON.parse(req.responseText).bugs;
 
-                // clear table before building search results
+                // Clear table before building search results
                 let tableBody = document.getElementById("table-body");
                 tableBody.innerHTML = '';
 
-                // if no results are found
+                // If no results are found
                 if (bugsArray.length == 0) {
                     let newRow = tableBody.insertRow(-1);
                     let summaryCell = document.createElement('td');
@@ -126,7 +126,7 @@ try {
                     return;
                 }
 
-                // build rows for each bug if there is at least one result
+                // Build rows for each bug if there is at least one result
                 bugsArray.forEach(element => {
                     createRow(tableBody, element);
                 });
