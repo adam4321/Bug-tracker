@@ -11,7 +11,7 @@ spinner.style.visibility = "hidden";
 function submitUpdate() {
     spinner.style.visibility = "visible";
     let req = new XMLHttpRequest();
-    const PATH = "/bug_tracker/programmers/edit_programmer/updateProgrammer";
+    const PATH = "/bug_tracker/edit_programmer/updateProgrammer";
  
     const urlParams = new URLSearchParams(window.location.search);
     
