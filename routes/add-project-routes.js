@@ -23,6 +23,7 @@ const checkUserLoggedIn = (req, res, next) => {
 function renderAddProjects(req, res, next) {
     // Find all of the projects and their associated companies
     let sql_query_1 = `SELECT companyId, companyName FROM Companies`;
+    
     let sql_query_2 = `SELECT * FROM Projects AS p JOIN Companies AS c ON p.companyId = c.companyId`;
 
     const mysql = req.app.get('mysql');
