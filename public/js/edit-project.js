@@ -11,7 +11,7 @@ recordForm.addEventListener('submit', (e) => {
     e.preventDefault();
     spinner.style.visibility = "visible";
     let req = new XMLHttpRequest();
-    let path = '/bug_tracker/projects/edit_project/updateProject';
+    let path = '/bug_tracker/edit_project/updateProject';
 
     const urlParams = new URLSearchParams(window.location.search);
 
