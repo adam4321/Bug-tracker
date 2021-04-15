@@ -23,14 +23,9 @@ const checkUserLoggedIn = (req, res, next) => {
 
 /* RENDER ALL BUGS PAGE - Function to render the bugs page ----------------- */
 function renderHome(req, res, next) {
-    // 1st query gathers the projects for the dropdown
-    let sql_query_1 = `SELECT projectName, projectId FROM Projects`;
 
-    // 2nd query gathers the programmers for the scrolling checkbox list
-    let sql_query_2 = `SELECT programmerId, firstName, lastName FROM Programmers`;
-    
     // 3rd query populates the bug list
-    let sql_query_3 = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
+    let sql_query = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, 
                         b.dateStarted, b.resolution, b.priority, b.fixed 
 	                    FROM Programmers p 
 		                JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
@@ -49,7 +44,7 @@ function renderHome(req, res, next) {
     context.accessLevel = req.session.accessLevel;
 
     // Populate the bug list
-    mysql.pool.query(sql_query_3, (err, rows) => {
+    mysql.pool.query(sql_query, (err, rows) => {
         if (err) {
             next(err);
             return;
@@ -85,45 +80,9 @@ function renderHome(req, res, next) {
             }
         }
 
-        // Query for the list of programmers
-        mysql.pool.query(sql_query_2,  (err, rows) => {
-            if (err) {
-                next(err);
-                return;
-            }
-
-            let programmersDbData = [];
-            for (let i in rows) {
-                programmersDbData.push({
-                    programmerId: rows[i].programmerId,
-                    firstName: rows[i].firstName,
-                    lastName: rows[i].lastName
-                });
-            }
-
-            // Query for the list of projects
-            mysql.pool.query(sql_query_1,  (err, rows) => {
-                if (err) {
-                    next(err);
-                    return;
-                }
-
-                
-                let projectDbData = [];
-                for (let i in rows) {
-                    projectDbData.push({
-                        projectName: rows[i].projectName,
-                        projectId: rows[i].projectId
-                    });
-                }
-
-                // After the 3 calls return, then populate the context array
-                context.bugs = bugsDbData;
-                context.programmers = programmersDbData;
-                context.projects = projectDbData;
-                res.render('all-bugs', context);
-            });
-        });
+        // After the call returns, then populate the context array
+        context.bugs = bugsDbData;
+        res.render('all-bugs', context);
     });
 }
 
@@ -132,6 +91,7 @@ function renderHome(req, res, next) {
 function deleteBug(req, res, next) {
     // Delete the row with the passed in bugId
     let sql_query_1 = `DELETE FROM Bugs WHERE bugId=?`;
+
     let sql_query_2 = `SELECT * FROM Bugs`;
 
     const mysql = req.app.get('mysql');
@@ -185,13 +145,13 @@ function searchBug(req, res, next) {
         idString = resultsList.join();
 
         // query to gather data of bugs in the initial query results
-        let bugsQuery = 'SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription, ' + 
-                        'b.dateStarted, b.resolution, b.priority, b.fixed FROM Programmers p ' + 
-                        'JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId ' + 
-                        'JOIN Bugs b ON bp.bugId = b.bugId ' + 
-                        'LEFT OUTER JOIN Projects pj ON b.projectId = pj.projectId ' + 
-                        'WHERE b.bugId IN (' + idString + ') ' +
-                        'ORDER BY b.bugId;';
+        let bugsQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription,
+                            b.dateStarted, b.resolution, b.priority, b.fixed FROM Programmers p
+                            JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
+                            JOIN Bugs b ON bp.bugId = b.bugId
+                            LEFT OUTER JOIN Projects pj ON b.projectId = pj.projectId
+                                WHERE b.bugId IN (${idString})
+                                ORDER BY dateStarted DESC`;
 
         // console.log(bugsQuery)  // this string can be pasted in phpmyadmin for testing
 
@@ -243,7 +203,7 @@ function viewAllBugs(req, res, next) {
 		                JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
 		                JOIN Bugs b ON bp.bugId = b.bugId
                         LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                            ORDER BY bugId`;
+                            ORDER BY dateStarted DESC`;
 
     const mysql = req.app.get('mysql');                 
     let context = {};
