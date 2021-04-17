@@ -36,7 +36,7 @@ function renderHome(req, res) {
                             LEFT OUTER JOIN programmers AS p ON bp2.programmerId = p.programmerId
                             LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
                                 WHERE bp.programmerId = ?
-                                ORDER BY dateStarted DESC`;
+                                ORDER BY dateStarted DESC, bugId DESC`;
 
     // Register the Google user into the database if they are a new user
     const sql_query_3 = `INSERT INTO Programmers 
@@ -139,7 +139,94 @@ function renderHome(req, res) {
             });
         }
     });
-};
+}
+
+
+/* BUGS PAGE SEARCH BUG - Function to search for string in bugs table ----- */
+function searchBug(req, res, next) {
+    const mysql = req.app.get('mysql');                 
+    let context = {};
+
+    // query to find bug entries that contain substring
+    let searchQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription,
+                        b.dateStarted, b.resolution, b.priority, b.fixed FROM Programmers p
+                        JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
+                        JOIN Bugs b ON bp.bugId = b.bugId
+                        LEFT OUTER JOIN Projects pj ON b.projectId = pj.projectId
+                            WHERE CONCAT(bugSummary, bugDescription, resolution, projectName,
+                            firstName, lastName, priority) LIKE `
+                            + mysql.pool.escape('%'+ req.body.searchString +'%') +
+                            `AND p.programmerId = ?`;
+    
+    mysql.pool.query(searchQuery, [req.user.id], (err, result) => {
+        if (err) {
+            next(err);
+            return;
+        }
+
+        // If no results were found in initial search query
+        if (result.length == 0) {
+            context.bugs = [];
+            res.send(JSON.stringify(context));
+            return;
+        }
+
+        // Get list of matching bugIds 
+        resultsList = [];
+
+        for (i = 0; i < result.length; i++) {
+            resultsList.push(result[i].bugId)
+        }
+
+        idString = resultsList.join();
+
+        // query to gather data of bugs in the initial query results
+        let bugsQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription,
+                            b.dateStarted, b.resolution, b.priority, b.fixed FROM Programmers p
+                            JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
+                            JOIN Bugs b ON bp.bugId = b.bugId
+                            LEFT OUTER JOIN Projects pj ON b.projectId = pj.projectId
+                                WHERE b.bugId IN (${idString})
+                                ORDER BY dateStarted DESC, bugId DESC`;
+
+        mysql.pool.query(bugsQuery, (err, rows) => {
+            if (err) {
+                next(err);
+                return;
+            }
+
+            let prevEntryBugId;
+            let bugProgrammers = [];
+            let matchingBugsData = [];
+
+            for (let i in rows) {
+                if (prevEntryBugId == rows[i].bugId) {
+                    bugProgrammers.push(rows[i].firstName + ' ' + rows[i].lastName);
+                }
+                else {
+                    prevEntryBugId = rows[i].bugId;
+                    bugProgrammers = [];
+                    bugProgrammers.push(rows[i].firstName + ' ' + rows[i].lastName);
+
+                    matchingBugsData.push({
+                        bugId: rows[i].bugId,
+                        bugSummary: rows[i].bugSummary,
+                        bugDescription: rows[i].bugDescription,
+                        projectName: rows[i].projectName,
+                        programmers: bugProgrammers,
+                        dateStarted: rows[i].dateStarted,
+                        priority: rows[i].priority,
+                        fixed: rows[i].fixed,
+                        resolution: rows[i].resolution
+                    }) 
+                }
+            }
+
+            context.bugs = matchingBugsData;
+            res.send(JSON.stringify(context));
+        });
+    });
+}
 
 
 /* USER BUGS - Function to render user's bugs ------------------------------ */
@@ -150,23 +237,22 @@ function viewAllBugs(req, res) {
                         WHERE programmerId = ?`
 
     // 2nd query populates the bug list
-    const sql_query_2 = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, 
-                        b.bugDescription, b.dateStarted, b.resolution, b.priority, b.fixed 
-	                    FROM Programmers p
-                        JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId  
-                        JOIN Bugs b ON bp.bugId = b.bugId
-                        LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                            WHERE p.programmerId = ?
-                            ORDER BY dateStarted DESC`;
+    const sql_query_2 = `SELECT p.firstName, p.lastName, bp2.bugId, pj.projectName, b.bugSummary, b.bugDescription,
+                        b.dateStarted, b.resolution, b.priority, b.fixed
+                            FROM bugs_programmers AS bp
+                            JOIN bugs ON bp.bugId = bugs.bugId
+                            INNER JOIN bugs_programmers AS bp2 ON bp2.bugId = bp.bugId
+                            JOIN Bugs b ON b.bugId = bp2.bugId
+                            LEFT OUTER JOIN programmers AS p ON bp2.programmerId = p.programmerId
+                            LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
+                                WHERE bp.programmerId = ?
+                                ORDER BY dateStarted DESC, bugId DESC`;
 
     const mysql = req.app.get('mysql');
 
     // Initialize empty context object with Google user props
     let context = {};
     context.id = req.user.id;
-    context.email = req.user.email;
-    context.name = req.user.displayName;
-    context.photo = req.user.picture;
 
     // See if user with email at end of query string exists in database
     mysql.pool.query(sql_query_1, context.id, (err, rows, fields) => {
@@ -215,18 +301,19 @@ function viewAllBugs(req, res) {
                     });
                 }
             }
-            
+
             // Render user home page with any assigned bugs
             context.bugs = bugsDbData;
             res.send(JSON.stringify(context));
         });
     });
-};
+}
 
 
 /* USER HOME PAGE ROUTES --------------------------------------------------- */
 
 router.get('/', checkUserLoggedIn, renderHome);
+router.post('/searchBug', checkUserLoggedIn, searchBug);
 router.post('/viewAll', checkUserLoggedIn, viewAllBugs);
 
 module.exports = router;
