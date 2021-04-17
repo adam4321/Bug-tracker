@@ -31,7 +31,7 @@ function renderHome(req, res, next) {
 		                JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
 		                JOIN Bugs b ON bp.bugId = b.bugId
                         LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                            ORDER BY dateStarted DESC`;
+                            ORDER BY dateStarted DESC, bugId DESC`;
 
     const mysql = req.app.get('mysql');                 
 
@@ -90,7 +90,7 @@ function renderHome(req, res, next) {
 /* ALL BUGS PAGE DELETE ROW - Route to delete a row from the bug list ----- */
 function deleteBug(req, res, next) {
     // Delete the row with the passed in bugId
-    let sql_query_1 = `DELETE FROM Bugs WHERE bugId=?`;
+    let sql_query_1 = `DELETE FROM Bugs WHERE bugId = ?`;
 
     let sql_query_2 = `SELECT * FROM Bugs`;
 
@@ -108,6 +108,7 @@ function deleteBug(req, res, next) {
                 next(err);
                 return;
             }
+
             context.results = JSON.stringify(rows);
             res.render('all-bugs', context);
         });
@@ -117,12 +118,18 @@ function deleteBug(req, res, next) {
 
 /* BUGS PAGE SEARCH BUG - Function to search for string in bugs table ----- */
 function searchBug(req, res, next) {
-    // query to find bug entries that contain substring
-    let searchQuery = 'SELECT bugId FROM Bugs WHERE CONCAT(bugSummary, bugDescription, resolution) LIKE "%' + 
-                        req.body.searchString + '%"';
-
     const mysql = req.app.get('mysql');                 
     let context = {};
+
+    // query to find bug entries that contain substring
+    let searchQuery = `SELECT p.firstName, p.lastName, b.bugId, pj.projectName, b.bugSummary, b.bugDescription,
+                        b.dateStarted, b.resolution, b.priority, b.fixed FROM Programmers p
+                        JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
+                        JOIN Bugs b ON bp.bugId = b.bugId
+                        LEFT OUTER JOIN Projects pj ON b.projectId = pj.projectId
+                            WHERE CONCAT(bugSummary, bugDescription, resolution, projectName,
+                            firstName, lastName, priority) LIKE `
+                            + mysql.pool.escape('%'+ req.body.searchString +'%');
     
     mysql.pool.query(searchQuery, (err, result) => {
         if (err) {
@@ -130,7 +137,7 @@ function searchBug(req, res, next) {
             return;
         }
 
-        // if no results were found in initial search query
+        // If no results were found in initial search query
         if (result.length == 0) {
             context.bugs = [];
             res.send(JSON.stringify(context));
@@ -139,9 +146,11 @@ function searchBug(req, res, next) {
 
         // Get list of matching bugIds 
         resultsList = [];
-        for(i = 0; i < result.length; i++) {
+
+        for (i = 0; i < result.length; i++) {
             resultsList.push(result[i].bugId)
         }
+
         idString = resultsList.join();
 
         // query to gather data of bugs in the initial query results
@@ -151,7 +160,7 @@ function searchBug(req, res, next) {
                             JOIN Bugs b ON bp.bugId = b.bugId
                             LEFT OUTER JOIN Projects pj ON b.projectId = pj.projectId
                                 WHERE b.bugId IN (${idString})
-                                ORDER BY dateStarted DESC`;
+                                ORDER BY dateStarted DESC, bugId DESC`;
 
         // console.log(bugsQuery)  // this string can be pasted in phpmyadmin for testing
 
@@ -203,7 +212,7 @@ function viewAllBugs(req, res, next) {
 		                JOIN Bugs_Programmers bp ON p.programmerId = bp.programmerId
 		                JOIN Bugs b ON bp.bugId = b.bugId
                         LEFT OUTER JOIN Projects pj ON b.projectId <=> pj.projectId
-                            ORDER BY dateStarted DESC`;
+                            ORDER BY dateStarted DESC, bugId DESC`;
 
     const mysql = req.app.get('mysql');                 
     let context = {};
