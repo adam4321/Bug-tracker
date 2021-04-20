@@ -24,7 +24,7 @@ CREATE TABLE Programmers (
     dateStarted date, 
     accessLevel int(11),
     PRIMARY KEY (programmerId)
-) ENGINE=InnoDB;
+) CHARACTER SET 'utf8', ENGINE=InnoDB;
 
 
 LOCK TABLES Programmers WRITE;
@@ -51,7 +51,7 @@ CREATE TABLE Companies (
     companyName varchar(255) NOT NULL,
     dateJoined date,
     PRIMARY KEY (companyId)
-) ENGINE=InnoDB;
+) CHARACTER SET 'utf8', ENGINE=InnoDB;
 
 LOCK TABLES Companies WRITE;
 
@@ -79,7 +79,7 @@ CREATE TABLE Projects (
     FOREIGN KEY (companyId) REFERENCES Companies (companyId)
 		ON UPDATE CASCADE 
         ON DELETE CASCADE
-) ENGINE=InnoDB;
+) CHARACTER SET 'utf8', ENGINE=InnoDB;
 
 LOCK TABLES Projects WRITE,
 	Companies AS c1 WRITE,
@@ -121,7 +121,7 @@ CREATE TABLE Bugs (
     FOREIGN KEY (projectId) REFERENCES Projects (projectId)
 		ON UPDATE CASCADE 
         ON DELETE CASCADE
-) ENGINE=InnoDB;
+) CHARACTER SET 'utf8', ENGINE=InnoDB;
 
 
 LOCK TABLES Bugs WRITE, 
@@ -183,7 +183,7 @@ CREATE TABLE Bugs_Programmers (
     FOREIGN KEY (programmerId) REFERENCES Programmers (programmerId)
 		ON UPDATE CASCADE 
         ON DELETE CASCADE
-) ENGINE=InnoDB;
+) CHARACTER SET 'utf8', ENGINE=InnoDB;
 
 
 LOCK TABLES Bugs_Programmers WRITE, Bugs AS b1 WRITE, Programmers AS p1 WRITE;
