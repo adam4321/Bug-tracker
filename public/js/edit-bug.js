@@ -73,6 +73,9 @@ recordForm.addEventListener('submit', (e) => {
 
     // Fill the project, if it has a value
     let project;
+    if (recordForm.elements.bugProject.value == 'null') {
+        recordForm.elements.bugProject.value = '';
+    }
     if (recordForm.elements.bugProject.value) {
         project = recordForm.elements.bugProject.value;
     }
@@ -98,7 +101,7 @@ recordForm.addEventListener('submit', (e) => {
     req.addEventListener('load', () => {
         if (req.status >= 200 && req.status < 400) {
             // Return the user to the bugs page
-            window.location.href = "http://localhost:5000/bug_tracker/all_bugs";
+            window.location.href = "/bug_tracker/home";
     
         } else {
             console.error('Database return error');
