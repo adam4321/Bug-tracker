@@ -33,7 +33,6 @@ recordForm.addEventListener('submit', (e) => {
     req.addEventListener('load', () => {
         if (req.status >= 200 && req.status < 400) {
             // Clear the submit form and turn off the spinner
-            document.getElementById('recordForm').reset();
             setTimeout(() => { spinner.style.visibility = "hidden"; }, 1000);
 
             // Redirect to companies page
