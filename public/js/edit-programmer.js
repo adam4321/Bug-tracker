@@ -33,7 +33,6 @@ function submitUpdate() {
     req.addEventListener("load", function redirectHome() {
         if (req.status >= 200 && req.status < 400) {
             // Clear the submit form and stop spinner
-            document.getElementById('recordForm').reset();
             setTimeout(() => { spinner.style.visibility = "hidden"; }, 1000);
             
             // Redirect to companies page
