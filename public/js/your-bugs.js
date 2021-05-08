@@ -99,7 +99,7 @@ try {
             return;
         }
 
-        let path = "/bug_tracker/all_bugs/searchBug";
+        let path = "/bug_tracker/home/searchBug";
         let req = new XMLHttpRequest();
         let reqBody = JSON.stringify({searchString: searchString});
 
