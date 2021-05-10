@@ -23,6 +23,7 @@ const checkUserLoggedIn = (req, res, next) => {
 function renderEditProject(req, res, next) {
     // Find all of the projects and their associated companies
     let sql_query_1 = `SELECT companyId, companyName FROM Companies`;
+    
     let sql_query_2 = `SELECT c.companyName, p.projectName, p.dateStarted, p.lastUpdated, p.inMaintenance
                         FROM Projects p JOIN Companies c ON p.companyId = c.companyId
                         WHERE p.projectId = ?`;

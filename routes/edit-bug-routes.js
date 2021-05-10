@@ -34,7 +34,7 @@ function renderEditBug(req, res, next) {
                         JOIN Bugs b ON bp.bugId = b.bugId
                         LEFT OUTER JOIN Projects pj ON b.projectId = pj.projectId
                         WHERE bp.bugId=?
-                            ORDER BY bugId`
+                            ORDER BY bugId`;
 
     const mysql = req.app.get('mysql');
     
