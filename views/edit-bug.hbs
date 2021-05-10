@@ -1,7 +1,7 @@
 {{!--  Edit bug page view - using express handlebars  --}}
 
 <title>Bug Tracker | Edit Bug</title>
-<link type="text/css" rel="stylesheet" href="/css/edit-bug.css">
+<link type="text/css" rel="stylesheet" href="css/edit-bug.css">
       
 {{!-- Container for the dashboard --}}
 <div class="form-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop" id="main-box">
@@ -23,12 +23,12 @@
                     <select class="submitBtn" name="bugProject" id="bug-project-field">
                         {{#with editBug}} 
                             {{#if this.projectName}}
-                                <option value="{{this.project}}" selected="selected">{{this.projectName}}</option>
+                                <option value="{{this.projectId}}" selected="selected">{{this.projectName}}</option>
                             {{else}}
-                                <option value="{{this.project}}" selected="selected">NULL</option>
+                                <option value="null" selected="selected">NULL</option>
                             {{/if}} 
                         {{/with}}
-                        <option value="">NULL</option>
+                        <option value="null">NULL</option>
                         {{#each projects}}
                             <option value="{{this.projectId}}">{{this.projectName}}</option>
                         {{/each}}
@@ -104,4 +104,4 @@
 </div>
 
 
-<script src="/js/edit-bug.js"></script>
+<script src="js/edit-bug.js"></script>
